@@ -25,109 +25,136 @@
     
     <section>
         <article>
-            <pre class="prettyprint source"><code>define([
-    "backbone",
-    "hotkey/HotKey",
-    "user/UserGeneric",
-    "user/UserPreference",
-    "OPrime"
-], function(
-    Backbone, 
-    HotKey,
-    UserGeneric,
-    UserPreference
-) {
-  var User = UserGeneric.extend(
-  /** @lends User.prototype */
-  {
-    /**
-     * @class User extends from UserGeneric. It inherits the same attributes as UserGeneric but can 
-     * login. 
-     * 
-     * @property {String} firstname The user's first name. 
-     * @property {String} lastname The user's last name.
-     * @property {Array} teams This is a list of teams a user belongs to. 
-     * @property {Array} sessionHistory 
-     * @property {Permission} permissions This is where permissions are specified (eg. read only; add/edit data etc.)   
-     *
-     * @description The initialize function probably checks to see if the user is existing or new and creates a new account if it is new. 
-     * 
-     * @extends Backbone.Model
-     * @constructs
-     */
-    initialize: function(attributes) {
-      if (OPrime.debugMode) OPrime.debug("USER init");
-      User.__super__.initialize.call(this, attributes);
-      
-      if(this.get("filledWithDefaults")){
-        this.fillWithDefaults();
-        this.unset("filledWithDefaults");
-      }
-      this.bind("change", this.checkPrefsChanged, this);
-    },
-    fillWithDefaults : function(){
-      // If there is no prefs, create a new one
-      if (!this.get("prefs")) {
-        this.set("prefs", new UserPreference({filledWithDefaults : true }));
-      }
-      
-      // If there is no hotkeys, create a new one
-      if (!this.get("hotkeys")) {
-        this.set("hotkeys", new HotKey({filledWithDefaults : true }));//TODO this needs to become plural when hotkeys get implemented
-      }
-    },
-    defaults : {
-      // Defaults from UserGeneric
-      username : "",
-      password : "",
-      email : "",
-      gravatar : "user/user_gravatar.png",
-      researchInterest : "",
-      affiliation : "",
-      description : "",
-      subtitle : "",
-      corpuses : [],
-      dataLists : [],
-      mostRecentIds : {},
-      // Defaults from User
-      firstname : "",
-      lastname : "",
-      teams : [],
-      sessionHistory : []
-    },
+            <pre class="prettyprint source"><code>var UserMask = require("./UserMask").UserMask;
+var UserPreference = require("./UserPreference").UserPreference;
+var DEFAULT_USER_MODEL = require("./user.json");
 
-    /**
-     * The subtitle function returns user's first and last names. 
-     */
-    subtitle: function () {
-    	if (this.get("firstname") == undefined) {
-        this.set("firstname","");
+/**
+ * @class User extends from UserGeneric. It inherits the same attributes as UserGeneric but can
+ * login.
+ *
+ * @property {String} firstname The user's first name.
+ * @property {String} lastname The user's last name.
+ * @property {Array} teams This is a list of teams a user belongs to.
+ * @property {Array} sessionHistory
+ * @property {Permission} permissions This is where permissions are specified (eg. read only; add/edit data etc.)
+ *
+ * @name  User
+ * @extends UserMask
+ * @constructs
+ */
+var User = function User(options) {
+  if (!this._fieldDBtype) {
+    this._fieldDBtype = "User";
+  }
+  this.debug("Constructing User length: ", options);
+  UserMask.apply(this, arguments);
+};
+
+User.prototype = Object.create(UserMask.prototype, /** @lends User.prototype */ {
+  constructor: {
+    value: User
+  },
+
+  api: {
+    value: "users"
+  },
+
+  defaults: {
+    get: function() {
+      return JSON.parse(JSON.stringify(DEFAULT_USER_MODEL));
+    }
+  },
+
+  INTERNAL_MODELS: {
+    value: {
+      prefs: UserPreference
+    }
+  },
+
+  hotkeys: {
+    get: function() {
+      if (this.prefs) {
+        return this.prefs.hotkeys;
       }
-      
-      if (this.get("lastname") == undefined) {
-        this.set("lastname","");
-      }
-      
-      return this.get("firstname") + " " + this.get("lastname");
     },
-    checkPrefsChanged : function(){
-      try{
-        window.appView.userPreferenceView.model = this.get("prefs");
-        window.appView.userPreferenceView.render();
-      }catch(e){
-        
+    set: function(value) {
+      if (!this.prefs) {
+        this.prefs = new this.INTERNAL_MODELS["prefs"]();
       }
+      if (Object.prototype.toString.call(value) !== "[object Array]") {
+        if (!value.firstKey && !value.secondKey && !value.description) {
+          value = [];
+        } else {
+          value = [value];
+        }
+      }
+      this.prefs.hotkeys = value;
+      delete this.hotkeys;
+    }
+  },
+
+  prefs: {
+    get: function() {
+      if (!this._prefs && this.INTERNAL_MODELS["prefs"] && typeof this.INTERNAL_MODELS["prefs"] === "function") {
+        this.prefs = new this.INTERNAL_MODELS["prefs"](this.defaults.prefs);
+      }
+      return this._prefs;
     },
-    saveAndInterConnectInApp : function(callback){
-      
-      if(typeof callback == "function"){
-        callback();
+    set: function(value) {
+      if (value === this._prefs) {
+        return;
+      }
+      if (!value) {
+        delete this._prefs;
+        return;
+      } else {
+        if (Object.prototype.toString.call(value) === "[object Array]") {
+          value = new this.INTERNAL_MODELS["prefs"](value);
+        }
+      }
+      this._prefs = value;
+    }
+  },
+
+  appbrand: {
+    get: function() {
+      if (this.prefs && !this.prefs.preferedDashboardType) {
+        if (this._appbrand === "phophlo") {
+          this.debug(" setting preferedDashboardType from user " + this._appbrand);
+
+          this.prefs.preferedDashboardType = "experimenter";
+        }
+      }
+      return this._appbrand || "lingsync";
+    },
+    set: function(value) {
+      if (value === this._appbrand) {
+        return;
+      }
+
+      if (this._appbrand) {
+        this.warn("appbrand cannot be modified by client side apps.");
+      } else {
+        if (value.trim) {
+          value = value.trim();
+        }
+        this._appbrand = value;
+      }
+      this.debug(" setting preferedDashboardType from user " + this._appbrand);
+      if (this.prefs && !this.prefs.preferedDashboardType) {
+        if (this._appbrand === "phophlo") {
+          this.prefs._preferedDashboardType = "experimenter";
+          this.debug(" it is now " + this.prefs.preferedDashboardType);
+
+        }
       }
     }
-  });
+  }
 
-  return User;
-});</code></pre>
+});
+exports.User = User;
+</code></pre>
         </article>
     </section>
 
@@ -137,13 +164,13 @@
 </div>
 
 <nav>
-    <h2><a href="index.html">Index</a></h2><h3>Modules</h3><ul><li><a href="module-FieldDB.html">FieldDB</a></li></ul><h3>Classes</h3><ul><li><a href="Activity.html">Activity</a></li><li><a href="App.html">App</a></li><li><a href="AppRouter.html">AppRouter</a></li><li><a href="AudioVideo.html">AudioVideo</a></li><li><a href="Authentication.html">Authentication</a></li><li><a href="Comment.html">Comment</a></li><li><a href="Comments.html">Comments</a></li><li><a href="Confidential.html">Confidential</a></li><li><a href="Consultant.html">Consultant</a></li><li><a href="Consultants.html">Consultants</a></li><li><a href="Conversation.html">Conversation</a></li><li><a href="Conversations.html">Conversations</a></li><li><a href="Corpus.html">Corpus</a></li><li><a href="Corpuses.html">Corpuses</a></li><li><a href="CorpusMask.html">CorpusMask</a></li><li><a href="DataList.html">DataList</a></li><li><a href="DataLists.html">DataLists</a></li><li><a href="Datum.html">Datum</a></li><li><a href="DatumField.html">DatumField</a></li><li><a href="DatumFields.html">DatumFields</a></li><li><a href="Datums.html">Datums</a></li><li><a href="DatumState.html">DatumState</a></li><li><a href="DatumStates.html">DatumStates</a></li><li><a href="DatumTag.html">DatumTag</a></li><li><a href="Export.html">Export</a></li><li><a href="HotKey.html">HotKey</a></li><li><a href="HotKeys.html">HotKeys</a></li><li><a href="Import.html">Import</a></li><li><a href="InsertUnicode.html">InsertUnicode</a></li><li><a href="InsertUnicodes.html">InsertUnicodes</a></li><li><a href="Lexicon.html">Lexicon</a></li><li><a href="LexiconNode.html">LexiconNode</a></li><li><a href="LexiconNodes.html">LexiconNodes</a></li><li><a href="Permission.html">Permission</a></li><li><a href="Permissions.html">Permissions</a></li><li><a href="ReportBot.html">ReportBot</a></li><li><a href="Search.html">Search</a></li><li><a href="Session.html">Session</a></li><li><a href="Sessions.html">Sessions</a></li><li><a href="Team.html">Team</a></li><li><a href="User.html">User</a></li><li><a href="UserApp.html">UserApp</a></li><li><a href="UserMask.html">UserMask</a></li><li><a href="UserPreference.html">UserPreference</a></li><li><a href="UserRouter.html">UserRouter</a></li><li>{String: Exercise}</li></ul><h3>Global</h3><ul><li><a href="global.html#baseSchema">baseSchema</a></li><li><a href="global.html#CorpusConnection">CorpusConnection</a></li><li><a href="global.html#newCorpusConnection">newCorpusConnection</a></li><li><a href="global.html#validateDbnameFormat">validateDbnameFormat</a></li></ul>
+    <h2><a href="index.html">Index</a></h2><h3>Modules</h3><ul><li><a href="module-FieldDB.html">FieldDB</a></li></ul><h3>Classes</h3><ul><li><a href="Activities.html">Activities</a></li><li><a href="Activity.html">Activity</a></li><li><a href="App.html">App</a></li><li><a href="AppRouter.html">AppRouter</a></li><li><a href="AudioPlayer.html">AudioPlayer</a></li><li><a href="AudioVideo.html">AudioVideo</a></li><li><a href="AudioVideoRecorder.html">AudioVideoRecorder</a></li><li><a href="AudioVideos.html">AudioVideos</a></li><li><a href="Authentication.html">Authentication</a></li><li><a href="Collection.html">Collection</a></li><li><a href="Comment.html">Comment</a></li><li><a href="Comments.html">Comments</a></li><li><a href="Confidential.html">Confidential</a></li><li><a href="Consultant.html">Consultant</a></li><li><a href="Consultants.html">Consultants</a></li><li><a href="ContextualizableObject.html">ContextualizableObject</a></li><li><a href="Contextualizer.html">Contextualizer</a></li><li><a href="Conversation.html">Conversation</a></li><li><a href="Conversations.html">Conversations</a></li><li><a href="Corpus.html">Corpus</a></li><li><a href="Corpuses.html">Corpuses</a></li><li><a href="CorpusMask.html">CorpusMask</a></li><li><a href="DataList.html">DataList</a></li><li><a href="DataLists.html">DataLists</a></li><li><a href="dataURItoBlob.html">dataURItoBlob</a></li><li><a href="Datum.html">Datum</a></li><li><a href="DatumField.html">DatumField</a></li><li><a href="DatumFields.html">DatumFields</a></li><li><a href="Datums.html">Datums</a></li><li><a href="DatumState.html">DatumState</a></li><li><a href="DatumStates.html">DatumStates</a></li><li><a href="DatumTag.html">DatumTag</a></li><li><a href="DatumTags.html">DatumTags</a></li><li><a href="DocumentCollection.html">DocumentCollection</a></li><li><a href="ELanguages.html">ELanguages</a></li><li><a href="Export.html">Export</a></li><li><a href="FieldDBObject.html">FieldDBObject</a></li><li><a href="HotKey.html">HotKey</a></li><li><a href="HotKeys.html">HotKeys</a></li><li><a href="HTML5Audio.html">HTML5Audio</a></li><li><a href="Image.html">Image</a></li><li><a href="Images.html">Images</a></li><li><a href="InsertUnicode.html">InsertUnicode</a></li><li><a href="InsertUnicodes.html">InsertUnicodes</a></li><li><a href="Lexicon.html">Lexicon</a></li><li><a href="LexiconNode.html">LexiconNode</a></li><li><a href="LexiconNodes.html">LexiconNodes</a></li><li><a href="Participant.html">Participant</a></li><li><a href="Permission.html">Permission</a></li><li><a href="Permissions.html">Permissions</a></li><li><a href="PsycholinguisticsApp.html">PsycholinguisticsApp</a></li><li><a href="ReportBot.html">ReportBot</a></li><li><a href="Response.html">Response</a></li><li><a href="Search.html">Search</a></li><li><a href="Session.html">Session</a></li><li><a href="Sessions.html">Sessions</a></li><li><a href="Speaker.html">Speaker</a></li><li><a href="Stimulus.html">Stimulus</a></li><li><a href="SubExperimentDataList.html">SubExperimentDataList</a></li><li><a href="Team.html">Team</a></li><li><a href="User.html">User</a></li><li><a href="UserApp.html">UserApp</a></li><li><a href="UserMask.html">UserMask</a></li><li><a href="UserPreference.html">UserPreference</a></li><li><a href="UserRouter.html">UserRouter</a></li><li>{String: Exercise}</li></ul><h3>Global</h3><ul><li><a href="global.html#baseSchema">baseSchema</a></li><li><a href="global.html#clone">clone</a></li><li><a href="global.html#CorpusConnection">CorpusConnection</a></li><li><a href="global.html#debugMode">debugMode</a></li><li><a href="global.html#find">find</a></li><li><a href="global.html#getSanitizedDotNotationKey">getSanitizedDotNotationKey</a></li><li><a href="global.html#newCorpusConnection">newCorpusConnection</a></li><li><a href="global.html#sanitizeStringForFileSystem">sanitizeStringForFileSystem</a></li><li><a href="global.html#sanitizeStringForPrimaryKey">sanitizeStringForPrimaryKey</a></li><li><a href="global.html#validateDbnameFormat">validateDbnameFormat</a></li></ul>
 </nav>
 
 <br clear="both">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.2</a> on Sun Feb 09 2014 10:49:22 GMT-0500 (EST)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.2</a> on Fri Dec 26 2014 09:41:34 GMT+0530 (GMT+05:30)
 </footer>
 
 <script> prettyPrint(); </script>

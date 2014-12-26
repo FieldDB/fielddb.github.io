@@ -26,29 +26,136 @@
     <section>
         <article>
             <pre class="prettyprint source"><code>define([
-    "backbone",
-    "permission/Permission"
+  "backbone",
+  "permission/Permission"
 ], function(
-    Backbone, 
-    Permission
+  Backbone,
+  Permission
 ) {
-    var Permissions = Backbone.Collection.extend(
+  var Permissions = Backbone.Collection.extend(
     /** @lends Permissions.prototype */
     {
-       /**
-        * @class A collection of Permissions 
-        *
-        * @extends Backbone.Collection
-        * @constructs
-        */
-       initialize: function() {
-       },
-       internalModels: Permission,
-       model: Permission
+      /**
+       * @class A collection of Permissions
+       *
+       * @extends Backbone.Collection
+       * @constructs
+       */
+      initialize: function() {},
+      internalModels: Permission,
+      model: Permission,
+
+      fetch: function(doneLoadingPermissions) {
+        if (!this.get("team")) {
+          //If app is completed loaded use the user, otherwise put a blank user
+          if (window.appView) {
+            this.set("team", window.app.get("authentication").get("userPublic"));
+            //          this.get("team").id = window.app.get("authentication").get("userPublic").id;
+          } else {
+            //          this.set("team", new UserMask({pouchname: this.get("pouchname")}));
+          }
+        }
+
+        var self = this;
+        // load the permissions in from the server.
+        window.app.get("authentication").fetchListOfUsersGroupedByPermissions(function(users) {
+          var typeaheadusers = [];
+          for (var userX in users.notonteam) {
+            if (users.notonteam[userX].username) {
+              typeaheadusers.push(users.notonteam[userX].username);
+            } else {
+              if (OPrime.debugMode) {
+                OPrime.debug("This user is invalid", users.notonteam[userX]);
+              }
+            }
+          }
+          typeaheadusers = JSON.stringify(typeaheadusers);
+          var potentialusers = users.allusers || [];
+
+          var admins = new Users();
+          self.add(new Permission({
+            users: admins,
+            role: "admin",
+            typeaheadusers: typeaheadusers,
+            potentialusers: potentialusers,
+            pouchname: self.get("pouchname")
+          }));
+
+          var writers = new Users();
+          self.add(new Permission({
+            users: writers,
+            role: "writer",
+            typeaheadusers: typeaheadusers,
+            potentialusers: potentialusers,
+            pouchname: self.get("pouchname")
+          }));
+
+          var readers = new Users();
+          self.add(new Permission({
+            users: readers,
+            role: "reader",
+            typeaheadusers: typeaheadusers,
+            potentialusers: potentialusers,
+            pouchname: self.get("pouchname")
+          }));
+
+          var u;
+          var user;
+          if (users.admins && users.admins.length > 0) {
+            for (u in users.admins) {
+              if (!users.admins[u].username) {
+                continue;
+              }
+              user = {
+                "username": users.admins[u].username
+              };
+              if (users.admins[u].gravatar) {
+                user.gravatar = users.admins[u].gravatar;
+              }
+              admins.models.push(new UserMask(user));
+            }
+          }
+          if (users.writers && users.writers.length > 0) {
+            for (u in users.writers) {
+              if (!users.writers[u].username) {
+                continue;
+              }
+              user = {
+                "username": users.writers[u].username
+              };
+              if (users.writers[u].gravatar) {
+                user.gravatar = users.writers[u].gravatar;
+              }
+              writers.models.push(new UserMask(user));
+            }
+          }
+          if (users.readers && users.readers.length > 0) {
+            for (u in users.readers) {
+              if (!users.readers[u].username) {
+                continue;
+              }
+              user = {
+                "username": users.readers[u].username
+              };
+              if (users.readers[u].gravatar) {
+                user.gravatar = users.readers[u].gravatar;
+              }
+              readers.models.push(new UserMask(user));
+            }
+          }
+          //Set up the typeahead for the permissions edit
+
+          if (typeof doneLoadingPermissions === "function") {
+            doneLoadingPermissions();
+          }
+        });
+      }
+
     });
-    
-    return Permissions;
-});</code></pre>
+
+  return Permissions;
+});
+</code></pre>
         </article>
     </section>
 
@@ -58,13 +165,13 @@
 </div>
 
 <nav>
-    <h2><a href="index.html">Index</a></h2><h3>Modules</h3><ul><li><a href="module-FieldDB.html">FieldDB</a></li></ul><h3>Classes</h3><ul><li><a href="Activity.html">Activity</a></li><li><a href="App.html">App</a></li><li><a href="AppRouter.html">AppRouter</a></li><li><a href="AudioVideo.html">AudioVideo</a></li><li><a href="Authentication.html">Authentication</a></li><li><a href="Comment.html">Comment</a></li><li><a href="Comments.html">Comments</a></li><li><a href="Confidential.html">Confidential</a></li><li><a href="Consultant.html">Consultant</a></li><li><a href="Consultants.html">Consultants</a></li><li><a href="Conversation.html">Conversation</a></li><li><a href="Conversations.html">Conversations</a></li><li><a href="Corpus.html">Corpus</a></li><li><a href="Corpuses.html">Corpuses</a></li><li><a href="CorpusMask.html">CorpusMask</a></li><li><a href="DataList.html">DataList</a></li><li><a href="DataLists.html">DataLists</a></li><li><a href="Datum.html">Datum</a></li><li><a href="DatumField.html">DatumField</a></li><li><a href="DatumFields.html">DatumFields</a></li><li><a href="Datums.html">Datums</a></li><li><a href="DatumState.html">DatumState</a></li><li><a href="DatumStates.html">DatumStates</a></li><li><a href="DatumTag.html">DatumTag</a></li><li><a href="Export.html">Export</a></li><li><a href="HotKey.html">HotKey</a></li><li><a href="HotKeys.html">HotKeys</a></li><li><a href="Import.html">Import</a></li><li><a href="InsertUnicode.html">InsertUnicode</a></li><li><a href="InsertUnicodes.html">InsertUnicodes</a></li><li><a href="Lexicon.html">Lexicon</a></li><li><a href="LexiconNode.html">LexiconNode</a></li><li><a href="LexiconNodes.html">LexiconNodes</a></li><li><a href="Permission.html">Permission</a></li><li><a href="Permissions.html">Permissions</a></li><li><a href="ReportBot.html">ReportBot</a></li><li><a href="Search.html">Search</a></li><li><a href="Session.html">Session</a></li><li><a href="Sessions.html">Sessions</a></li><li><a href="Team.html">Team</a></li><li><a href="User.html">User</a></li><li><a href="UserApp.html">UserApp</a></li><li><a href="UserMask.html">UserMask</a></li><li><a href="UserPreference.html">UserPreference</a></li><li><a href="UserRouter.html">UserRouter</a></li><li>{String: Exercise}</li></ul><h3>Global</h3><ul><li><a href="global.html#baseSchema">baseSchema</a></li><li><a href="global.html#CorpusConnection">CorpusConnection</a></li><li><a href="global.html#newCorpusConnection">newCorpusConnection</a></li><li><a href="global.html#validateDbnameFormat">validateDbnameFormat</a></li></ul>
+    <h2><a href="index.html">Index</a></h2><h3>Modules</h3><ul><li><a href="module-FieldDB.html">FieldDB</a></li></ul><h3>Classes</h3><ul><li><a href="Activities.html">Activities</a></li><li><a href="Activity.html">Activity</a></li><li><a href="App.html">App</a></li><li><a href="AppRouter.html">AppRouter</a></li><li><a href="AudioPlayer.html">AudioPlayer</a></li><li><a href="AudioVideo.html">AudioVideo</a></li><li><a href="AudioVideoRecorder.html">AudioVideoRecorder</a></li><li><a href="AudioVideos.html">AudioVideos</a></li><li><a href="Authentication.html">Authentication</a></li><li><a href="Collection.html">Collection</a></li><li><a href="Comment.html">Comment</a></li><li><a href="Comments.html">Comments</a></li><li><a href="Confidential.html">Confidential</a></li><li><a href="Consultant.html">Consultant</a></li><li><a href="Consultants.html">Consultants</a></li><li><a href="ContextualizableObject.html">ContextualizableObject</a></li><li><a href="Contextualizer.html">Contextualizer</a></li><li><a href="Conversation.html">Conversation</a></li><li><a href="Conversations.html">Conversations</a></li><li><a href="Corpus.html">Corpus</a></li><li><a href="Corpuses.html">Corpuses</a></li><li><a href="CorpusMask.html">CorpusMask</a></li><li><a href="DataList.html">DataList</a></li><li><a href="DataLists.html">DataLists</a></li><li><a href="dataURItoBlob.html">dataURItoBlob</a></li><li><a href="Datum.html">Datum</a></li><li><a href="DatumField.html">DatumField</a></li><li><a href="DatumFields.html">DatumFields</a></li><li><a href="Datums.html">Datums</a></li><li><a href="DatumState.html">DatumState</a></li><li><a href="DatumStates.html">DatumStates</a></li><li><a href="DatumTag.html">DatumTag</a></li><li><a href="DatumTags.html">DatumTags</a></li><li><a href="DocumentCollection.html">DocumentCollection</a></li><li><a href="ELanguages.html">ELanguages</a></li><li><a href="Export.html">Export</a></li><li><a href="FieldDBObject.html">FieldDBObject</a></li><li><a href="HotKey.html">HotKey</a></li><li><a href="HotKeys.html">HotKeys</a></li><li><a href="HTML5Audio.html">HTML5Audio</a></li><li><a href="Image.html">Image</a></li><li><a href="Images.html">Images</a></li><li><a href="InsertUnicode.html">InsertUnicode</a></li><li><a href="InsertUnicodes.html">InsertUnicodes</a></li><li><a href="Lexicon.html">Lexicon</a></li><li><a href="LexiconNode.html">LexiconNode</a></li><li><a href="LexiconNodes.html">LexiconNodes</a></li><li><a href="Participant.html">Participant</a></li><li><a href="Permission.html">Permission</a></li><li><a href="Permissions.html">Permissions</a></li><li><a href="PsycholinguisticsApp.html">PsycholinguisticsApp</a></li><li><a href="ReportBot.html">ReportBot</a></li><li><a href="Response.html">Response</a></li><li><a href="Search.html">Search</a></li><li><a href="Session.html">Session</a></li><li><a href="Sessions.html">Sessions</a></li><li><a href="Speaker.html">Speaker</a></li><li><a href="Stimulus.html">Stimulus</a></li><li><a href="SubExperimentDataList.html">SubExperimentDataList</a></li><li><a href="Team.html">Team</a></li><li><a href="User.html">User</a></li><li><a href="UserApp.html">UserApp</a></li><li><a href="UserMask.html">UserMask</a></li><li><a href="UserPreference.html">UserPreference</a></li><li><a href="UserRouter.html">UserRouter</a></li><li>{String: Exercise}</li></ul><h3>Global</h3><ul><li><a href="global.html#baseSchema">baseSchema</a></li><li><a href="global.html#clone">clone</a></li><li><a href="global.html#CorpusConnection">CorpusConnection</a></li><li><a href="global.html#debugMode">debugMode</a></li><li><a href="global.html#find">find</a></li><li><a href="global.html#getSanitizedDotNotationKey">getSanitizedDotNotationKey</a></li><li><a href="global.html#newCorpusConnection">newCorpusConnection</a></li><li><a href="global.html#sanitizeStringForFileSystem">sanitizeStringForFileSystem</a></li><li><a href="global.html#sanitizeStringForPrimaryKey">sanitizeStringForPrimaryKey</a></li><li><a href="global.html#validateDbnameFormat">validateDbnameFormat</a></li></ul>
 </nav>
 
 <br clear="both">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.2</a> on Sun Feb 09 2014 10:49:22 GMT-0500 (EST)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.2</a> on Fri Dec 26 2014 09:41:34 GMT+0530 (GMT+05:30)
 </footer>
 
 <script> prettyPrint(); </script>

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: FieldDB.js</title>
+    <title>JSDoc: Source: fielddb.js</title>
     
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">Source: FieldDB.js</h1>
+    <h1 class="page-title">Source: fielddb.js</h1>
     
     
 
@@ -32,15 +32,99 @@
  * @module          FieldDB
  * @tutorial        tests/FieldDBTest.js
  * @requires        Export
+ * @requires        FieldDBObject
+ * @requires        CORS
+ * @requires        UserMask
  */
-var Export = require("./export/Export");
-
 (function(exports) {
-	'use strict';
+  "use strict";
+  var App = require("./app/App").App;
+  var PsycholinguisticsApp = require("./app/PsycholinguisticsApp").PsycholinguisticsApp;
+  var Export = require("./export/Export");
+  var FieldDBObject = require("./FieldDBObject").FieldDBObject;
+  var Document = require("./datum/Document").Document;
+  var CORS = require("./CORS").CORS;
+  CORS.bug = FieldDBObject.prototype.bug;
+  var DataList = require("./data_list/DataList").DataList;
+  var SubExperimentDataList = require("./data_list/SubExperimentDataList").SubExperimentDataList;
+  var AudioVideo = require("./audio_video/AudioVideo").AudioVideo;
+  var AudioVideos = require("./audio_video/AudioVideos").AudioVideos;
+  var AudioVideoRecorder = require("./audio_video/AudioVideoRecorder").AudioVideoRecorder;
+  var Datum = require("./datum/Datum").Datum;
+  var Stimulus = require("./datum/Stimulus").Stimulus;
+  var Response = require("./datum/Response").Response;
+  var Database = require("./corpus/Database").Database;
+  var PsycholinguisticsDatabase = require("./corpus/PsycholinguisticsDatabase").PsycholinguisticsDatabase;
+  var FieldDBConnection = require("./FieldDBConnection").FieldDBConnection;
+  var Router = require("./Router").Router;
+  var User = require("./user/User").User;
+  var UserMask = require("./user/UserMask").UserMask;
+  var Team = require("./user/Team").Team;
+  var Speaker = require("./user/Speaker").Speaker;
+  var Consultant = require("./user/Consultant").Consultant;
+  var Participant = require("./user/Participant").Participant;
+  var Contextualizer = require("./locales/Contextualizer").Contextualizer;
+  var Corpus = require("./corpus/Corpus").Corpus;
+  var FieldDatabase = require("./corpus/Corpus").FieldDatabase;
+  var CorpusMask = require("./corpus/CorpusMask").CorpusMask;
+  var Import = require("./import/Import").Import;
+  var Search = require("./search/Search").Search;
+  var Q = require("q");
 
-	exports.Export = Export;
+  var FieldDB = {};
 
-}(typeof exports === 'object' && exports || this));
+  FieldDB.App = App;
+  FieldDB.PsycholinguisticsApp = PsycholinguisticsApp;
+  FieldDB.Export = Export;
+  FieldDB.FieldDBObject = FieldDBObject;
+  FieldDB.Document = Document;
+  FieldDB.CORS = CORS;
+  FieldDB.DataList = DataList;
+  FieldDB.SubExperimentDataList = SubExperimentDataList;
+  FieldDB.AudioVideo = AudioVideo;
+  FieldDB.AudioVideos = AudioVideos;
+  FieldDB.AudioVideoRecorder = AudioVideoRecorder;
+  FieldDB.Datum = Datum;
+  FieldDB.Stimulus = Stimulus;
+  FieldDB.Response = Response;
+  FieldDB.Database = Database;
+  FieldDB.FieldDatabase = FieldDatabase;
+  FieldDB.PsycholinguisticsDatabase = PsycholinguisticsDatabase;
+  FieldDB.Router = Router;
+  FieldDB.User = User;
+  FieldDB.UserMask = UserMask;
+  FieldDB.Team = Team;
+  FieldDB.Speaker = Speaker;
+  FieldDB.Consultant = Consultant;
+  FieldDB.Participant = Participant;
+  FieldDB.Contextualizer = Contextualizer;
+  FieldDB.Corpus = Corpus;
+  FieldDB.CorpusMask = CorpusMask;
+  FieldDB.Import = Import;
+  FieldDB.Search = Search;
+  FieldDB.Q = Q;
+  FieldDB.FieldDBConnection = FieldDBConnection;
+
+  exports.FieldDB = FieldDB;
+  global.FieldDB = FieldDB;
+
+  console.log("------------------------------------------------------------------------");
+  console.log("------------------------------------------------------------------------");
+  console.log("------------------------------------------------------------------------");
+  console.log("                     ___ _     _    _ ___  ___ ");
+  console.log("                    | __(_)___| |__| |   \\| _ )");
+  console.log("                    | _|| / -_) / _` | |) | _ \\");
+  console.log("                    |_| |_\\___|_\\__,_|___/|___/");
+  console.log("-----------------------------------------------loaded.------------------");
+  console.log("------------------------------------------------------------------------");
+  console.log("-----------------------Welcome to the power user console! Type----------");
+  console.log("--------------------------FieldDB.--------------------------------------");
+  console.log("------------------",new FieldDB.FieldDBObject().version);
+  // FieldDB["Response"] = Response;
+  console.log("---------------------------for available models/functionality-----------");
+  console.log("------------------------------------------------------------------------");
+  console.log("------------------------------------------------------------------------");
+}(typeof exports === "object" && exports || this));
 </code></pre>
         </article>
     </section>
@@ -51,13 +135,13 @@ var Export = require("./export/Export");
 </div>
 
 <nav>
-    <h2><a href="index.html">Index</a></h2><h3>Modules</h3><ul><li><a href="module-FieldDB.html">FieldDB</a></li></ul><h3>Classes</h3><ul><li><a href="Activity.html">Activity</a></li><li><a href="App.html">App</a></li><li><a href="AppRouter.html">AppRouter</a></li><li><a href="AudioVideo.html">AudioVideo</a></li><li><a href="Authentication.html">Authentication</a></li><li><a href="Comment.html">Comment</a></li><li><a href="Comments.html">Comments</a></li><li><a href="Confidential.html">Confidential</a></li><li><a href="Consultant.html">Consultant</a></li><li><a href="Consultants.html">Consultants</a></li><li><a href="Conversation.html">Conversation</a></li><li><a href="Conversations.html">Conversations</a></li><li><a href="Corpus.html">Corpus</a></li><li><a href="Corpuses.html">Corpuses</a></li><li><a href="CorpusMask.html">CorpusMask</a></li><li><a href="DataList.html">DataList</a></li><li><a href="DataLists.html">DataLists</a></li><li><a href="Datum.html">Datum</a></li><li><a href="DatumField.html">DatumField</a></li><li><a href="DatumFields.html">DatumFields</a></li><li><a href="Datums.html">Datums</a></li><li><a href="DatumState.html">DatumState</a></li><li><a href="DatumStates.html">DatumStates</a></li><li><a href="DatumTag.html">DatumTag</a></li><li><a href="Export.html">Export</a></li><li><a href="HotKey.html">HotKey</a></li><li><a href="HotKeys.html">HotKeys</a></li><li><a href="Import.html">Import</a></li><li><a href="InsertUnicode.html">InsertUnicode</a></li><li><a href="InsertUnicodes.html">InsertUnicodes</a></li><li><a href="Lexicon.html">Lexicon</a></li><li><a href="LexiconNode.html">LexiconNode</a></li><li><a href="LexiconNodes.html">LexiconNodes</a></li><li><a href="Permission.html">Permission</a></li><li><a href="Permissions.html">Permissions</a></li><li><a href="ReportBot.html">ReportBot</a></li><li><a href="Search.html">Search</a></li><li><a href="Session.html">Session</a></li><li><a href="Sessions.html">Sessions</a></li><li><a href="Team.html">Team</a></li><li><a href="User.html">User</a></li><li><a href="UserApp.html">UserApp</a></li><li><a href="UserMask.html">UserMask</a></li><li><a href="UserPreference.html">UserPreference</a></li><li><a href="UserRouter.html">UserRouter</a></li><li>{String: Exercise}</li></ul><h3>Global</h3><ul><li><a href="global.html#baseSchema">baseSchema</a></li><li><a href="global.html#CorpusConnection">CorpusConnection</a></li><li><a href="global.html#newCorpusConnection">newCorpusConnection</a></li><li><a href="global.html#validateDbnameFormat">validateDbnameFormat</a></li></ul>
+    <h2><a href="index.html">Index</a></h2><h3>Modules</h3><ul><li><a href="module-FieldDB.html">FieldDB</a></li></ul><h3>Classes</h3><ul><li><a href="Activities.html">Activities</a></li><li><a href="Activity.html">Activity</a></li><li><a href="App.html">App</a></li><li><a href="AppRouter.html">AppRouter</a></li><li><a href="AudioPlayer.html">AudioPlayer</a></li><li><a href="AudioVideo.html">AudioVideo</a></li><li><a href="AudioVideoRecorder.html">AudioVideoRecorder</a></li><li><a href="AudioVideos.html">AudioVideos</a></li><li><a href="Authentication.html">Authentication</a></li><li><a href="Collection.html">Collection</a></li><li><a href="Comment.html">Comment</a></li><li><a href="Comments.html">Comments</a></li><li><a href="Confidential.html">Confidential</a></li><li><a href="Consultant.html">Consultant</a></li><li><a href="Consultants.html">Consultants</a></li><li><a href="ContextualizableObject.html">ContextualizableObject</a></li><li><a href="Contextualizer.html">Contextualizer</a></li><li><a href="Conversation.html">Conversation</a></li><li><a href="Conversations.html">Conversations</a></li><li><a href="Corpus.html">Corpus</a></li><li><a href="Corpuses.html">Corpuses</a></li><li><a href="CorpusMask.html">CorpusMask</a></li><li><a href="DataList.html">DataList</a></li><li><a href="DataLists.html">DataLists</a></li><li><a href="dataURItoBlob.html">dataURItoBlob</a></li><li><a href="Datum.html">Datum</a></li><li><a href="DatumField.html">DatumField</a></li><li><a href="DatumFields.html">DatumFields</a></li><li><a href="Datums.html">Datums</a></li><li><a href="DatumState.html">DatumState</a></li><li><a href="DatumStates.html">DatumStates</a></li><li><a href="DatumTag.html">DatumTag</a></li><li><a href="DatumTags.html">DatumTags</a></li><li><a href="DocumentCollection.html">DocumentCollection</a></li><li><a href="ELanguages.html">ELanguages</a></li><li><a href="Export.html">Export</a></li><li><a href="FieldDBObject.html">FieldDBObject</a></li><li><a href="HotKey.html">HotKey</a></li><li><a href="HotKeys.html">HotKeys</a></li><li><a href="HTML5Audio.html">HTML5Audio</a></li><li><a href="Image.html">Image</a></li><li><a href="Images.html">Images</a></li><li><a href="InsertUnicode.html">InsertUnicode</a></li><li><a href="InsertUnicodes.html">InsertUnicodes</a></li><li><a href="Lexicon.html">Lexicon</a></li><li><a href="LexiconNode.html">LexiconNode</a></li><li><a href="LexiconNodes.html">LexiconNodes</a></li><li><a href="Participant.html">Participant</a></li><li><a href="Permission.html">Permission</a></li><li><a href="Permissions.html">Permissions</a></li><li><a href="PsycholinguisticsApp.html">PsycholinguisticsApp</a></li><li><a href="ReportBot.html">ReportBot</a></li><li><a href="Response.html">Response</a></li><li><a href="Search.html">Search</a></li><li><a href="Session.html">Session</a></li><li><a href="Sessions.html">Sessions</a></li><li><a href="Speaker.html">Speaker</a></li><li><a href="Stimulus.html">Stimulus</a></li><li><a href="SubExperimentDataList.html">SubExperimentDataList</a></li><li><a href="Team.html">Team</a></li><li><a href="User.html">User</a></li><li><a href="UserApp.html">UserApp</a></li><li><a href="UserMask.html">UserMask</a></li><li><a href="UserPreference.html">UserPreference</a></li><li><a href="UserRouter.html">UserRouter</a></li><li>{String: Exercise}</li></ul><h3>Global</h3><ul><li><a href="global.html#baseSchema">baseSchema</a></li><li><a href="global.html#clone">clone</a></li><li><a href="global.html#CorpusConnection">CorpusConnection</a></li><li><a href="global.html#debugMode">debugMode</a></li><li><a href="global.html#find">find</a></li><li><a href="global.html#getSanitizedDotNotationKey">getSanitizedDotNotationKey</a></li><li><a href="global.html#newCorpusConnection">newCorpusConnection</a></li><li><a href="global.html#sanitizeStringForFileSystem">sanitizeStringForFileSystem</a></li><li><a href="global.html#sanitizeStringForPrimaryKey">sanitizeStringForPrimaryKey</a></li><li><a href="global.html#validateDbnameFormat">validateDbnameFormat</a></li></ul>
 </nav>
 
 <br clear="both">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.2</a> on Sun Feb 09 2014 10:49:22 GMT-0500 (EST)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.2</a> on Fri Dec 26 2014 09:41:34 GMT+0530 (GMT+05:30)
 </footer>
 
 <script> prettyPrint(); </script>

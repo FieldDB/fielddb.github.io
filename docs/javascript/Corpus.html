@@ -218,7 +218,7 @@ regardless of how it is really stored on the disk.</div>
 	
         <tr>
             
-                <td class="name"><code>datumfields</code></td>
+                <td class="name"><code>datumFields</code></td>
             
             
             <td class="type">
@@ -404,10 +404,17 @@ regardless of how it is really stored on the disk.</div>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Corpus.js.html">corpus/Corpus.js</a>, <a href="Corpus.js.html#line53">line 53</a>
+        <a href="Corpus.js.html">corpus/Corpus.js</a>, <a href="Corpus.js.html#line60">line 60</a>
     </li></ul></dd>
     
     
+    
+    <dt class="tag-tutorial">Tutorials:</dt>
+    <dd class="tag-tutorial">
+        <ul>
+            <li><em class="disabled">Tutorial: tests/corpus/CorpusTest.js</em></li>
+        </ul>
+    </dd>
     
     
     
@@ -436,7 +443,7 @@ regardless of how it is really stored on the disk.</div>
         <h3 class="subsection-title">Extends</h3>
         
         <ul>
-            <li>Backbone.Model</li>
+            <li><a href="CorpusMask.html">CorpusMask</a></li>
         </ul>
     
     
@@ -454,7 +461,7 @@ regardless of how it is really stored on the disk.</div>
         <dl>
             
 <dt>
-    <h4 class="name" id="url"><span class="type-signature"></span>url<span class="type-signature"></span></h4>
+    <h4 class="name" id="api"><span class="type-signature"></span>api<span class="type-signature"></span></h4>
     
     
 </dt>
@@ -490,7 +497,7 @@ regardless of how it is really stored on the disk.</div>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Corpus.js.html">corpus/Corpus.js</a>, <a href="Corpus.js.html#line431">line 431</a>
+        <a href="Corpus.js.html">corpus/Corpus.js</a>, <a href="Corpus.js.html#line513">line 513</a>
     </li></ul></dd>
     
     
@@ -505,96 +512,24 @@ regardless of how it is really stored on the disk.</div>
     
 </dd>
 
-        </dl>
-    
-    
-    
-        <h3 class="subsection-title">Methods</h3>
         
-        <dl>
             
 <dt>
-    <h4 class="name" id="buildLexiconFromTeamServer"><span class="type-signature"></span>buildLexiconFromTeamServer<span class="signature">(pouchname, callback)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="buildLexiconFromTeamServer"><span class="type-signature"></span>buildLexiconFromTeamServer<span class="type-signature"></span></h4>
     
     
 </dt>
 <dd>
     
-    
     <div class="description">
-        This function takes in a pouchname, which could be different
+        This function takes in a dbname, which could be different
 from the current corpus incase there is a master corpus wiht
 more/better monolingual data.
     </div>
     
+    
+    
 
-    
-    
-    
-    
-    
-        <h5>Parameters:</h5>
-        
-
-<table class="params">
-    <thead>
-	<tr>
-		
-		<th>Name</th>
-		
-		
-		<th>Type</th>
-		
-		
-		
-		
-		
-		<th class="last">Description</th>
-	</tr>
-	</thead>
-	
-	<tbody>
-	
-	
-        <tr>
-            
-                <td class="name"><code>pouchname</code></td>
-            
-            
-            <td class="type">
-            
-            </td>
-            
-            
-            
-            
-            
-            <td class="description last"></td>
-        </tr>
-	
-	
-	
-        <tr>
-            
-                <td class="name"><code>callback</code></td>
-            
-            
-            <td class="type">
-            
-            </td>
-            
-            
-            
-            
-            
-            <td class="description last"></td>
-        </tr>
-	
-	
-	</tbody>
-</table>
-    
-    
     
 <dl class="details">
     
@@ -618,7 +553,7 @@ more/better monolingual data.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Corpus.js.html">corpus/Corpus.js</a>, <a href="Corpus.js.html#line1451">line 1451</a>
+        <a href="Corpus.js.html">corpus/Corpus.js</a>, <a href="Corpus.js.html#line1094">line 1094</a>
     </li></ul></dd>
     
     
@@ -631,102 +566,26 @@ more/better monolingual data.
 
     
     
-
-    
-
-    
-    
-    
-    
-    
-    
-    
 </dd>
 
         
             
 <dt>
-    <h4 class="name" id="buildMorphologicalAnalyzerFromTeamServer"><span class="type-signature"></span>buildMorphologicalAnalyzerFromTeamServer<span class="signature">(pouchname, callback)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="buildMorphologicalAnalyzerFromTeamServer"><span class="type-signature"></span>buildMorphologicalAnalyzerFromTeamServer<span class="type-signature"></span></h4>
     
     
 </dt>
 <dd>
     
-    
     <div class="description">
-        This function takes in a pouchname, which could be different
+        This function takes in a dbname, which could be different
 from the current corpus in case there is a master corpus with
 more/better monolingual data.
     </div>
     
+    
+    
 
-    
-    
-    
-    
-    
-        <h5>Parameters:</h5>
-        
-
-<table class="params">
-    <thead>
-	<tr>
-		
-		<th>Name</th>
-		
-		
-		<th>Type</th>
-		
-		
-		
-		
-		
-		<th class="last">Description</th>
-	</tr>
-	</thead>
-	
-	<tbody>
-	
-	
-        <tr>
-            
-                <td class="name"><code>pouchname</code></td>
-            
-            
-            <td class="type">
-            
-            </td>
-            
-            
-            
-            
-            
-            <td class="description last"></td>
-        </tr>
-	
-	
-	
-        <tr>
-            
-                <td class="name"><code>callback</code></td>
-            
-            
-            <td class="type">
-            
-            </td>
-            
-            
-            
-            
-            
-            <td class="description last"></td>
-        </tr>
-	
-	
-	</tbody>
-</table>
-    
-    
     
 <dl class="details">
     
@@ -750,7 +609,7 @@ more/better monolingual data.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Corpus.js.html">corpus/Corpus.js</a>, <a href="Corpus.js.html#line1434">line 1434</a>
+        <a href="Corpus.js.html">corpus/Corpus.js</a>, <a href="Corpus.js.html#line1078">line 1078</a>
     </li></ul></dd>
     
     
@@ -763,30 +622,19 @@ more/better monolingual data.
 
     
     
-
-    
-
-    
-    
-    
-    
-    
-    
-    
 </dd>
 
         
             
 <dt>
-    <h4 class="name" id="getFrequentDatumFields"><span class="type-signature"></span>getFrequentDatumFields<span class="signature">(pouchname, callback)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="getFrequentDatumFields"><span class="type-signature"></span>getFrequentDatumFields<span class="type-signature"></span></h4>
     
     
 </dt>
 <dd>
     
-    
     <div class="description">
-        This function takes in a pouchname, which could be different
+        This function takes in a dbname, which could be different
 from the current corpus incase there is a master corpus wiht
 more representative datum
 example : https://corpusdev.lingsync.org/lingllama-cherokee/_design/pages/_view/get_frequent_fields?group=true
@@ -796,74 +644,9 @@ It takes the values stored in the corpus, if set, otherwise it will take the val
 If a url is passed, it contacts the server for fresh info.
     </div>
     
+    
+    
 
-    
-    
-    
-    
-    
-        <h5>Parameters:</h5>
-        
-
-<table class="params">
-    <thead>
-	<tr>
-		
-		<th>Name</th>
-		
-		
-		<th>Type</th>
-		
-		
-		
-		
-		
-		<th class="last">Description</th>
-	</tr>
-	</thead>
-	
-	<tbody>
-	
-	
-        <tr>
-            
-                <td class="name"><code>pouchname</code></td>
-            
-            
-            <td class="type">
-            
-            </td>
-            
-            
-            
-            
-            
-            <td class="description last"></td>
-        </tr>
-	
-	
-	
-        <tr>
-            
-                <td class="name"><code>callback</code></td>
-            
-            
-            <td class="type">
-            
-            </td>
-            
-            
-            
-            
-            
-            <td class="description last"></td>
-        </tr>
-	
-	
-	</tbody>
-</table>
-    
-    
     
 <dl class="details">
     
@@ -887,7 +670,7 @@ If a url is passed, it contacts the server for fresh info.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Corpus.js.html">corpus/Corpus.js</a>, <a href="Corpus.js.html#line1474">line 1474</a>
+        <a href="Corpus.js.html">corpus/Corpus.js</a>, <a href="Corpus.js.html#line1116">line 1116</a>
     </li></ul></dd>
     
     
@@ -900,30 +683,19 @@ If a url is passed, it contacts the server for fresh info.
 
     
     
-
-    
-
-    
-    
-    
-    
-    
-    
-    
 </dd>
 
         
             
 <dt>
-    <h4 class="name" id="getFrequentDatumTags"><span class="type-signature"></span>getFrequentDatumTags<span class="signature">(pouchname, callback)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="getFrequentDatumTags"><span class="type-signature"></span>getFrequentDatumTags<span class="type-signature"></span></h4>
     
     
 </dt>
 <dd>
     
-    
     <div class="description">
-        This function takes in a pouchname, which could be different
+        This function takes in a dbname, which could be different
 from the current corpus incase there is a master corpus wiht
 more representative datum
 example : https://corpusdev.lingsync.org/lingllama-cherokee/_design/pages/_view/get_corpus_validationStati?group=true
@@ -933,74 +705,9 @@ It takes the values stored in the corpus, if set, otherwise it will take the val
 If a url is passed, it contacts the server for fresh info.
     </div>
     
+    
+    
 
-    
-    
-    
-    
-    
-        <h5>Parameters:</h5>
-        
-
-<table class="params">
-    <thead>
-	<tr>
-		
-		<th>Name</th>
-		
-		
-		<th>Type</th>
-		
-		
-		
-		
-		
-		<th class="last">Description</th>
-	</tr>
-	</thead>
-	
-	<tbody>
-	
-	
-        <tr>
-            
-                <td class="name"><code>pouchname</code></td>
-            
-            
-            <td class="type">
-            
-            </td>
-            
-            
-            
-            
-            
-            <td class="description last"></td>
-        </tr>
-	
-	
-	
-        <tr>
-            
-                <td class="name"><code>callback</code></td>
-            
-            
-            <td class="type">
-            
-            </td>
-            
-            
-            
-            
-            
-            <td class="description last"></td>
-        </tr>
-	
-	
-	</tbody>
-</table>
-    
-    
     
 <dl class="details">
     
@@ -1024,7 +731,7 @@ If a url is passed, it contacts the server for fresh info.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Corpus.js.html">corpus/Corpus.js</a>, <a href="Corpus.js.html#line1655">line 1655</a>
+        <a href="Corpus.js.html">corpus/Corpus.js</a>, <a href="Corpus.js.html#line1221">line 1221</a>
     </li></ul></dd>
     
     
@@ -1037,30 +744,19 @@ If a url is passed, it contacts the server for fresh info.
 
     
     
-
-    
-
-    
-    
-    
-    
-    
-    
-    
 </dd>
 
         
             
 <dt>
-    <h4 class="name" id="getFrequentDatumValidationStates"><span class="type-signature"></span>getFrequentDatumValidationStates<span class="signature">(pouchname, callback)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="getFrequentDatumValidationStates"><span class="type-signature"></span>getFrequentDatumValidationStates<span class="type-signature"></span></h4>
     
     
 </dt>
 <dd>
     
-    
     <div class="description">
-        This function takes in a pouchname, which could be different
+        This function takes in a dbname, which could be different
 from the current corpus incase there is a master corpus wiht
 more representative datum
 example : https://corpusdev.lingsync.org/lingllama-cherokee/_design/pages/_view/get_corpus_validationStati?group=true
@@ -1070,74 +766,9 @@ It takes the values stored in the corpus, if set, otherwise it will take the val
 If a url is passed, it contacts the server for fresh info.
     </div>
     
+    
+    
 
-    
-    
-    
-    
-    
-        <h5>Parameters:</h5>
-        
-
-<table class="params">
-    <thead>
-	<tr>
-		
-		<th>Name</th>
-		
-		
-		<th>Type</th>
-		
-		
-		
-		
-		
-		<th class="last">Description</th>
-	</tr>
-	</thead>
-	
-	<tbody>
-	
-	
-        <tr>
-            
-                <td class="name"><code>pouchname</code></td>
-            
-            
-            <td class="type">
-            
-            </td>
-            
-            
-            
-            
-            
-            <td class="description last"></td>
-        </tr>
-	
-	
-	
-        <tr>
-            
-                <td class="name"><code>callback</code></td>
-            
-            
-            <td class="type">
-            
-            </td>
-            
-            
-            
-            
-            
-            <td class="description last"></td>
-        </tr>
-	
-	
-	</tbody>
-</table>
-    
-    
     
 <dl class="details">
     
@@ -1161,7 +792,7 @@ If a url is passed, it contacts the server for fresh info.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Corpus.js.html">corpus/Corpus.js</a>, <a href="Corpus.js.html#line1577">line 1577</a>
+        <a href="Corpus.js.html">corpus/Corpus.js</a>, <a href="Corpus.js.html#line1135">line 1135</a>
     </li></ul></dd>
     
     
@@ -1174,14 +805,68 @@ If a url is passed, it contacts the server for fresh info.
 
     
     
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="glosser"><span class="type-signature"></span>glosser<span class="type-signature"> :FieldDBGlosser</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        DO NOT store in attributes when saving to pouch (too big)
+    </div>
+    
+    
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">FieldDBGlosser</span>
+
+
+            </li>
+        </ul>
+    
 
     
+<dl class="details">
+    
+        
+    
+    
+    
 
     
     
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="Corpus.js.html">corpus/Corpus.js</a>, <a href="Corpus.js.html#line799">line 799</a>
+    </li></ul></dd>
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
     
     
 </dd>
@@ -1189,12 +874,183 @@ If a url is passed, it contacts the server for fresh info.
         
             
 <dt>
-    <h4 class="name" id="putInTrash"><span class="type-signature"></span>putInTrash<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="newComment"><span class="type-signature"></span>newComment<span class="type-signature"> :Object</span></h4>
     
     
 </dt>
 <dd>
     
+    <div class="description">
+        This the function called by the add button, it adds a new comment state both to the collection and the model
+    </div>
+    
+    
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="Corpus.js.html">corpus/Corpus.js</a>, <a href="Corpus.js.html#line587">line 587</a>
+    </li></ul></dd>
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="newCorpus"><span class="type-signature"></span>newCorpus<span class="type-signature"></span></h4>
+    
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        Builds a new corpus based on this one (if this is not the team's practice corpus)
+    </div>
+    
+    
+    
+
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="Corpus.js.html">corpus/Corpus.js</a>, <a href="Corpus.js.html#line747">line 747</a>
+    </li></ul></dd>
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="newSession"><span class="type-signature"></span>newSession<span class="type-signature"></span></h4>
+    
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        Builds a new session in this corpus, copying the current session's fields (if available) or the corpus' session fields.
+    </div>
+    
+    
+    
+
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="Corpus.js.html">corpus/Corpus.js</a>, <a href="Corpus.js.html#line624">line 624</a>
+    </li></ul></dd>
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="putInTrash"><span class="type-signature"></span>putInTrash<span class="type-signature"></span></h4>
+    
+    
+</dt>
+<dd>
     
     <div class="description">
         Make the  model marked as Deleted, mapreduce function will
@@ -1205,13 +1061,9 @@ the trash.
 Also remove it from the view so the user cant see it.
     </div>
     
+    
+    
 
-    
-    
-    
-    
-    
-    
     
 <dl class="details">
     
@@ -1235,7 +1087,7 @@ Also remove it from the view so the user cant see it.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Corpus.js.html">corpus/Corpus.js</a>, <a href="Corpus.js.html#line581">line 581</a>
+        <a href="Corpus.js.html">corpus/Corpus.js</a>, <a href="Corpus.js.html#line571">line 571</a>
     </li></ul></dd>
     
     
@@ -1248,27 +1100,16 @@ Also remove it from the view so the user cant see it.
 
     
     
-
-    
-
-    
-    
-    
-    
-    
-    
-    
 </dd>
 
         
             
 <dt>
-    <h4 class="name" id="saveAndInterConnectInApp"><span class="type-signature"></span>saveAndInterConnectInApp<span class="signature">(successcallback, failurecallback)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="saveCorpus"><span class="type-signature"></span>saveCorpus<span class="type-signature"></span></h4>
     
     
 </dt>
 <dd>
-    
     
     <div class="description">
         Accepts two functions to call back when save is successful or
@@ -1280,74 +1121,9 @@ failure to the user.
 - Adds an activity to the logged in user with diff in what the user changed.
     </div>
     
+    
+    
 
-    
-    
-    
-    
-    
-        <h5>Parameters:</h5>
-        
-
-<table class="params">
-    <thead>
-	<tr>
-		
-		<th>Name</th>
-		
-		
-		<th>Type</th>
-		
-		
-		
-		
-		
-		<th class="last">Description</th>
-	</tr>
-	</thead>
-	
-	<tbody>
-	
-	
-        <tr>
-            
-                <td class="name"><code>successcallback</code></td>
-            
-            
-            <td class="type">
-            
-            </td>
-            
-            
-            
-            
-            
-            <td class="description last"></td>
-        </tr>
-	
-	
-	
-        <tr>
-            
-                <td class="name"><code>failurecallback</code></td>
-            
-            
-            <td class="type">
-            
-            </td>
-            
-            
-            
-            
-            
-            <td class="description last"></td>
-        </tr>
-	
-	
-	</tbody>
-</table>
-    
-    
     
 <dl class="details">
     
@@ -1371,7 +1147,7 @@ failure to the user.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Corpus.js.html">corpus/Corpus.js</a>, <a href="Corpus.js.html#line765">line 765</a>
+        <a href="Corpus.js.html">corpus/Corpus.js</a>, <a href="Corpus.js.html#line855">line 855</a>
     </li></ul></dd>
     
     
@@ -1384,173 +1160,24 @@ failure to the user.
 
     
     
-
-    
-
-    
-    
-    
-    
-    
-    
-    
 </dd>
 
         
             
 <dt>
-    <h4 class="name" id="setAsCurrentCorpus"><span class="type-signature"></span>setAsCurrentCorpus<span class="signature">(successcallback, failurecallback)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="validDBQueries"><span class="type-signature"></span>validDBQueries<span class="type-signature"></span></h4>
     
     
 </dt>
 <dd>
-    
-    
-    <div class="description">
-        Accepts two functions success will be called if successful,
-otherwise it will attempt to render the current corpus views. If
-the corpus isn't in the current corpus it will call the fail
-callback or it will alert a bug to the user. Override the fail
-callback if you don't want the alert.
-    </div>
-    
-
-    
-    
-    
-    
-    
-        <h5>Parameters:</h5>
-        
-
-<table class="params">
-    <thead>
-	<tr>
-		
-		<th>Name</th>
-		
-		
-		<th>Type</th>
-		
-		
-		
-		
-		
-		<th class="last">Description</th>
-	</tr>
-	</thead>
-	
-	<tbody>
-	
-	
-        <tr>
-            
-                <td class="name"><code>successcallback</code></td>
-            
-            
-            <td class="type">
-            
-            </td>
-            
-            
-            
-            
-            
-            <td class="description last"></td>
-        </tr>
-	
-	
-	
-        <tr>
-            
-                <td class="name"><code>failurecallback</code></td>
-            
-            
-            <td class="type">
-            
-            </td>
-            
-            
-            
-            
-            
-            <td class="description last"></td>
-        </tr>
-	
-	
-	</tbody>
-</table>
-    
-    
-    
-<dl class="details">
-    
-        
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Corpus.js.html">corpus/Corpus.js</a>, <a href="Corpus.js.html#line1368">line 1368</a>
-    </li></ul></dd>
-    
-    
-    
-    
-    
-    
-    
-</dl>
-
-    
-    
-
-    
-
-    
-    
-    
-    
-    
-    
-    
-</dd>
-
-        
-            
-<dt>
-    <h4 class="name" id="validCouchViews"><span class="type-signature"></span>validCouchViews<span class="signature">()</span><span class="type-signature"></span></h4>
-    
-    
-</dt>
-<dd>
-    
     
     <div class="description">
         If more views are added to corpora, add them here
     </div>
     
+    
+    
 
-    
-    
-    
-    
-    
-    
     
 <dl class="details">
     
@@ -1574,7 +1201,7 @@ callback if you don't want the alert.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Corpus.js.html">corpus/Corpus.js</a>, <a href="Corpus.js.html#line1241">line 1241</a>
+        <a href="Corpus.js.html">corpus/Corpus.js</a>, <a href="Corpus.js.html#line918">line 918</a>
     </li></ul></dd>
     
     
@@ -1587,30 +1214,11 @@ callback if you don't want the alert.
 
     
     
-
-    
-
-    
-    
-    
-    
-    
-    <h5>Returns:</h5>
-    
-            
-<div class="param-desc">
-    an object containing valid map reduce functions
-TODO: add conversation search to the get_datum_fields function
-</div>
-
-
-
-        
-    
-    
 </dd>
 
         </dl>
+    
+    
     
     
     
@@ -1626,13 +1234,13 @@ TODO: add conversation search to the get_datum_fields function
 </div>
 
 <nav>
-    <h2><a href="index.html">Index</a></h2><h3>Modules</h3><ul><li><a href="module-FieldDB.html">FieldDB</a></li></ul><h3>Classes</h3><ul><li><a href="Activity.html">Activity</a></li><li><a href="App.html">App</a></li><li><a href="AppRouter.html">AppRouter</a></li><li><a href="AudioVideo.html">AudioVideo</a></li><li><a href="Authentication.html">Authentication</a></li><li><a href="Comment.html">Comment</a></li><li><a href="Comments.html">Comments</a></li><li><a href="Confidential.html">Confidential</a></li><li><a href="Consultant.html">Consultant</a></li><li><a href="Consultants.html">Consultants</a></li><li><a href="Conversation.html">Conversation</a></li><li><a href="Conversations.html">Conversations</a></li><li><a href="Corpus.html">Corpus</a></li><li><a href="Corpuses.html">Corpuses</a></li><li><a href="CorpusMask.html">CorpusMask</a></li><li><a href="DataList.html">DataList</a></li><li><a href="DataLists.html">DataLists</a></li><li><a href="Datum.html">Datum</a></li><li><a href="DatumField.html">DatumField</a></li><li><a href="DatumFields.html">DatumFields</a></li><li><a href="Datums.html">Datums</a></li><li><a href="DatumState.html">DatumState</a></li><li><a href="DatumStates.html">DatumStates</a></li><li><a href="DatumTag.html">DatumTag</a></li><li><a href="Export.html">Export</a></li><li><a href="HotKey.html">HotKey</a></li><li><a href="HotKeys.html">HotKeys</a></li><li><a href="Import.html">Import</a></li><li><a href="InsertUnicode.html">InsertUnicode</a></li><li><a href="InsertUnicodes.html">InsertUnicodes</a></li><li><a href="Lexicon.html">Lexicon</a></li><li><a href="LexiconNode.html">LexiconNode</a></li><li><a href="LexiconNodes.html">LexiconNodes</a></li><li><a href="Permission.html">Permission</a></li><li><a href="Permissions.html">Permissions</a></li><li><a href="ReportBot.html">ReportBot</a></li><li><a href="Search.html">Search</a></li><li><a href="Session.html">Session</a></li><li><a href="Sessions.html">Sessions</a></li><li><a href="Team.html">Team</a></li><li><a href="User.html">User</a></li><li><a href="UserApp.html">UserApp</a></li><li><a href="UserMask.html">UserMask</a></li><li><a href="UserPreference.html">UserPreference</a></li><li><a href="UserRouter.html">UserRouter</a></li><li>{String: Exercise}</li></ul><h3>Global</h3><ul><li><a href="global.html#baseSchema">baseSchema</a></li><li><a href="global.html#CorpusConnection">CorpusConnection</a></li><li><a href="global.html#newCorpusConnection">newCorpusConnection</a></li><li><a href="global.html#validateDbnameFormat">validateDbnameFormat</a></li></ul>
+    <h2><a href="index.html">Index</a></h2><h3>Modules</h3><ul><li><a href="module-FieldDB.html">FieldDB</a></li></ul><h3>Classes</h3><ul><li><a href="Activities.html">Activities</a></li><li><a href="Activity.html">Activity</a></li><li><a href="App.html">App</a></li><li><a href="AppRouter.html">AppRouter</a></li><li><a href="AudioPlayer.html">AudioPlayer</a></li><li><a href="AudioVideo.html">AudioVideo</a></li><li><a href="AudioVideoRecorder.html">AudioVideoRecorder</a></li><li><a href="AudioVideos.html">AudioVideos</a></li><li><a href="Authentication.html">Authentication</a></li><li><a href="Collection.html">Collection</a></li><li><a href="Comment.html">Comment</a></li><li><a href="Comments.html">Comments</a></li><li><a href="Confidential.html">Confidential</a></li><li><a href="Consultant.html">Consultant</a></li><li><a href="Consultants.html">Consultants</a></li><li><a href="ContextualizableObject.html">ContextualizableObject</a></li><li><a href="Contextualizer.html">Contextualizer</a></li><li><a href="Conversation.html">Conversation</a></li><li><a href="Conversations.html">Conversations</a></li><li><a href="Corpus.html">Corpus</a></li><li><a href="Corpuses.html">Corpuses</a></li><li><a href="CorpusMask.html">CorpusMask</a></li><li><a href="DataList.html">DataList</a></li><li><a href="DataLists.html">DataLists</a></li><li><a href="dataURItoBlob.html">dataURItoBlob</a></li><li><a href="Datum.html">Datum</a></li><li><a href="DatumField.html">DatumField</a></li><li><a href="DatumFields.html">DatumFields</a></li><li><a href="Datums.html">Datums</a></li><li><a href="DatumState.html">DatumState</a></li><li><a href="DatumStates.html">DatumStates</a></li><li><a href="DatumTag.html">DatumTag</a></li><li><a href="DatumTags.html">DatumTags</a></li><li><a href="DocumentCollection.html">DocumentCollection</a></li><li><a href="ELanguages.html">ELanguages</a></li><li><a href="Export.html">Export</a></li><li><a href="FieldDBObject.html">FieldDBObject</a></li><li><a href="HotKey.html">HotKey</a></li><li><a href="HotKeys.html">HotKeys</a></li><li><a href="HTML5Audio.html">HTML5Audio</a></li><li><a href="Image.html">Image</a></li><li><a href="Images.html">Images</a></li><li><a href="InsertUnicode.html">InsertUnicode</a></li><li><a href="InsertUnicodes.html">InsertUnicodes</a></li><li><a href="Lexicon.html">Lexicon</a></li><li><a href="LexiconNode.html">LexiconNode</a></li><li><a href="LexiconNodes.html">LexiconNodes</a></li><li><a href="Participant.html">Participant</a></li><li><a href="Permission.html">Permission</a></li><li><a href="Permissions.html">Permissions</a></li><li><a href="PsycholinguisticsApp.html">PsycholinguisticsApp</a></li><li><a href="ReportBot.html">ReportBot</a></li><li><a href="Response.html">Response</a></li><li><a href="Search.html">Search</a></li><li><a href="Session.html">Session</a></li><li><a href="Sessions.html">Sessions</a></li><li><a href="Speaker.html">Speaker</a></li><li><a href="Stimulus.html">Stimulus</a></li><li><a href="SubExperimentDataList.html">SubExperimentDataList</a></li><li><a href="Team.html">Team</a></li><li><a href="User.html">User</a></li><li><a href="UserApp.html">UserApp</a></li><li><a href="UserMask.html">UserMask</a></li><li><a href="UserPreference.html">UserPreference</a></li><li><a href="UserRouter.html">UserRouter</a></li><li>{String: Exercise}</li></ul><h3>Global</h3><ul><li><a href="global.html#baseSchema">baseSchema</a></li><li><a href="global.html#clone">clone</a></li><li><a href="global.html#CorpusConnection">CorpusConnection</a></li><li><a href="global.html#debugMode">debugMode</a></li><li><a href="global.html#find">find</a></li><li><a href="global.html#getSanitizedDotNotationKey">getSanitizedDotNotationKey</a></li><li><a href="global.html#newCorpusConnection">newCorpusConnection</a></li><li><a href="global.html#sanitizeStringForFileSystem">sanitizeStringForFileSystem</a></li><li><a href="global.html#sanitizeStringForPrimaryKey">sanitizeStringForPrimaryKey</a></li><li><a href="global.html#validateDbnameFormat">validateDbnameFormat</a></li></ul>
 </nav>
 
 <br clear="both">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.2</a> on Sun Feb 09 2014 10:49:23 GMT-0500 (EST)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.2</a> on Fri Dec 26 2014 09:41:35 GMT+0530 (GMT+05:30)
 </footer>
 
 <script> prettyPrint(); </script>
