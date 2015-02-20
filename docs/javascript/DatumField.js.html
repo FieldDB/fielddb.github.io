@@ -37,7 +37,7 @@ var Confidential = require("./../confidentiality_encryption/Confidential").Confi
  *           text area. Some of them, such as the judgment one will be very
  *           short, while others context can be infinitely long.
  * @property label The label that is associated with the field, such as
- *           Utterance, Morphemes, etc.
+ *           Transcription, Morphemes, etc.
  * @property value This is what the user will enter when entering data into
  *           the data fields.
  * @property mask This allows users to mask fields for confidentiality.
@@ -48,9 +48,9 @@ var Confidential = require("./../confidentiality_encryption/Confidential").Confi
  * @constructs
  */
 var DatumField = function DatumField(options) {
-  if(!this._fieldDBtype){
-		this._fieldDBtype = "DatumField";
-	}
+  if (!this._fieldDBtype) {
+    this._fieldDBtype = "DatumField";
+  }
 
   this.debug("Constructing DatumField ", options);
   // Let encryptedValue and value from serialization be set
@@ -133,8 +133,16 @@ DatumField.prototype = Object.create(FieldDBObject.prototype, /** @lends DatumFi
     },
     set: function(value) {
       this.debug("label is deprecated, instead automatically contextualize a label for appropriate user eg labelFieldLinguists,  labelNonLinguists, labelTranslators, labelComputationalLinguist");
-      this.labelFieldLinguists = value;
-      this.id = value;
+      if (!this.labelFieldLinguists) {
+        if (value && value.length > 2) {
+          this.labelFieldLinguists = value[0].toUpperCase() + value.substring(1, value.length);
+        } else {
+          this.labelFieldLinguists = value;
+        }
+      }
+      if (!this.id) {
+        this.id = value;
+      }
     }
   },
 
@@ -393,14 +401,16 @@ DatumField.prototype = Object.create(FieldDBObject.prototype, /** @lends DatumFi
         return;
       }
       if (!value) {
-        var fieldCanBeDeleted = !this._shouldBeEncrypted || (this._shouldBeEncrypted && this.decryptedMode);
-        if (fieldCanBeDeleted) {
-          delete this._value;
-          delete this._mask;
-          delete this._encryptedValue;
+        var fieldCanBeEmptied = !this._shouldBeEncrypted || (this._shouldBeEncrypted && this.decryptedMode);
+        if (fieldCanBeEmptied) {
+          this._value = "";
+          this._mask = "";
+          this._encryptedValue = "";
           return;
         } else {
-          this.warn("The value was removed by the user, but they are not able to edit the field currently.");
+          if (this._value) {
+            this.warn("The value " + this._value + " of " + this.id + " was requested to be removed by the user, but they are not able to edit the field currently. No changes were made ");
+          }
           return;
         }
       }
@@ -527,7 +537,7 @@ DatumField.prototype = Object.create(FieldDBObject.prototype, /** @lends DatumFi
   help: {
     configurable: true,
     get: function() {
-      return this._help || "Put your team's data entry conventions here (if any)...";
+      return this._helpLinguists || this._help || "Put your team's data entry conventions here (if any)...";
     },
     set: function(value) {
       if (value === this._help) {
@@ -538,12 +548,15 @@ DatumField.prototype = Object.create(FieldDBObject.prototype, /** @lends DatumFi
         return;
       }
       this._help = value.trim();
+      if (!this.helpLinguists) {
+        this.helpLinguists = this._help;
+      }
     }
   },
 
   helpLinguists: {
     get: function() {
-      return this._helpLinguists || "Put your team's data entry conventions here (if any)...";
+      return this._helpLinguists || this.help;
     },
     set: function(value) {
       if (value === this._helpLinguists) {
@@ -559,7 +572,7 @@ DatumField.prototype = Object.create(FieldDBObject.prototype, /** @lends DatumFi
 
   helpNonLinguists: {
     get: function() {
-      return this._helpNonLinguists || "Put your team's data entry conventions here (if any)...";
+      return this._helpNonLinguists || this.help;
     },
     set: function(value) {
       if (value === this._helpNonLinguists) {
@@ -575,7 +588,7 @@ DatumField.prototype = Object.create(FieldDBObject.prototype, /** @lends DatumFi
 
   helpTranslators: {
     get: function() {
-      return this._helpTranslators || "Put your team's data entry conventions here (if any)...";
+      return this._helpTranslators || this.help;
     },
     set: function(value) {
       if (value === this._helpTranslators) {
@@ -591,7 +604,7 @@ DatumField.prototype = Object.create(FieldDBObject.prototype, /** @lends DatumFi
 
   helpComputationalLinguists: {
     get: function() {
-      return this._helpComputationalLinguists || "Put your team's data entry conventions here (if any)...";
+      return this._helpComputationalLinguists || this.help;
     },
     set: function(value) {
       if (value === this._helpComputationalLinguists) {
@@ -607,7 +620,7 @@ DatumField.prototype = Object.create(FieldDBObject.prototype, /** @lends DatumFi
 
   helpDevelopers: {
     get: function() {
-      return this._helpDevelopers || "Put your team's data entry conventions here (if any)...";
+      return this._helpDevelopers || this.help;
     },
     set: function(value) {
       if (value === this._helpDevelopers) {
@@ -840,13 +853,21 @@ DatumField.prototype = Object.create(FieldDBObject.prototype, /** @lends DatumFi
   toJSON: {
     value: function(includeEvenEmptyAttributes, removeEmptyAttributes) {
       this.debug("Customizing toJSON ", includeEvenEmptyAttributes, removeEmptyAttributes);
+      includeEvenEmptyAttributes = true;
       var json = FieldDBObject.prototype.toJSON.apply(this, arguments);
       delete json.dateCreated;
       delete json.dateModified;
       delete json.comments;
       delete json.dbname;
 
-      json.id = json._id;
+      // TODO eventually dont include the label and hint but now include it for backward compaitibilty
+      json.label = this.id;
+      json.hint = this.hint || "";
+
+      json.value = this.value || "";
+      json.mask = this.mask || "";
+
+      json.id = this.id;
       delete json._id;
 
       json.fieldDBtype = this.fieldDBtype;
@@ -876,7 +897,7 @@ exports.DatumField = DatumField;
 <br clear="both">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.2</a> on Fri Dec 26 2014 09:41:34 GMT+0530 (GMT+05:30)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.2</a> on Fri Feb 20 2015 15:29:49 GMT+0700 (WIT)
 </footer>
 
 <script> prettyPrint(); </script>

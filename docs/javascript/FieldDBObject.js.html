@@ -109,6 +109,9 @@ var FieldDBObject = function FieldDBObject(json) {
   if (!this._fieldDBtype) {
     this._fieldDBtype = "FieldDBObject";
   }
+  if (json && json.id) {
+    this.useIdNotUnderscore = true;
+  }
   this.verbose("In parent an json", json);
   // Set the confidential first, so the rest of the fields can be encrypted
   if (json && json.confidential && this.INTERNAL_MODELS["confidential"]) {
@@ -146,11 +149,6 @@ var FieldDBObject = function FieldDBObject(json) {
     this.dateCreated = Date.now();
   }
 
-  if (!this.render) {
-    this.render = function(options) {
-      this.warn("Rendering, but the render was not injected for this " + this.fieldDBtype, options);
-    };
-  }
 };
 
 FieldDBObject.software = {};
@@ -162,6 +160,10 @@ FieldDBObject.DEFAULT_ARRAY = [];
 FieldDBObject.DEFAULT_COLLECTION = [];
 FieldDBObject.DEFAULT_VERSION = "v" + package.version;
 FieldDBObject.DEFAULT_DATE = 0;
+
+FieldDBObject.render = function(options) {
+  this.warn("Rendering, but the render was not injected for this " + this.fieldDBtype, options);
+};
 
 FieldDBObject.bug = function(message) {
   try {
@@ -425,6 +427,14 @@ FieldDBObject.prototype = Object.create(Object.prototype, {
     }
   },
 
+  render: {
+    configurable: true,
+    value: function(options) {
+      this.debug("Calling render with options", options);
+      FieldDBObject.render.apply(this, arguments);
+    }
+  },
+
   save: {
     value: function(optionalUserWhoSaved) {
       var deferred = Q.defer(),
@@ -432,10 +442,16 @@ FieldDBObject.prototype = Object.create(Object.prototype, {
 
       if (this.fetching) {
         self.warn("Fetching is in process, can't save right now...");
+        Q.nextText(function() {
+          deferred.reject("Fetching is in process, can't save right now...");
+        });
         return;
       }
       if (this.saving) {
         self.warn("Save was already in process...");
+        Q.nextText(function() {
+          deferred.reject("Fetching is in process, can't save right now...");
+        });
         return;
       }
       this.saving = true;
@@ -515,6 +531,14 @@ FieldDBObject.prototype = Object.create(Object.prototype, {
       }
       // optionalUserWhoSaved.browser = browser;
 
+      var userWhoSaved = {
+        username: optionalUserWhoSaved.username,
+        name: optionalUserWhoSaved.name,
+        lastname: optionalUserWhoSaved.lastname,
+        firstname: optionalUserWhoSaved.firstname,
+        gravatar: optionalUserWhoSaved.gravatar
+      };
+
       if (!this._rev) {
         this._dateCreated = Date.now();
         var enteredByUser = this.enteredByUser || {};
@@ -523,9 +547,9 @@ FieldDBObject.prototype = Object.create(Object.prototype, {
         } else if (!this.enteredByUser) {
           this.enteredByUser = enteredByUser;
         }
-        enteredByUser.value = optionalUserWhoSaved.name || optionalUserWhoSaved.username;
+        enteredByUser.value = userWhoSaved.name || userWhoSaved.username;
         enteredByUser.json = enteredByUser.json || {};
-        enteredByUser.json.user = optionalUserWhoSaved;
+        enteredByUser.json.user = userWhoSaved;
         enteredByUser.json.software = FieldDBObject.software;
         try {
           enteredByUser.json.hardware = Android ? Android.deviceDetails : FieldDBObject.hardware;
@@ -553,16 +577,16 @@ FieldDBObject.prototype = Object.create(Object.prototype, {
         }
 
         modifiedByUser.value = modifiedByUser.value ? modifiedByUser.value + ", " : "";
-        modifiedByUser.value += optionalUserWhoSaved.name || optionalUserWhoSaved.username;
+        modifiedByUser.value += userWhoSaved.name || userWhoSaved.username;
         modifiedByUser.json = modifiedByUser.json || {};
         if (modifiedByUser.users) {
           modifiedByUser.json.users = modifiedByUser.users;
           delete modifiedByUser.users;
         }
         modifiedByUser.json.users = modifiedByUser.json.users || [];
-        optionalUserWhoSaved.software = FieldDBObject.software;
-        optionalUserWhoSaved.hardware = FieldDBObject.hardware;
-        modifiedByUser.json.users.push(optionalUserWhoSaved);
+        userWhoSaved.software = FieldDBObject.software;
+        userWhoSaved.hardware = FieldDBObject.hardware;
+        modifiedByUser.json.users.push(userWhoSaved);
       }
 
       if (FieldDBObject.software && FieldDBObject.software.location) {
@@ -1083,6 +1107,10 @@ FieldDBObject.prototype = Object.create(Object.prototype, {
       /* force id to be set if possible */
       // this.id = this.id;
 
+      if (this.useIdNotUnderscore) {
+        json.id = this.id;
+      }
+
       for (aproperty in this) {
         if (this.hasOwnProperty(aproperty) && typeof this[aproperty] !== "function") {
           underscorelessProperty = aproperty.replace(/^_/, "");
@@ -1115,6 +1143,10 @@ FieldDBObject.prototype = Object.create(Object.prototype, {
       if (!json._id) {
         delete json._id;
       }
+      if (this.useIdNotUnderscore) {
+        delete json._id;
+      }
+
       if (!json._rev) {
         delete json._rev;
       }
@@ -1126,6 +1158,7 @@ FieldDBObject.prototype = Object.create(Object.prototype, {
       delete json.saving;
       delete json.fetching;
       delete json.loaded;
+      delete json.useIdNotUnderscore;
       delete json.decryptedMode;
       delete json.bugMessage;
       delete json.warnMessage;
@@ -1133,7 +1166,7 @@ FieldDBObject.prototype = Object.create(Object.prototype, {
       delete json.perObjectAlwaysConfirmOkay;
       delete json.application;
       delete json.contextualizer;
-      if (this._collection !== "private_corpuses") {
+      if (this.collection !== "private_corpuses") {
         delete json.confidential;
         delete json.confidentialEncrypter;
       } else {
@@ -1186,6 +1219,10 @@ FieldDBObject.prototype = Object.create(Object.prototype, {
       var source = json._id;
       if (json._rev) {
         source = source + "?rev=" + json._rev;
+      } else {
+        if (this.parent && this.parent._rev) {
+          source = this.parent._id + "?rev=" + this.parent._rev;
+        }
       }
       relatedData.push({
         URI: source,
@@ -1195,6 +1232,7 @@ FieldDBObject.prototype = Object.create(Object.prototype, {
       /* Clear the current object's info which we shouldnt clone */
       delete json._id;
       delete json._rev;
+      delete json.parent;
 
       return json;
     }
@@ -1289,7 +1327,7 @@ exports.FieldDBObject = FieldDBObject;
 <br clear="both">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.2</a> on Fri Dec 26 2014 09:41:34 GMT+0530 (GMT+05:30)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.2</a> on Fri Feb 20 2015 15:29:49 GMT+0700 (WIT)
 </footer>
 
 <script> prettyPrint(); </script>
