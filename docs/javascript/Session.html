@@ -39,7 +39,7 @@
     Session
     </h2>
     
-        <div class="class-description">The Session widget is the place where information which is generally 
+        <div class="class-description">The Session widget is the place where information which is generally
 shared by many datum (due to being part of an elicitiation session)</div>
     
 </header>  
@@ -313,45 +313,45 @@ shared by many datum (due to being part of an elicitiation session)</div>
           the researcher was pursuing during that session.
 
  new DatumField({
-            label : "user",
-            shouldBeEncrypted: "",
-            userchooseable: "disabled"
-          }),
-          new DatumField({
-            label : "consultants",
-            shouldBeEncrypted: "",
-            userchooseable: "disabled"
-          }),
-          new DatumField({
-            label : "language",
-            shouldBeEncrypted: "",
-            userchooseable: "disabled",
-            help: "This is the langauge (or language family) if you would like to use it."
-          }),
-          new DatumField({
-            label : "dialect",
-            shouldBeEncrypted: "",
-            userchooseable: "disabled",
-            help: "You can use this field to be as precise as you would like about the dialect of this session."
-          }),
-          new DatumField({
-            label : "dateElicited",
-            shouldBeEncrypted: "",
-            userchooseable: "disabled",
-            help: "This is the date in which the session took place."
-          }),
-          new DatumField({
-            label : "dateSEntered",
-            shouldBeEncrypted: "",
-            userchooseable: "disabled",
-            help: "This is the date in which the session was entered."
-          }),
-          new DatumField({
-            label : "goal",
-            shouldBeEncrypted: "",
-            userchooseable: "disabled",
-            help: "This describes the goals of the session."
-          }),</td>
+        label : "user",
+        shouldBeEncrypted: "",
+        userchooseable: "disabled"
+      }),
+      new DatumField({
+        label : "consultants",
+        shouldBeEncrypted: "",
+        userchooseable: "disabled"
+      }),
+      new DatumField({
+        label : "language",
+        shouldBeEncrypted: "",
+        userchooseable: "disabled",
+        help: "This is the langauge (or language family) if you would like to use it."
+      }),
+      new DatumField({
+        label : "dialect",
+        shouldBeEncrypted: "",
+        userchooseable: "disabled",
+        help: "You can use this field to be as precise as you would like about the dialect of this session."
+      }),
+      new DatumField({
+        label : "dateElicited",
+        shouldBeEncrypted: "",
+        userchooseable: "disabled",
+        help: "This is the date in which the session took place."
+      }),
+      new DatumField({
+        label : "dateSEntered",
+        shouldBeEncrypted: "",
+        userchooseable: "disabled",
+        help: "This is the date in which the session was entered."
+      }),
+      new DatumField({
+        label : "goal",
+        shouldBeEncrypted: "",
+        userchooseable: "disabled",
+        help: "This describes the goals of the session."
+      }),</td>
         </tr>
 	
 	
@@ -379,7 +379,7 @@ shared by many datum (due to being part of an elicitiation session)</div>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Session.js.html">datum/Session.js</a>, <a href="Session.js.html#line94">line 94</a>
+        <a href="Session.js.html">datum/Session.js</a>, <a href="Session.js.html#line7">line 7</a>
     </li></ul></dd>
     
     
@@ -411,7 +411,7 @@ shared by many datum (due to being part of an elicitiation session)</div>
         <h3 class="subsection-title">Extends</h3>
         
         <ul>
-            <li>Backbone.Model</li>
+            <li><a href="FieldDBObject.html">FieldDBObject</a></li>
         </ul>
     
     
@@ -429,146 +429,11 @@ shared by many datum (due to being part of an elicitiation session)</div>
         <dl>
             
 <dt>
-    <h4 class="name" id="url"><span class="type-signature"></span>url<span class="type-signature"></span></h4>
+    <h4 class="name" id="saveAndInterConnectInApp"><span class="type-signature"></span>saveAndInterConnectInApp<span class="type-signature"></span></h4>
     
     
 </dt>
 <dd>
-    
-    <div class="description">
-        backbone-couchdb adaptor set up
-    </div>
-    
-    
-    
-
-    
-<dl class="details">
-    
-        
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Session.js.html">datum/Session.js</a>, <a href="Session.js.html#line143">line 143</a>
-    </li></ul></dd>
-    
-    
-    
-    
-    
-    
-    
-</dl>
-
-    
-    
-</dd>
-
-        </dl>
-    
-    
-    
-        <h3 class="subsection-title">Methods</h3>
-        
-        <dl>
-            
-<dt>
-    <h4 class="name" id="putInTrash"><span class="type-signature"></span>putInTrash<span class="signature">()</span><span class="type-signature"></span></h4>
-    
-    
-</dt>
-<dd>
-    
-    
-    <div class="description">
-        Make the  model marked as Deleted, mapreduce function will 
-ignore the deleted models so that it does not show in the app, 
-but deleted model remains in the database until the admin empties 
-the trash.
-
-Also remove it from the view so the user cant see it.
-    </div>
-    
-
-    
-    
-    
-    
-    
-    
-    
-<dl class="details">
-    
-        
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Session.js.html">datum/Session.js</a>, <a href="Session.js.html#line194">line 194</a>
-    </li></ul></dd>
-    
-    
-    
-    
-    
-    
-    
-</dl>
-
-    
-    
-
-    
-
-    
-    
-    
-    
-    
-    
-    
-</dd>
-
-        
-            
-<dt>
-    <h4 class="name" id="saveAndInterConnectInApp"><span class="type-signature"></span>saveAndInterConnectInApp<span class="signature">(successcallback, failurecallback)</span><span class="type-signature"></span></h4>
-    
-    
-</dt>
-<dd>
-    
     
     <div class="description">
         Accepts two functions to call back when save is successful or
@@ -580,74 +445,9 @@ failure to the user.
 - Adds an activity to the logged in user with diff in what the user changed.
     </div>
     
+    
+    
 
-    
-    
-    
-    
-    
-        <h5>Parameters:</h5>
-        
-
-<table class="params">
-    <thead>
-	<tr>
-		
-		<th>Name</th>
-		
-		
-		<th>Type</th>
-		
-		
-		
-		
-		
-		<th class="last">Description</th>
-	</tr>
-	</thead>
-	
-	<tbody>
-	
-	
-        <tr>
-            
-                <td class="name"><code>successcallback</code></td>
-            
-            
-            <td class="type">
-            
-            </td>
-            
-            
-            
-            
-            
-            <td class="description last"></td>
-        </tr>
-	
-	
-	
-        <tr>
-            
-                <td class="name"><code>failurecallback</code></td>
-            
-            
-            <td class="type">
-            
-            </td>
-            
-            
-            
-            
-            
-            <td class="description last"></td>
-        </tr>
-	
-	
-	</tbody>
-</table>
-    
-    
     
 <dl class="details">
     
@@ -671,7 +471,7 @@ failure to the user.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Session.js.html">datum/Session.js</a>, <a href="Session.js.html#line233">line 233</a>
+        <a href="Session.js.html">datum/Session.js</a>, <a href="Session.js.html#line736">line 736</a>
     </li></ul></dd>
     
     
@@ -684,27 +484,16 @@ failure to the user.
 
     
     
-
-    
-
-    
-    
-    
-    
-    
-    
-    
 </dd>
 
         
             
 <dt>
-    <h4 class="name" id="setAsCurrentSession"><span class="type-signature"></span>setAsCurrentSession<span class="signature">(successcallback, failurecallback)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="setAsCurrentSession"><span class="type-signature"></span>setAsCurrentSession<span class="type-signature"></span></h4>
     
     
 </dt>
 <dd>
-    
     
     <div class="description">
         Accepts two functions success will be called if sucessfull,
@@ -714,74 +503,9 @@ callback or it will alert a bug to the user. Override the fail
 callback if you don't want the alert.
     </div>
     
+    
+    
 
-    
-    
-    
-    
-    
-        <h5>Parameters:</h5>
-        
-
-<table class="params">
-    <thead>
-	<tr>
-		
-		<th>Name</th>
-		
-		
-		<th>Type</th>
-		
-		
-		
-		
-		
-		<th class="last">Description</th>
-	</tr>
-	</thead>
-	
-	<tbody>
-	
-	
-        <tr>
-            
-                <td class="name"><code>successcallback</code></td>
-            
-            
-            <td class="type">
-            
-            </td>
-            
-            
-            
-            
-            
-            <td class="description last"></td>
-        </tr>
-	
-	
-	
-        <tr>
-            
-                <td class="name"><code>failurecallback</code></td>
-            
-            
-            <td class="type">
-            
-            </td>
-            
-            
-            
-            
-            
-            <td class="description last"></td>
-        </tr>
-	
-	
-	</tbody>
-</table>
-    
-    
     
 <dl class="details">
     
@@ -805,7 +529,7 @@ callback if you don't want the alert.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Session.js.html">datum/Session.js</a>, <a href="Session.js.html#line338">line 338</a>
+        <a href="Session.js.html">datum/Session.js</a>, <a href="Session.js.html#line843">line 843</a>
     </li></ul></dd>
     
     
@@ -816,163 +540,13 @@ callback if you don't want the alert.
     
 </dl>
 
-    
-    
-
-    
-
-    
-    
-    
-    
-    
-    
-    
-</dd>
-
-        
-            
-<dt>
-    <h4 class="name" id="validate"><span class="type-signature"></span>validate<span class="signature">(attributes)</span><span class="type-signature"> &rarr; {String}</span></h4>
-    
-    
-</dt>
-<dd>
-    
-    
-    <div class="description">
-        Validation functions will verify that the session ID is unique and
-that the consultant,users, and teams are all correspond to people in
-the system.
-    </div>
-    
-
-    
-    
-    
-    
-    
-        <h5>Parameters:</h5>
-        
-
-<table class="params">
-    <thead>
-	<tr>
-		
-		<th>Name</th>
-		
-		
-		<th>Type</th>
-		
-		
-		
-		
-		
-		<th class="last">Description</th>
-	</tr>
-	</thead>
-	
-	<tbody>
-	
-	
-        <tr>
-            
-                <td class="name"><code>attributes</code></td>
-            
-            
-            <td class="type">
-            
-                
-<span class="param-type">Object</span>
-
-
-            
-            </td>
-            
-            
-            
-            
-            
-            <td class="description last">The set of attributes to validate.</td>
-        </tr>
-	
-	
-	</tbody>
-</table>
-    
-    
-    
-<dl class="details">
-    
-        
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Session.js.html">datum/Session.js</a>, <a href="Session.js.html#line384">line 384</a>
-    </li></ul></dd>
-    
-    
-    
-    
-    
-    
-    
-</dl>
-
-    
-    
-
-    
-
-    
-    
-    
-    
-    
-    <h5>Returns:</h5>
-    
-            
-<div class="param-desc">
-    The validation error, if there is one. Otherwise,
-         doesn't return anything.
-</div>
-
-
-
-<dl>
-	<dt>
-		Type
-	</dt>
-	<dd>
-		
-<span class="param-type">String</span>
-
-
-	</dd>
-</dl>
-
-        
     
     
 </dd>
 
         </dl>
+    
+    
     
     
     
@@ -988,13 +562,13 @@ the system.
 </div>
 
 <nav>
-    <h2><a href="index.html">Index</a></h2><h3>Modules</h3><ul><li><a href="module-FieldDB.html">FieldDB</a></li></ul><h3>Classes</h3><ul><li><a href="Activities.html">Activities</a></li><li><a href="Activity.html">Activity</a></li><li><a href="App.html">App</a></li><li><a href="AppRouter.html">AppRouter</a></li><li><a href="AudioPlayer.html">AudioPlayer</a></li><li><a href="AudioVideo.html">AudioVideo</a></li><li><a href="AudioVideoRecorder.html">AudioVideoRecorder</a></li><li><a href="AudioVideos.html">AudioVideos</a></li><li><a href="Authentication.html">Authentication</a></li><li><a href="Collection.html">Collection</a></li><li><a href="Comment.html">Comment</a></li><li><a href="Comments.html">Comments</a></li><li><a href="Confidential.html">Confidential</a></li><li><a href="Consultant.html">Consultant</a></li><li><a href="Consultants.html">Consultants</a></li><li><a href="ContextualizableObject.html">ContextualizableObject</a></li><li><a href="Contextualizer.html">Contextualizer</a></li><li><a href="Conversation.html">Conversation</a></li><li><a href="Conversations.html">Conversations</a></li><li><a href="Corpus.html">Corpus</a></li><li><a href="Corpuses.html">Corpuses</a></li><li><a href="CorpusMask.html">CorpusMask</a></li><li><a href="DataList.html">DataList</a></li><li><a href="DataLists.html">DataLists</a></li><li><a href="dataURItoBlob.html">dataURItoBlob</a></li><li><a href="Datum.html">Datum</a></li><li><a href="DatumField.html">DatumField</a></li><li><a href="DatumFields.html">DatumFields</a></li><li><a href="Datums.html">Datums</a></li><li><a href="DatumState.html">DatumState</a></li><li><a href="DatumStates.html">DatumStates</a></li><li><a href="DatumTag.html">DatumTag</a></li><li><a href="DatumTags.html">DatumTags</a></li><li><a href="DocumentCollection.html">DocumentCollection</a></li><li><a href="ELanguages.html">ELanguages</a></li><li><a href="Export.html">Export</a></li><li><a href="FieldDBObject.html">FieldDBObject</a></li><li><a href="HotKey.html">HotKey</a></li><li><a href="HotKeys.html">HotKeys</a></li><li><a href="HTML5Audio.html">HTML5Audio</a></li><li><a href="Image.html">Image</a></li><li><a href="Images.html">Images</a></li><li><a href="InsertUnicode.html">InsertUnicode</a></li><li><a href="InsertUnicodes.html">InsertUnicodes</a></li><li><a href="Lexicon.html">Lexicon</a></li><li><a href="LexiconNode.html">LexiconNode</a></li><li><a href="LexiconNodes.html">LexiconNodes</a></li><li><a href="Participant.html">Participant</a></li><li><a href="Permission.html">Permission</a></li><li><a href="Permissions.html">Permissions</a></li><li><a href="PsycholinguisticsApp.html">PsycholinguisticsApp</a></li><li><a href="ReportBot.html">ReportBot</a></li><li><a href="Response.html">Response</a></li><li><a href="Search.html">Search</a></li><li><a href="Session.html">Session</a></li><li><a href="Sessions.html">Sessions</a></li><li><a href="Speaker.html">Speaker</a></li><li><a href="Stimulus.html">Stimulus</a></li><li><a href="SubExperimentDataList.html">SubExperimentDataList</a></li><li><a href="Team.html">Team</a></li><li><a href="User.html">User</a></li><li><a href="UserApp.html">UserApp</a></li><li><a href="UserMask.html">UserMask</a></li><li><a href="UserPreference.html">UserPreference</a></li><li><a href="UserRouter.html">UserRouter</a></li><li>{String: Exercise}</li></ul><h3>Global</h3><ul><li><a href="global.html#baseSchema">baseSchema</a></li><li><a href="global.html#clone">clone</a></li><li><a href="global.html#CorpusConnection">CorpusConnection</a></li><li><a href="global.html#debugMode">debugMode</a></li><li><a href="global.html#find">find</a></li><li><a href="global.html#getSanitizedDotNotationKey">getSanitizedDotNotationKey</a></li><li><a href="global.html#newCorpusConnection">newCorpusConnection</a></li><li><a href="global.html#sanitizeStringForFileSystem">sanitizeStringForFileSystem</a></li><li><a href="global.html#sanitizeStringForPrimaryKey">sanitizeStringForPrimaryKey</a></li><li><a href="global.html#validateDbnameFormat">validateDbnameFormat</a></li></ul>
+    <h2><a href="index.html">Index</a></h2><h3>Modules</h3><ul><li><a href="module-FieldDB.html">FieldDB</a></li></ul><h3>Classes</h3><ul><li><a href="Activities.html">Activities</a></li><li><a href="Activity.html">Activity</a></li><li><a href="App.html">App</a></li><li><a href="AppRouter.html">AppRouter</a></li><li><a href="AudioPlayer.html">AudioPlayer</a></li><li><a href="AudioVideo.html">AudioVideo</a></li><li><a href="AudioVideoRecorder.html">AudioVideoRecorder</a></li><li><a href="AudioVideos.html">AudioVideos</a></li><li><a href="Authentication.html">Authentication</a></li><li><a href="Collection.html">Collection</a></li><li><a href="Comment.html">Comment</a></li><li><a href="Comments.html">Comments</a></li><li><a href="Confidential.html">Confidential</a></li><li><a href="Connection.html">Connection</a></li><li><a href="Consultant.html">Consultant</a></li><li><a href="Consultants.html">Consultants</a></li><li><a href="ContextualizableObject.html">ContextualizableObject</a></li><li><a href="Contextualizer.html">Contextualizer</a></li><li><a href="Conversation.html">Conversation</a></li><li><a href="Conversations.html">Conversations</a></li><li><a href="Corpus.html">Corpus</a></li><li><a href="CorpusMask.html">CorpusMask</a></li><li><a href="DataList.html">DataList</a></li><li><a href="DataLists.html">DataLists</a></li><li><a href="dataURItoBlob.html">dataURItoBlob</a></li><li><a href="Datum.html">Datum</a></li><li><a href="DatumField.html">DatumField</a></li><li><a href="DatumFields.html">DatumFields</a></li><li><a href="Datums.html">Datums</a></li><li><a href="DatumState.html">DatumState</a></li><li><a href="DatumStates.html">DatumStates</a></li><li><a href="DatumTag.html">DatumTag</a></li><li><a href="DatumTags.html">DatumTags</a></li><li><a href="DocumentCollection.html">DocumentCollection</a></li><li><a href="ELanguages.html">ELanguages</a></li><li><a href="ExperimentDataList.html">ExperimentDataList</a></li><li><a href="Export.html">Export</a></li><li><a href="FieldDBObject.html">FieldDBObject</a></li><li><a href="HotKey.html">HotKey</a></li><li><a href="HotKeys.html">HotKeys</a></li><li><a href="HTML5Audio.html">HTML5Audio</a></li><li><a href="Image.html">Image</a></li><li><a href="Images.html">Images</a></li><li><a href="LexiconNodes.html">LexiconNodes</a></li><li><a href="Participant.html">Participant</a></li><li><a href="Permission.html">Permission</a></li><li><a href="Permissions.html">Permissions</a></li><li><a href="PsycholinguisticsApp.html">PsycholinguisticsApp</a></li><li><a href="ReportBot.html">ReportBot</a></li><li><a href="Response.html">Response</a></li><li><a href="Search.html">Search</a></li><li><a href="Session.html">Session</a></li><li><a href="Sessions.html">Sessions</a></li><li><a href="Speaker.html">Speaker</a></li><li><a href="Stimulus.html">Stimulus</a></li><li><a href="SubExperimentDataList.html">SubExperimentDataList</a></li><li><a href="Team.html">Team</a></li><li><a href="UnicodeSymbol.html">UnicodeSymbol</a></li><li><a href="UnicodeSymbols.html">UnicodeSymbols</a></li><li><a href="User.html">User</a></li><li><a href="UserApp.html">UserApp</a></li><li><a href="UserMask.html">UserMask</a></li><li><a href="UserPreference.html">UserPreference</a></li><li><a href="UserRouter.html">UserRouter</a></li><li><a href="Users.html">Users</a></li><li>{String: Exercise}</li></ul><h3>Global</h3><ul><li><a href="global.html#add">add</a></li><li><a href="global.html#clone">clone</a></li><li><a href="global.html#debugMode">debugMode</a></li><li><a href="global.html#find">find</a></li><li><a href="global.html#getMD5ForFile">getMD5ForFile</a></li><li><a href="global.html#getSanitizedDotNotationKey">getSanitizedDotNotationKey</a></li><li><a href="global.html#sanitizeStringForFileSystem">sanitizeStringForFileSystem</a></li><li><a href="global.html#sanitizeStringForPrimaryKey">sanitizeStringForPrimaryKey</a></li><li><a href="global.html#showDiffs">showDiffs</a></li></ul>
 </nav>
 
 <br clear="both">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.2</a> on Fri Feb 20 2015 15:29:51 GMT+0700 (WIT)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.2</a> on Mon Jul 20 2015 11:06:04 GMT-0400 (EDT)
 </footer>
 
 <script> prettyPrint(); </script>

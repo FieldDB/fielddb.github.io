@@ -47,7 +47,9 @@ var DatumStates = require("./DatumStates").DatumStates;
 // var DatumTag = require("./../FieldDBObject").FieldDBObject;
 var DatumTags = require("./DatumTags").DatumTags;
 var Images = require("./../image/Images").Images;
-var Session = require("./../FieldDBObject").FieldDBObject;
+var Session = require("./Session").Session;
+
+var DEFAULT_CORPUS_MODEL = require("./../corpus/corpus.json");
 
 /**
  * @class The Datum widget is the place where all linguistic data is
@@ -107,23 +109,92 @@ Datum.prototype = Object.create(FieldDBObject.prototype, /** @lends Datum.protot
     value: Datum
   },
 
-  fields: {
+  orthography: {
+    configurable: true,
     get: function() {
-      return this._fields || FieldDBObject.DEFAULT_COLLECTION;
+      if (this.fields && this.fields.orthography) {
+        return this.fields.orthography.value;
+      } else {
+        return FieldDBObject.DEFAULT_STRING;
+      }
     },
     set: function(value) {
-      if (value === this._fields) {
-        return;
-      }
-      if (!value) {
-        delete this._fields;
-        return;
+      if (this.fields && this.fields.orthography) {
+        // this.fields.debugMode = true;
       } else {
-        if (Object.prototype.toString.call(value) === "[object Array]" && typeof this.INTERNAL_MODELS["fields"] === "function") {
-          value = new this.INTERNAL_MODELS["fields"](value);
-        }
+        return;
       }
-      this._fields = value;
+      this.fields.orthography.value = value;
+    }
+  },
+
+  utterance: {
+    configurable: true,
+    get: function() {
+      if (this.fields && this.fields.utterance) {
+        return this.fields.utterance.value;
+      } else {
+        return FieldDBObject.DEFAULT_STRING;
+      }
+    },
+    set: function(value) {
+      if (this.fields && this.fields.utterance) {
+        // this.fields.debugMode = true;
+      } else {
+        return;
+      }
+      this.fields.utterance.value = value;
+    }
+  },
+
+  morphemes: {
+    configurable: true,
+    get: function() {
+      if (this.fields && this.fields.morphemes) {
+        return this.fields.morphemes.value;
+      } else {
+        return FieldDBObject.DEFAULT_STRING;
+      }
+    },
+    set: function(value) {
+      if (this.fields && this.fields.morphemes) {
+        // this.fields.debugMode = true;
+      } else {
+        return;
+      }
+      this.fields.morphemes.value = value;
+    }
+  },
+
+  gloss: {
+    configurable: true,
+    get: function() {
+      if (this.fields && this.fields.gloss) {
+        return this.fields.gloss.value;
+      } else {
+        return FieldDBObject.DEFAULT_STRING;
+      }
+    },
+    set: function(value) {
+      if (this.fields && this.fields.gloss) {
+        // this.fields.debugMode = true;
+      } else {
+        return;
+      }
+      this.fields.gloss.value = value;
+    }
+  },
+
+  fields: {
+    get: function() {
+      this.debug("getting fields");
+      return this._fields;
+    },
+    set: function(value) {
+      if (value && !value.confidential && this.confidential) {
+        value.confidential = this.confidential;
+      }
+      this.ensureSetViaAppropriateType("fields", value);
     }
   },
 
@@ -138,18 +209,143 @@ Datum.prototype = Object.create(FieldDBObject.prototype, /** @lends Datum.protot
     }
   },
 
+  accessAsObject: {
+    get: function() {
+      var obj = {};
+
+      var passValueReference = function(field) {
+        obj[field.id] = field.value;
+      };
+
+      this.fields.map(passValueReference);
+      if (this.session) {
+        this.session.fields.map(passValueReference);
+      } else {
+        this.warn("this datum is missing a session, this is stange");
+      }
+
+      obj.comments = this.comments.map(function(comment) {
+        return comment.text;
+      }).join("; ");
+      obj.audioVideo = this.audioVideo.map(function(audioVideo) {
+        return audioVideo.filename;
+      }).join("; ");
+      obj.images = this.images.map(function(image) {
+        return image.filename;
+      }).join("; ");
+      return obj;
+    },
+    set: function() {}
+  },
+
+  igt: {
+    get: function() {
+      var igtLines = {},
+        parallelText = {},
+        tuples = [],
+        feederWord,
+        fullWord,
+        lengthOfLongestIGTLineInWords,
+        igtLine,
+        cellIndex,
+        tuple;
+
+      var punctuationToRemove = /[#?!,\/\(\)\*\#]/g;
+      var whiteSpaceSplit = /[ \t\n]+/;
+      // var leipzigSplit = /[=-]+/;
+      var cleanUngrammaticalitySubstitutions = false;
+
+      this.fields.map(function(field) {
+        if (field.type && field.type.indexOf("parallelText") > -1) {
+          parallelText[field.id] = field.value;
+        }
+        if (!field.type || field.type.indexOf("IGT") === -1) {
+          return;
+        }
+
+        var chunks = field.value.replace(/#?!.,\//g, "").split(whiteSpaceSplit);
+
+        chunks = chunks.map(function(chunk) {
+          if (cleanUngrammaticalitySubstitutions) {
+            // If the token it not null or the empty string
+            if (chunk) {
+              // Replace (*_) with _
+              feederWord = chunk.replace(/\(\*[^)]*\)/g, "$1");
+              // Replace *(_) with _
+              feederWord = feederWord.replace(/\*\(([^)]*)\)/, "$1");
+              // Remove all remaining punctuation
+              fullWord = feederWord.replace(punctuationToRemove, "");
+              chunk = fullWord;
+            }
+          }
+
+          // return chunk.split(leipzigSplit);
+          return chunk;
+        });
+
+        igtLines[field.id] = chunks;
+      });
+      this.debug("Collected all the IGT lines", igtLines);
+      this.debug("Collected all the Paralel Text lines", parallelText);
+
+      // Build triples
+      lengthOfLongestIGTLineInWords = 0;
+      for (igtLine in igtLines) {
+        if (igtLines[igtLine] && igtLines[igtLine].length > lengthOfLongestIGTLineInWords) {
+          lengthOfLongestIGTLineInWords = igtLines[igtLine].length;
+        }
+      }
+
+      // for each word
+      for (cellIndex = 0; cellIndex &lt; lengthOfLongestIGTLineInWords; cellIndex++) {
+        tuple = {};
+        // for each row of the igt
+        for (igtLine in igtLines) {
+          this.debug("working on   " + igtLine, igtLines[igtLine]);
+          if (igtLines[igtLine] && igtLines[igtLine].length > cellIndex && igtLines[igtLine][cellIndex]) {
+            tuple[igtLine] = igtLines[igtLine][cellIndex];
+          } else {
+            tuple[igtLine] = "";
+          }
+        }
+        tuples.push(tuple);
+      }
+
+      this.debug("IGT+ tuples", tuples);
+
+
+      return {
+        tuples: tuples,
+        parallelText: parallelText
+      };
+
+    },
+    set: function() {
+      this.warn("Setting the igt has to be copy pasted from one of the other codebases");
+    }
+  },
+
   addFile: {
     value: function(newFileDetails) {
+      if (!newFileDetails) {
+        this.warn("A null file was requested to be added to this datum", newFileDetails);
+        return;
+      }
+      newFileDetails.type = newFileDetails.type || "";
       if (newFileDetails.type.indexOf("audio") === 0) {
+        this.audioVideo = this.audioVideo || [];
         this.audioVideo.add(newFileDetails);
       } else if (newFileDetails.type.indexOf("video") === 0) {
+        this.audioVideo = this.audioVideo || [];
         this.audioVideo.add(newFileDetails);
       } else if (newFileDetails.type.indexOf("image") === 0) {
+        this.images = this.images || [];
         this.images.add(newFileDetails);
       } else {
         var regularizedJSON = new AudioVideo(newFileDetails).toJSON();
         this.addRelatedData(regularizedJSON);
       }
+      this.unsaved = true;
     }
   },
 
@@ -161,19 +357,23 @@ Datum.prototype = Object.create(FieldDBObject.prototype, /** @lends Datum.protot
       return this._audioVideo || FieldDBObject.DEFAULT_COLLECTION;
     },
     set: function(value) {
-      if (value === this._audioVideo) {
-        return;
-      }
-      if (!value) {
-        delete this._audioVideo;
-        return;
-      } else {
-        if (Object.prototype.toString.call(value) === "[object Array]" && typeof this.INTERNAL_MODELS["audioVideo"] === "function") {
-          value = new this.INTERNAL_MODELS["audioVideo"](value);
-        }
-      }
-      this._audioVideo = value;
+      this.ensureSetViaAppropriateType("audioVideo", value);
     }
+  },
+
+  hasAudio: {
+    get: function() {
+      var hasAudio = false;
+      if (this.audioVideo.length > 0) {
+        this.audioVideo.map(function(audioVideo) {
+          if (audioVideo.trashed !== "deleted") {
+            hasAudio = true;
+          }
+        });
+      }
+      return hasAudio;
+    },
+    set: function() {}
   },
 
   play: {
@@ -193,18 +393,48 @@ Datum.prototype = Object.create(FieldDBObject.prototype, /** @lends Datum.protot
       return this._images || FieldDBObject.DEFAULT_COLLECTION;
     },
     set: function(value) {
-      if (value === this._images) {
+      if (value && !value.confidential && this.confidential) {
+        value.confidential = this.confidential;
+      }
+      this.ensureSetViaAppropriateType("images", value);
+    }
+  },
+
+  hasImages: {
+    get: function() {
+      var hasImages = false;
+      if (this.images.length > 0) {
+        this.images.map(function(image) {
+          if (image.trashed !== "deleted") {
+            hasImages = true;
+          }
+        });
+      }
+      return hasImages;
+    },
+    set: function() {}
+  },
+
+  relatedData: {
+    get: function() {
+      if (!this.fields) {
         return;
       }
-      if (!value) {
-        delete this._images;
-        return;
-      } else {
-        if (Object.prototype.toString.call(value) === "[object Array]" && typeof this.INTERNAL_MODELS["images"] === "function") {
-          value = new this.INTERNAL_MODELS["images"](value);
-        }
+      if (this.fields && !this.fields.relatedData && DEFAULT_CORPUS_MODEL && DEFAULT_CORPUS_MODEL.datumFields && DEFAULT_CORPUS_MODEL.datumFields.length >= 10) {
+        this.fields.add(DEFAULT_CORPUS_MODEL.datumFields[10]);
       }
-      this._images = value;
+      this.fields.relatedData.json = this.fields.relatedData.json || {};
+      this.fields.relatedData.json.relatedData = this.fields.relatedData.json.relatedData || [];
+      return this.fields.relatedData.json.relatedData;
+    },
+    set: function() {
+      // if (this.fields && this.fields.relatedData) {
+      //   // this.fields.debugMode = true;
+      // } else {
+      //   return;
+      // }
+      // // this.fields.relatedData.json = this.fields.relatedData.json || {};
+      // // this.fields.relatedData.json.relatedData = value;
     }
   },
 
@@ -282,7 +512,7 @@ Datum.prototype = Object.create(FieldDBObject.prototype, /** @lends Datum.protot
                * Its possible that the pouch has no by date views, create them and then try searching again.
                */
               window.toldSearchtomakebydateviews = true;
-              window.app.get("corpus").createPouchView("pages/datums", function() {
+              window.app.corpus.createPouchView("pages/datums", function() {
                 window.appView.toastUser("Initializing your corpus' sort items by date functions for the first time.", "alert-success", "Sort:");
                 self.getMostRecentIdsByDate(howmany, callback);
               });
@@ -306,96 +536,70 @@ Datum.prototype = Object.create(FieldDBObject.prototype, /** @lends Datum.protot
   },
   fillWithCorpusFieldsIfMissing: {
     value: function() {
-      if (!this.get("fields")) {
+      if (!this.fields) {
         return;
       }
       /* Update the datum to show all fields which are currently in the corpus, they are only added if saved. */
-      var corpusFields = window.app.get("corpus").get("fields").models;
+      var corpusFields = window.app.corpus.datumFields.models;
       for (var field in corpusFields) {
         var label = corpusFields[field].get("label");
         this.debug("Label " + label);
-        var correspondingFieldInThisDatum = this.get("fields").where({
+        var correspondingFieldInThisDatum = this.fields.where({
           label: label
         });
         if (correspondingFieldInThisDatum.length === 0) {
-          this.get("fields").push(corpusFields[field]);
+          this.fields.push(corpusFields[field]);
         }
       }
     }
   },
-  searchByQueryString: {
-    value: function(queryString, callback) {
-      var self = this;
+  search: {
+    value: function(queryString, limitToOptionalFields) {
       try {
         //http://support.google.com/analytics/bin/answer.py?hl=en&answer=1012264
         window.pageTracker._trackPageview("/search_results.php?q=" + queryString);
       } catch (e) {
-        self.debug("Search Analytics not working.");
+        this.debug("Search Analytics not working.");
       }
 
       // Process the given query string into tokens
-      var queryTokens = self.processQueryString(queryString);
+      var queryTokens = this.processQueryString(queryString);
       var doGrossKeywordMatch = false;
       if (queryString.indexOf(":") === -1) {
         doGrossKeywordMatch = true;
         queryString = queryString.toLowerCase().replace(/\s/g, "");
       }
 
-      if (OPrime.isBackboneCouchDBApp()) {
-
-        // run a custom map reduce
-        //        var mapFunction = function(doc) {
-        //          if(doc.collection !== "datums"){
-        //            return;
-        //          }
-        //          var fields  = doc.fields;
-        //          var result = {};
-        //          for(var f in fields){
-        //            if(fields[f].label === "gloss"){
-        //              result.gloss = fields[f].value;
-        //            }else if(fields[f].label === "morphemes"){
-        //              result.morphemes = fields[f].value;
-        //            }else if(fields[f].label === "judgement"){
-        //              result.judgement = fields[f].value;
-        //            }
-        //          }
-        //          emit( result,  doc._id );
-        //        };
-        //        $.couch.db(this.get("pouchname")).query(mapFunction, "_count", "javascript", {
-        //use the get_datum_fields view
-        //        self.bug("TODO test search in chrome extension");
-        $.couch.db(self.get("pouchname")).view("pages/get_datum_fields", {
-          success: function(response) {
-            self.debug("Got " + response.length + "datums to check for the search query locally client side.");
-            var matchIds = [];
-            //            console.log(response);
-            for (var i in response.rows) {
-              var thisDatumIsIn = self.isThisMapReduceResultInTheSearchResults(response.rows[i], queryString, doGrossKeywordMatch, queryTokens);
-              // If the row's datum matches the given query string
-              if (thisDatumIsIn) {
-                // Keep its datum's ID, which is the value
-                matchIds.push(response.rows[i].value);
-              }
+      if (true) {
+        var accessAsObject = this.accessAsObject;
+        // If the caller asked for only certain fields, search only those.
+        if (limitToOptionalFields) {
+          this.debug("Reducing fields to the fields requested by the user", limitToOptionalFields);
+          for (var fieldlabel in limitToOptionalFields) {
+            if (!limitToOptionalFields.hasOwnProperty(fieldlabel) || !limitToOptionalFields[fieldlabel]) {
+              continue;
             }
+            limitToOptionalFields[fieldlabel] = accessAsObject[fieldlabel];
+          }
+        } else {
+          limitToOptionalFields = accessAsObject;
+        }
 
-            if (typeof callback === "function") {
-              //callback with the unique members of the array
-              callback(_.unique(matchIds));
-              //              callback(matchIds); //loosing my this in SearchEditView
-            }
-          },
-          error: function(status) {
-            console.log("Error quering datum", status);
-          },
-          reduce: false
-        });
-
+        var highlightedMatchesInHTML = this.highlightMatches(limitToOptionalFields, queryString, doGrossKeywordMatch, queryTokens);
+        // If the row's datum matches the given query string
+        if (highlightedMatchesInHTML && highlightedMatchesInHTML.length > 0) {
+          // Keep its datum's ID, which is the value
+          this.highlightedMatches = highlightedMatchesInHTML; // ["TODO showing the matched with a window of 20 char before and after."];
+          return this.highlightedMatches;
+        }
+        delete this.highlightedMatches;
         return;
       }
 
 
 
       try {
+        var self = this;
         self.pouch(function(err, db) {
           db.query("pages/get_datum_fields", {
             reduce: false
@@ -406,7 +610,7 @@ Datum.prototype = Object.create(FieldDBObject.prototype, /** @lends Datum.protot
 
               // Go through all the rows of results
               for (var i in response.rows) {
-                var thisDatumIsIn = self.isThisMapReduceResultInTheSearchResults(response.rows[i], queryString, doGrossKeywordMatch, queryTokens);
+                var thisDatumIsIn = self.highlightMatches(response.rows[i], queryString, doGrossKeywordMatch, queryTokens);
                 // If the row's datum matches the given query string
                 if (thisDatumIsIn) {
                   // Keep its datum's ID, which is the value
@@ -422,21 +626,17 @@ Datum.prototype = Object.create(FieldDBObject.prototype, /** @lends Datum.protot
                * Its possible that the corpus has no search views, create them and then try searching again.
                */
               window.appView.toastUser("Initializing your search functions for the first time." +
-                " Search in LingSync is pretty powerful, " +
+                " Search is pretty powerful, " +
                 " in fact if you're the power user type you can write your " +
                 "own data extracting/filtering/visualization queries using " +
                 " &lt;a href='http://www.kchodorow.com/blog/2010/03/15/mapreduce-the-fanfiction/' target='_blank'>MapReduce.&lt;/a>", "alert-success", "Search:");
               window.toldSearchtomakeviews = true;
               var previousquery = queryString;
-              window.app.get("corpus").createPouchView("pages/get_datum_fields", function() {
+              window.app.corpus.createPouchView("pages/get_datum_fields", function() {
                 window.appView.searchEditView.search(previousquery);
               });
             }
-            if (typeof callback === "function") {
-              //callback with the unique members of the array
-              callback(_.unique(matchIds));
-              //                callback(matchIds); //loosing my this in SearchEditView
-            }
+
           });
         });
       } catch (e) {
@@ -444,41 +644,75 @@ Datum.prototype = Object.create(FieldDBObject.prototype, /** @lends Datum.protot
       }
     }
   },
-  isThisMapReduceResultInTheSearchResults: {
-    value: function(keyValuePair, queryString, doGrossKeywordMatch, queryTokens) {
+  highlightMatches: {
+    value: function(simpleObject, queryString, doGrossKeywordMatch, queryTokens) {
+      var fieldlabel,
+        highlightedmatch;
 
 
-      var thisDatumIsIn = false;
+      this.debug("Highlighting matches for ", simpleObject, queryString, doGrossKeywordMatch, queryTokens);
+      var highlightedMatches = [];
       // If the query string is null, include all datumIds
       if (queryString.trim() === "") {
-        thisDatumIsIn = true;
+        this.debug("user searched for nothing, which means we will include this item.");
+        highlightedMatches = [" "];
       } else if (doGrossKeywordMatch) {
-        if (JSON.stringify(keyValuePair.key).toLowerCase().replace(/\s/g, "").search(queryString) > -1) {
-          thisDatumIsIn = true;
+        this.debug("user searched for GrossKeywordMatch of " + queryString);
+
+        for (fieldlabel in simpleObject) {
+          if (!simpleObject.hasOwnProperty(fieldlabel) || !simpleObject[fieldlabel]) {
+            continue;
+          }
+          highlightedmatch = this.highlight(simpleObject[fieldlabel], queryString);
+          if (highlightedmatch.indexOf("&lt;span") > -1) {
+            highlightedMatches.push(highlightedmatch);
+          }
         }
+        return highlightedMatches;
       } else {
 
-        // Determine if this datum matches the first search criteria
-        thisDatumIsIn = this.matchesSingleCriteria(keyValuePair.key, queryTokens[0]);
 
+        var conditionalHighlightedMatches = [];
+        this.debug(" Searching through ", queryTokens);
+
+        // Determine if this datum matches the first search criteria
+        highlightedmatch = this.matchesSingleCriteria(simpleObject, queryTokens[0]);
+        if (highlightedmatch && highlightedmatch.indexOf("&lt;span") > -1) {
+          this.debug("      Found one match  " + highlightedmatch);
+
+          conditionalHighlightedMatches.push(highlightedmatch);
+        }
         // Progressively determine whether the datum still matches based on
         // subsequent search criteria
         for (var j = 1; j &lt; queryTokens.length; j += 2) {
           if (queryTokens[j] === "AND") {
-            // Short circuit: if it's already false then it continues to be false
-            if (!thisDatumIsIn) {
-              break;
+            // Do an intersection, if this fails, exit early.
+            highlightedmatch = this.matchesSingleCriteria(simpleObject, queryTokens[j + 1]);
+            if (highlightedmatch && highlightedmatch.indexOf("&lt;span") > -1) {
+              this.debug("       Passed intersection match  " + highlightedmatch);
+              conditionalHighlightedMatches.push(highlightedmatch);
+            } else {
+              this.debug("       Failed the Intersection match " + highlightedmatch);
+              return;
             }
-
-            // Do an intersection
-            thisDatumIsIn = thisDatumIsIn && this.matchesSingleCriteria(keyValuePair.key, queryTokens[j + 1]);
           } else {
             // Do a union
-            thisDatumIsIn = thisDatumIsIn || this.matchesSingleCriteria(keyValuePair.key, queryTokens[j + 1]);
+            highlightedmatch = this.matchesSingleCriteria(simpleObject, queryTokens[j + 1]);
+            if (highlightedmatch && highlightedmatch.indexOf("&lt;span") > -1) {
+              this.debug("      Found another match  ", highlightedmatch);
+              conditionalHighlightedMatches.push(highlightedmatch);
+            }
           }
         }
+
+        if (conditionalHighlightedMatches && conditionalHighlightedMatches.length > 0) {
+          this.debug("This datum matches ", conditionalHighlightedMatches);
+          return conditionalHighlightedMatches;
+        }
+        this.debug("This datum doesnt match ", queryTokens);
+
       }
-      return thisDatumIsIn;
+      return highlightedMatches;
     }
   },
   /**
@@ -505,23 +739,26 @@ Datum.prototype = Object.create(FieldDBObject.prototype, /** @lends Datum.protot
         negate = true;
       }
       var value = criteria.substring(delimiterIndex + 1);
+
+      this.debug("    Looking at label:" + label + ": value :" + value + ": in :" + objectToSearchThrough[label]);
       /* handle the fact that "" means grammatical, so if user asks for  specifically, give only the ones wiht empty judgemnt */
       if (label === "judgement" && value.toLowerCase() === "grammatical") {
         if (!objectToSearchThrough[label]) {
-          return true;
+          return this.highlight("Grammatical", "Grammatical");
         }
       }
-      //      if(!label || !value){
-      //        return false;
-      //      }
 
-      var searchResult = objectToSearchThrough[label] && (objectToSearchThrough[label].toLowerCase().search(value.toLowerCase()) >= 0);
+      var searchResult = objectToSearchThrough[label];
+      searchResult = this.highlight(searchResult, value);
 
 
       if (negate) {
-        searchResult = !searchResult;
+        if (searchResult.indexOf("&lt;span") > -1) {
+          searchResult = "";
+        } else {
+          searchResult = this.highlight(searchResult, searchResult);
+        }
       }
-
 
       return searchResult;
     }
@@ -539,8 +776,15 @@ Datum.prototype = Object.create(FieldDBObject.prototype, /** @lends Datum.protot
    */
   processQueryString: {
     value: function(queryString) {
+      if (!queryString) {
+        return;
+      }
+      queryString = queryString + "";
+      queryString = queryString.replace(/\&\&/g, " AND ").replace(/\|\|/g, " OR ");
+      this.debug("    Normalized  query string, " + queryString);
+
       // Split on spaces
-      var queryArray = queryString.split(" ");
+      var queryArray = queryString.split(/ +/);
 
       // Create an array of tokens out of the query string where each token is
       // either a search criteria or an operator (AND or OR).
@@ -563,12 +807,13 @@ Datum.prototype = Object.create(FieldDBObject.prototype, /** @lends Datum.protot
       }
       queryTokens.push(currentString);
 
+      this.debug("    Tokenized query string, ", queryTokens);
       return queryTokens;
     }
   },
   getDisplayableFieldForActivitiesEtc: {
     value: function() {
-      return this.model.get("fields").where({
+      return this.model.fields.where({
         label: "utterance"
       })[0].get("mask");
     }
@@ -591,7 +836,7 @@ Datum.prototype = Object.create(FieldDBObject.prototype, /** @lends Datum.protot
         }),
         dateEntered: this.get("dateEntered"),
         dateModified: this.get("dateModified"),
-        fields: new DatumFields(this.get("fields").toJSON(), {
+        fields: new DatumFields(this.fields.toJSON(), {
           parse: true
         }),
         datumStates: new DatumStates(this.get("datumStates").toJSON(), {
@@ -600,7 +845,7 @@ Datum.prototype = Object.create(FieldDBObject.prototype, /** @lends Datum.protot
         datumTags: new DatumTags(this.get("datumTags").toJSON(), {
           parse: true
         }),
-        pouchname: this.get("pouchname"),
+        dbname: this.dbname,
         session: this.get("session")
       });
 
@@ -618,7 +863,7 @@ Datum.prototype = Object.create(FieldDBObject.prototype, /** @lends Datum.protot
   getValidationStatus: {
     value: function() {
       var validationStatus = "";
-      var stati = this.get("fields").where({
+      var stati = this.fields.where({
         "label": "validationStatus"
       });
       if (stati.length > 0) {
@@ -687,7 +932,7 @@ Datum.prototype = Object.create(FieldDBObject.prototype, /** @lends Datum.protot
       this.debug("Asking to change the datum state to " + selectedValue);
       /* make sure all the corpus states are availible in this datum */
       var thisdatumStates = this.get("datumStates");
-      window.app.get("corpus").get("datumStates").each(function(datumstate) {
+      window.app.corpus.get("datumStates").each(function(datumstate) {
         var obj = datumstate.toJSON();
         obj.selected = "";
         thisdatumStates.addIfNew(obj);
@@ -708,7 +953,7 @@ Datum.prototype = Object.create(FieldDBObject.prototype, /** @lends Datum.protot
       }
 
       /* prepend this state to the new validationStates as of v1.46.2 */
-      var n = this.get("fields").where({
+      var n = this.fields.where({
         label: "validationStatus"
       })[0];
       if (n === [] || !n) {
@@ -719,7 +964,7 @@ Datum.prototype = Object.create(FieldDBObject.prototype, /** @lends Datum.protot
           userchooseable: "disabled",
           help: "Any number of status of validity (replaces DatumStates). For example: ToBeCheckedWithSeberina, CheckedWithRicardo, Deleted etc..."
         });
-        this.get("fields").add(n);
+        this.fields.add(n);
       }
       var validationStatus = n.get("mask") || "";
       validationStatus = selectedValue + " " + validationStatus;
@@ -770,10 +1015,21 @@ Datum.prototype = Object.create(FieldDBObject.prototype, /** @lends Datum.protot
     value: function(showInExportModal) {
       this.debug(showInExportModal);
       //corpus's most frequent fields
-      var frequentFields = window.app.get("corpus").frequentFields;
+      var frequentFields;
+      if (this.application && this.application.corpus && this.application.corpus.frequentFields) {
+        frequentFields = this.application.corpus.frequentFields;
+      } else {
+        frequentFields = this.fields.map(function(field) {
+          return field.id
+        });
+      }
       //this datum/datalist's datumfields and their names
-      var fields = _.pluck(this.get("fields").toJSON(), "mask");
-      var fieldLabels = _.pluck(this.get("fields").toJSON(), "label");
+      var fields = this.fields.map(function(field) {
+        return field.value;
+      });
+      var fieldLabels = this.fields.map(function(field) {
+        return field.id;
+      });
       //setting up for IGT case...
       var judgementIndex = -1;
       var judgement = "";
@@ -785,7 +1041,7 @@ Datum.prototype = Object.create(FieldDBObject.prototype, /** @lends Datum.protot
       var gloss = "";
       var translationIndex = -1;
       var translation = "";
-      var result = "\n \\begin{exe} \n \\ex \[";
+      var result = "\n\\begin{exe} \n  \\ex \[";
 
       //IGT case:
       if (this.datumIsInterlinearGlossText()) {
@@ -822,7 +1078,10 @@ Datum.prototype = Object.create(FieldDBObject.prototype, /** @lends Datum.protot
         }
         //print the main IGT, escaping special latex chars
         /* ignore unnecessary escapement */
-        result = result + this.escapeLatexChars(judgement) + "\]\{" + this.escapeLatexChars(utterance) + "\n \\gll " + this.escapeLatexChars(morphemes) + "\\\\" + "\n " + this.escapeLatexChars(gloss) + "\\\\" + "\n \\trans " + this.escapeLatexChars(translation) + "\}" +
+        result = result + this.escapeLatexChars(judgement) + "\]\{" + this.escapeLatexChars(utterance) +
+          "\n  \\gll " + this.escapeLatexChars(morphemes) + "\\\\" +
+          "\n  " + this.escapeLatexChars(gloss) + "\\\\" +
+          "\n  \\trans " + this.escapeLatexChars(translation) + "\}" +
           "\n\\label\{\}";
       }
       //remove any empty fields from our arrays
@@ -834,8 +1093,8 @@ Datum.prototype = Object.create(FieldDBObject.prototype, /** @lends Datum.protot
 
       }
       /*throughout this next section, print frequent fields and infrequent ones differently
-    frequent fields get latex'd as items in a description and infrequent ones are the same,
-    but commented out.*/
+      frequent fields get latex'd as items in a description and infrequent ones are the same,
+      but commented out.*/
       if (fields && (fields.length > 0)) {
         var numInfrequent = 0;
         for (var field in fields) {
@@ -845,26 +1104,26 @@ Datum.prototype = Object.create(FieldDBObject.prototype, /** @lends Datum.protot
           numInfrequent++;
         }
         if (numInfrequent !== fieldLabels.length) {
-          result = result + "\n \\begin\{description\}";
+          result = result + "\n  \\begin\{description\}";
         } else {
-          result = result + "\n% \\begin\{description\}";
+          result = result + "\n%  \\begin\{description\}";
         }
         for (field in fields) {
           if (fields[field] && (frequentFields.indexOf(fieldLabels[field]) >= 0)) {
-            result = result + "\n \\item\[\\sc\{" + this.escapeLatexChars(fieldLabels[field]) + "\}\] " + this.escapeLatexChars(fields[field]);
+            result = result + "\n    \\item\[\\sc\{" + this.escapeLatexChars(fieldLabels[field]) + "\}\] " + this.escapeLatexChars(fields[field]);
           } else if (fields[field]) {
             /* If as a field that is designed for LaTex dont excape the LaTeX characters */
             if (fieldLabels[field].toLowerCase().indexOf("latex") > -1) {
               result = result + "\n " + fields[field];
             } else {
-              result = result + "\n% \\item\[\\sc\{" + this.escapeLatexChars(fieldLabels[field]) + "\}\] " + this.escapeLatexChars(fields[field]);
+              result = result + "\n%    \\item\[\\sc\{" + this.escapeLatexChars(fieldLabels[field]) + "\}\] " + this.escapeLatexChars(fields[field]);
             }
           }
         }
         if (numInfrequent !== fieldLabels.length) {
-          result = result + "\n \\end\{description\}";
+          result = result + "\n  \\end\{description\}";
         } else {
-          result = result + "\n% \\end\{description\}";
+          result = result + "\n%  \\end\{description\}";
         }
 
       }
@@ -879,7 +1138,7 @@ Datum.prototype = Object.create(FieldDBObject.prototype, /** @lends Datum.protot
     value: function(showInExportModal) {
       //this version prints new data as well as previously shown latex'd data (best for datalists)
       var result = this.laTeXiT(showInExportModal);
-      if (showInExportModal !== null) {
+      if (showInExportModal) {
         $("#export-type-description").html(" as &lt;a href='http://latex.informatik.uni-halle.de/latex-online/latex.php?spw=2&id=562739_bL74l6X0OjXf' target='_blank'>LaTeX (GB4E)&lt;/a>");
         $("#export-text-area").val($("#export-text-area").val() + result);
       }
@@ -891,7 +1150,7 @@ Datum.prototype = Object.create(FieldDBObject.prototype, /** @lends Datum.protot
     value: function(showInExportModal) {
       //this version prints new data and deletes previously shown latex'd data (best for datums)
       var result = this.laTeXiT(showInExportModal);
-      if (showInExportModal !== null) {
+      if (showInExportModal) {
         $("#export-type-description").html(" as &lt;a href='http://latex.informatik.uni-halle.de/latex-online/latex.php?spw=2&id=562739_bL74l6X0OjXf' target='_blank'>LaTeX (GB4E)&lt;/a>");
         var latexDocument =
           "\\documentclass[12pt]{article} \n" +
@@ -932,8 +1191,11 @@ Datum.prototype = Object.create(FieldDBObject.prototype, /** @lends Datum.protot
   datumIsInterlinearGlossText: {
     value: function(fieldLabels) {
       if (!fieldLabels) {
-        fieldLabels = _.pluck(this.get("fields").toJSON(), "label");
+        fieldLabels = this.fields.map(function(field) {
+          return field.id;
+        });
       }
+
       var utteranceOrMorphemes = false;
       var gloss = false;
       var trans = false;
@@ -962,10 +1224,12 @@ Datum.prototype = Object.create(FieldDBObject.prototype, /** @lends Datum.protot
    */
   exportAsPlainText: {
     value: function(showInExportModal) {
-      // var header = _.pluck(this.get("fields").toJSON(), "label") || [];
-      var fields = _.pluck(this.get("fields").toJSON(), "mask") || [];
+      // var header = _.pluck(this.fields.toJSON(), "label") || [];
+      var fields = this.fields.map(function(field) {
+        return field.value;
+      });
       var result = fields.join("\n");
-      if (showInExportModal !== null) {
+      if (showInExportModal) {
         $("#export-type-description").html(" as text (Word)");
         $("#export-text-area").val(
           $("#export-text-area").val() + result
@@ -980,25 +1244,39 @@ Datum.prototype = Object.create(FieldDBObject.prototype, /** @lends Datum.protot
    */
   exportAsCSV: {
     value: function(showInExportModal, orderedFields, printheaderonly) {
+      var asFlatObject = this.accessAsObject,
+        header = orderedFields || [],
+        columns = [];
 
-      var header = _.pluck(this.get("fields").toJSON(), "label") || [];
-      var fields = _.pluck(this.get("fields").toJSON(), "mask") || [];
-      var result = fields.join(",") + "\n";
+      if (orderedFields) {
+        columns = orderedFields.map(function(fieldid) {
+          return asFlatObject[fieldid] || "";
+        });
+      } else {
+        for (var fieldlabel in asFlatObject) {
+          header.push(fieldlabel);
+          columns.push(asFlatObject[fieldlabel]);
+        }
+      }
+      if (printheaderonly) {
+        columns = header;
+      }
+      var result = columns.map(function(cell) {
+        return "\"" + cell.replace(/"/g, "\\\"") + "\"";
+      }).join(",") + "\n";
 
       //      if (orderedFields === null) {
       //        orderedFields = ["judgement","utterance","morphemes","gloss","translation"];
       //      }
-      //      judgement = this.get("fields").where({label: "judgement"})[0].get("mask");
-      //      morphemes = this.get("fields").where({label: "morphemes"})[0].get("mask");
-      //      utterance= this.get("fields").where({label: "utterance"})[0].get("mask");
-      //      gloss = this.get("fields").where({label: "gloss"})[0].get("mask");
-      //      translation= this.get("fields").where({label: "translation"})[0].get("mask");
+      //      judgement = this.columns.where({label: "judgement"})[0].get("mask");
+      //      morphemes = this.columns.where({label: "morphemes"})[0].get("mask");
+      //      utterance= this.columns.where({label: "utterance"})[0].get("mask");
+      //      gloss = this.columns.where({label: "gloss"})[0].get("mask");
+      //      translation= this.columns.where({label: "translation"})[0].get("mask");
       //      var resultarray =  [judgement,utterance,morphemes,gloss,translation];
       //      var result = '"' + resultarray.join('","') + '"\n';
-      if (printheaderonly) {
-        result = header.join(",") + "\n";
-      }
-      if (showInExportModal !== null) {
+
+      if (showInExportModal) {
         $("#export-type-description").html(" as CSV (Excel, Filemaker Pro)");
         $("#export-text-area").val(
           $("#export-text-area").val() + result);
@@ -1015,7 +1293,7 @@ Datum.prototype = Object.create(FieldDBObject.prototype, /** @lends Datum.protot
   encrypt: {
     value: function() {
       this.set("confidential", true);
-      this.get("fields").each(function(dIndex) {
+      this.fields.each(function(dIndex) {
         dIndex.set("encrypted", "checked");
       });
       //TODO scrub version history to get rid of all unencrypted versions.
@@ -1030,7 +1308,7 @@ Datum.prototype = Object.create(FieldDBObject.prototype, /** @lends Datum.protot
     value: function() {
       this.set("confidential", false);
 
-      this.get("fields").each(function(dIndex) {
+      this.fields.each(function(dIndex) {
         dIndex.set("encrypted", "");
       });
     }
@@ -1058,7 +1336,7 @@ Datum.prototype = Object.create(FieldDBObject.prototype, /** @lends Datum.protot
         this.set("dateEntered", JSON.stringify(new Date()));
       }
       //protect against users moving datums from one corpus to another on purpose or accidentially
-      if (window.app.get("corpus").get("pouchname") !== this.get("pouchname")) {
+      if (window.app.corpus.dbname !== this.dbname) {
         if (typeof failurecallback === "function") {
           failurecallback();
         } else {
@@ -1068,7 +1346,7 @@ Datum.prototype = Object.create(FieldDBObject.prototype, /** @lends Datum.protot
       }
       //If it was decrypted, this will save the changes before we go into encryptedMode
 
-      this.get("fields").each(function(dIndex) {
+      this.fields.each(function(dIndex) {
         //Anything can be done here, it is the set function which does all the work.
         dIndex.set("value", dIndex.get("mask"));
       });
@@ -1076,7 +1354,7 @@ Datum.prototype = Object.create(FieldDBObject.prototype, /** @lends Datum.protot
       // Store the current Session, the current corpus, and the current date
       // in the Datum
       this.set({
-        "pouchname": window.app.get("corpus").get("pouchname"),
+        "dbname": window.app.corpus.dbname,
         "dateModified": JSON.stringify(new Date()),
         "timestamp": Date.now(),
         "jsonType": "Datum"
@@ -1087,7 +1365,7 @@ Datum.prototype = Object.create(FieldDBObject.prototype, /** @lends Datum.protot
       } else {
         self.debug("Not setting the session on this datum.");
       }
-      window.app.get("corpus").set("dateOfLastDatumModifiedToCheckForOldSession", JSON.stringify(new Date()));
+      window.app.corpus.set("dateOfLastDatumModifiedToCheckForOldSession", JSON.stringify(new Date()));
 
       var oldrev = this.get("_rev");
       /*
@@ -1108,12 +1386,12 @@ Datum.prototype = Object.create(FieldDBObject.prototype, /** @lends Datum.protot
       self.save(null, {
         success: function(model, response) {
           self.debug("Datum save success");
-          var utterance = model.get("fields").where({
+          var utterance = model.fields.where({
             label: "utterance"
           })[0].get("mask");
           var differences = "#diff/oldrev/" + oldrev + "/newrev/" + response._rev;
           //TODO add privacy for datum goals in corpus
-          //            if(window.app.get("corpus").get("keepDatumDetailsPrivate")){
+          //            if(window.app.corpus.get("keepDatumDetailsPrivate")){
           //              utterance = "";
           //              differences = "";
           //            }
@@ -1130,9 +1408,9 @@ Datum.prototype = Object.create(FieldDBObject.prototype, /** @lends Datum.protot
           window.app.addActivity({
             verb: "&lt;a href='" + differences + "'>" + verb + "&lt;/a> ",
             verbicon: verbicon,
-            directobject: "&lt;a href='#corpus/" + model.get("pouchname") + "/datum/" + model.id + "'>" + utterance + "&lt;/a> ",
+            directobject: "&lt;a href='#corpus/" + model.dbname + "/datum/" + model.id + "'>" + utterance + "&lt;/a> ",
             directobjecticon: "icon-list",
-            indirectobject: "in &lt;a href='#corpus/" + window.app.get("corpus").id + "'>" + window.app.get("corpus").get("title") + "&lt;/a>",
+            indirectobject: "in &lt;a href='#corpus/" + window.app.corpus.id + "'>" + window.app.corpus.get("title") + "&lt;/a>",
             teamOrPersonal: "team",
             context: " via Offline App."
           });
@@ -1140,9 +1418,9 @@ Datum.prototype = Object.create(FieldDBObject.prototype, /** @lends Datum.protot
           window.app.addActivity({
             verb: "&lt;a href='" + differences + "'>" + verb + "&lt;/a> ",
             verbicon: verbicon,
-            directobject: "&lt;a href='#corpus/" + model.get("pouchname") + "/datum/" + model.id + "'>" + utterance + "&lt;/a> ",
+            directobject: "&lt;a href='#corpus/" + model.dbname + "/datum/" + model.id + "'>" + utterance + "&lt;/a> ",
             directobjecticon: "icon-list",
-            indirectobject: "in &lt;a href='#corpus/" + window.app.get("corpus").id + "'>" + window.app.get("corpus").get("title") + "&lt;/a>",
+            indirectobject: "in &lt;a href='#corpus/" + window.app.corpus.id + "'>" + window.app.corpus.get("title") + "&lt;/a>",
             teamOrPersonal: "personal",
             context: " via Offline App."
           });
@@ -1152,8 +1430,8 @@ Datum.prototype = Object.create(FieldDBObject.prototype, /** @lends Datum.protot
           //             * that will eventually overwrite the default in the
           //             * corpus if the user saves the current data list
           //             */
-          //            var defaultIndex = window.app.get("corpus").datalists.length - 1;
-          //            if(window.appView.currentEditDataListView.model.id === window.app.get("corpus").datalists.models[defaultIndex].id){
+          //            var defaultIndex = window.app.corpus.datalists.length - 1;
+          //            if(window.appView.currentEditDataListView.model.id === window.app.corpus.datalists.models[defaultIndex].id){
           //              //Put it into the current data list views
           //              window.appView.currentPaginatedDataListDatumsView.collection.remove(model);//take it out of where it was,
           //              window.appView.currentPaginatedDataListDatumsView.collection.unshift(model); //and put it on the top. this is only in the default data list
@@ -1169,21 +1447,21 @@ Datum.prototype = Object.create(FieldDBObject.prototype, /** @lends Datum.protot
           //               * Make sure the datum is at the top of the default data list which is in the corpus,
           //               * this is in case the default data list is not being displayed
           //               */
-          //              var positionInDefaultDataList = window.app.get("corpus").datalists.models[defaultIndex].get("datumIds").indexOf(model.id);
+          //              var positionInDefaultDataList = window.app.corpus.datalists.models[defaultIndex].get("datumIds").indexOf(model.id);
           //              if(positionInDefaultDataList !== -1 ){
           //                //We only reorder the default data list datum to be in the order of the most recent modified, other data lists can stay in the order teh usr designed them.
-          //                window.app.get("corpus").datalists.models[defaultIndex].get("datumIds").splice(positionInDefaultDataList, 1);
+          //                window.app.corpus.datalists.models[defaultIndex].get("datumIds").splice(positionInDefaultDataList, 1);
           //              }
-          //              window.app.get("corpus").datalists.models[defaultIndex].get("datumIds").unshift(model.id);
-          //              window.app.get("corpus").datalists.models[defaultIndex].needsSave  = true;
-          //              window.appView.addUnsavedDoc(window.app.get("corpus").id);
+          //              window.app.corpus.datalists.models[defaultIndex].get("datumIds").unshift(model.id);
+          //              window.app.corpus.datalists.models[defaultIndex].needsSave  = true;
+          //              window.appView.addUnsavedDoc(window.app.corpus.id);
           //            }
           /*
            * Also, see if this datum matches the search datalist, and add it to the top of the search list
            */
           if ($("#search_box").val() !== "") {
             //TODO check this
-            var datumJson = model.get("fields").toJSON();
+            var datumJson = model.fields.toJSON();
             var datumAsDBResponseRow = {};
             for (var x in datumJson) {
               datumAsDBResponseRow[datumJson[x].label] = datumJson[x].mask;
@@ -1251,7 +1529,7 @@ Datum.prototype = Object.create(FieldDBObject.prototype, /** @lends Datum.protot
   setAsCurrentDatum: {
     value: function() {
       this.warn("Using deprected method setAsCurrentDatum.");
-      //      if( window.app.get("corpus").get("pouchname") !== this.get("pouchname") ){
+      //      if( window.app.corpus.dbname !== this.dbname ){
       //        if (typeof failurecallback === "function") {
       //          failurecallback();
       //        }else{
@@ -1286,8 +1564,12 @@ Datum.prototype = Object.create(FieldDBObject.prototype, /** @lends Datum.protot
       this.debug("Customizing toJSON ", includeEvenEmptyAttributes, removeEmptyAttributes);
 
       var json = FieldDBObject.prototype.toJSON.apply(this, arguments);
+      if (!json) {
+        this.warn("Not returning json right now.");
+        return;
+      }
 
-      this.todo("saving fields as the deprecated datumFields");
+      this.debug("saving fields as the deprecated datumFields");
       json.datumFields = json.fields;
       delete json.fields;
 
@@ -1309,13 +1591,13 @@ exports.Datum = Datum;
 </div>
 
 <nav>
-    <h2><a href="index.html">Index</a></h2><h3>Modules</h3><ul><li><a href="module-FieldDB.html">FieldDB</a></li></ul><h3>Classes</h3><ul><li><a href="Activities.html">Activities</a></li><li><a href="Activity.html">Activity</a></li><li><a href="App.html">App</a></li><li><a href="AppRouter.html">AppRouter</a></li><li><a href="AudioPlayer.html">AudioPlayer</a></li><li><a href="AudioVideo.html">AudioVideo</a></li><li><a href="AudioVideoRecorder.html">AudioVideoRecorder</a></li><li><a href="AudioVideos.html">AudioVideos</a></li><li><a href="Authentication.html">Authentication</a></li><li><a href="Collection.html">Collection</a></li><li><a href="Comment.html">Comment</a></li><li><a href="Comments.html">Comments</a></li><li><a href="Confidential.html">Confidential</a></li><li><a href="Consultant.html">Consultant</a></li><li><a href="Consultants.html">Consultants</a></li><li><a href="ContextualizableObject.html">ContextualizableObject</a></li><li><a href="Contextualizer.html">Contextualizer</a></li><li><a href="Conversation.html">Conversation</a></li><li><a href="Conversations.html">Conversations</a></li><li><a href="Corpus.html">Corpus</a></li><li><a href="Corpuses.html">Corpuses</a></li><li><a href="CorpusMask.html">CorpusMask</a></li><li><a href="DataList.html">DataList</a></li><li><a href="DataLists.html">DataLists</a></li><li><a href="dataURItoBlob.html">dataURItoBlob</a></li><li><a href="Datum.html">Datum</a></li><li><a href="DatumField.html">DatumField</a></li><li><a href="DatumFields.html">DatumFields</a></li><li><a href="Datums.html">Datums</a></li><li><a href="DatumState.html">DatumState</a></li><li><a href="DatumStates.html">DatumStates</a></li><li><a href="DatumTag.html">DatumTag</a></li><li><a href="DatumTags.html">DatumTags</a></li><li><a href="DocumentCollection.html">DocumentCollection</a></li><li><a href="ELanguages.html">ELanguages</a></li><li><a href="Export.html">Export</a></li><li><a href="FieldDBObject.html">FieldDBObject</a></li><li><a href="HotKey.html">HotKey</a></li><li><a href="HotKeys.html">HotKeys</a></li><li><a href="HTML5Audio.html">HTML5Audio</a></li><li><a href="Image.html">Image</a></li><li><a href="Images.html">Images</a></li><li><a href="InsertUnicode.html">InsertUnicode</a></li><li><a href="InsertUnicodes.html">InsertUnicodes</a></li><li><a href="Lexicon.html">Lexicon</a></li><li><a href="LexiconNode.html">LexiconNode</a></li><li><a href="LexiconNodes.html">LexiconNodes</a></li><li><a href="Participant.html">Participant</a></li><li><a href="Permission.html">Permission</a></li><li><a href="Permissions.html">Permissions</a></li><li><a href="PsycholinguisticsApp.html">PsycholinguisticsApp</a></li><li><a href="ReportBot.html">ReportBot</a></li><li><a href="Response.html">Response</a></li><li><a href="Search.html">Search</a></li><li><a href="Session.html">Session</a></li><li><a href="Sessions.html">Sessions</a></li><li><a href="Speaker.html">Speaker</a></li><li><a href="Stimulus.html">Stimulus</a></li><li><a href="SubExperimentDataList.html">SubExperimentDataList</a></li><li><a href="Team.html">Team</a></li><li><a href="User.html">User</a></li><li><a href="UserApp.html">UserApp</a></li><li><a href="UserMask.html">UserMask</a></li><li><a href="UserPreference.html">UserPreference</a></li><li><a href="UserRouter.html">UserRouter</a></li><li>{String: Exercise}</li></ul><h3>Global</h3><ul><li><a href="global.html#baseSchema">baseSchema</a></li><li><a href="global.html#clone">clone</a></li><li><a href="global.html#CorpusConnection">CorpusConnection</a></li><li><a href="global.html#debugMode">debugMode</a></li><li><a href="global.html#find">find</a></li><li><a href="global.html#getSanitizedDotNotationKey">getSanitizedDotNotationKey</a></li><li><a href="global.html#newCorpusConnection">newCorpusConnection</a></li><li><a href="global.html#sanitizeStringForFileSystem">sanitizeStringForFileSystem</a></li><li><a href="global.html#sanitizeStringForPrimaryKey">sanitizeStringForPrimaryKey</a></li><li><a href="global.html#validateDbnameFormat">validateDbnameFormat</a></li></ul>
+    <h2><a href="index.html">Index</a></h2><h3>Modules</h3><ul><li><a href="module-FieldDB.html">FieldDB</a></li></ul><h3>Classes</h3><ul><li><a href="Activities.html">Activities</a></li><li><a href="Activity.html">Activity</a></li><li><a href="App.html">App</a></li><li><a href="AppRouter.html">AppRouter</a></li><li><a href="AudioPlayer.html">AudioPlayer</a></li><li><a href="AudioVideo.html">AudioVideo</a></li><li><a href="AudioVideoRecorder.html">AudioVideoRecorder</a></li><li><a href="AudioVideos.html">AudioVideos</a></li><li><a href="Authentication.html">Authentication</a></li><li><a href="Collection.html">Collection</a></li><li><a href="Comment.html">Comment</a></li><li><a href="Comments.html">Comments</a></li><li><a href="Confidential.html">Confidential</a></li><li><a href="Connection.html">Connection</a></li><li><a href="Consultant.html">Consultant</a></li><li><a href="Consultants.html">Consultants</a></li><li><a href="ContextualizableObject.html">ContextualizableObject</a></li><li><a href="Contextualizer.html">Contextualizer</a></li><li><a href="Conversation.html">Conversation</a></li><li><a href="Conversations.html">Conversations</a></li><li><a href="Corpus.html">Corpus</a></li><li><a href="CorpusMask.html">CorpusMask</a></li><li><a href="DataList.html">DataList</a></li><li><a href="DataLists.html">DataLists</a></li><li><a href="dataURItoBlob.html">dataURItoBlob</a></li><li><a href="Datum.html">Datum</a></li><li><a href="DatumField.html">DatumField</a></li><li><a href="DatumFields.html">DatumFields</a></li><li><a href="Datums.html">Datums</a></li><li><a href="DatumState.html">DatumState</a></li><li><a href="DatumStates.html">DatumStates</a></li><li><a href="DatumTag.html">DatumTag</a></li><li><a href="DatumTags.html">DatumTags</a></li><li><a href="DocumentCollection.html">DocumentCollection</a></li><li><a href="ELanguages.html">ELanguages</a></li><li><a href="ExperimentDataList.html">ExperimentDataList</a></li><li><a href="Export.html">Export</a></li><li><a href="FieldDBObject.html">FieldDBObject</a></li><li><a href="HotKey.html">HotKey</a></li><li><a href="HotKeys.html">HotKeys</a></li><li><a href="HTML5Audio.html">HTML5Audio</a></li><li><a href="Image.html">Image</a></li><li><a href="Images.html">Images</a></li><li><a href="LexiconNodes.html">LexiconNodes</a></li><li><a href="Participant.html">Participant</a></li><li><a href="Permission.html">Permission</a></li><li><a href="Permissions.html">Permissions</a></li><li><a href="PsycholinguisticsApp.html">PsycholinguisticsApp</a></li><li><a href="ReportBot.html">ReportBot</a></li><li><a href="Response.html">Response</a></li><li><a href="Search.html">Search</a></li><li><a href="Session.html">Session</a></li><li><a href="Sessions.html">Sessions</a></li><li><a href="Speaker.html">Speaker</a></li><li><a href="Stimulus.html">Stimulus</a></li><li><a href="SubExperimentDataList.html">SubExperimentDataList</a></li><li><a href="Team.html">Team</a></li><li><a href="UnicodeSymbol.html">UnicodeSymbol</a></li><li><a href="UnicodeSymbols.html">UnicodeSymbols</a></li><li><a href="User.html">User</a></li><li><a href="UserApp.html">UserApp</a></li><li><a href="UserMask.html">UserMask</a></li><li><a href="UserPreference.html">UserPreference</a></li><li><a href="UserRouter.html">UserRouter</a></li><li><a href="Users.html">Users</a></li><li>{String: Exercise}</li></ul><h3>Global</h3><ul><li><a href="global.html#add">add</a></li><li><a href="global.html#clone">clone</a></li><li><a href="global.html#debugMode">debugMode</a></li><li><a href="global.html#find">find</a></li><li><a href="global.html#getMD5ForFile">getMD5ForFile</a></li><li><a href="global.html#getSanitizedDotNotationKey">getSanitizedDotNotationKey</a></li><li><a href="global.html#sanitizeStringForFileSystem">sanitizeStringForFileSystem</a></li><li><a href="global.html#sanitizeStringForPrimaryKey">sanitizeStringForPrimaryKey</a></li><li><a href="global.html#showDiffs">showDiffs</a></li></ul>
 </nav>
 
 <br clear="both">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.2</a> on Fri Feb 20 2015 15:29:49 GMT+0700 (WIT)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.2</a> on Mon Jul 20 2015 11:06:03 GMT-0400 (EDT)
 </footer>
 
 <script> prettyPrint(); </script>

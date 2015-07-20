@@ -57,7 +57,7 @@
  * @property {String} affiliation This is user's affiliation
  * @property {String} description This user's description
  * @property {String} subtitle This user's subtitle
- * @property {Array} corpuses The corpus connections of the corpuses owned by
+ * @property {Array} corpora The corpus connections of the corpora owned by
  *           this user
  * @property {Array} dataLists The datalist IDs of the datalists owned
  *           by this user.
@@ -71,13 +71,13 @@
  * @extends Object
  *
  */
-var UserGenericFactory = function(appVersion, defaultCorpusConnection, Diacritics, HotKeys, MD5, UserPreference) {
-  if (!appVersion || !defaultCorpusConnection) {
-    throw new Error("You must supply an appVersion and a defaultCorpusConnection which will be used to create new users");
+var UserGenericFactory = function(appVersion, defaultConnection, Diacritics, HotKeys, MD5, UserPreference) {
+  if (!appVersion || !defaultConnection) {
+    throw new Error("You must supply an appVersion and a defaultConnection which will be used to create new users");
   }
 
   this.appVersion = appVersion;
-  this.defaultCorpusConnection = defaultCorpusConnection;
+  this.defaultConnection = defaultConnection;
 
   /* TODO move these to seperate files as they are created */
   if (!HotKeys) {
@@ -98,8 +98,8 @@ var UserGenericFactory = function(appVersion, defaultCorpusConnection, Diacritic
           "numVisibleDatum": 2,
           "transparentDashboard": "false",
           "alwaysRandomizeSkin": "false",
-          "preferedDashboardLayout": "default",
-          "preferedClientApps": ["spreadsheet"],
+          "preferredDashboardLayout": "default",
+          "preferredClientApps": ["spreadsheet"],
           "numberOfItemsInPaginatedViews": 10,
           "unicodes": [{
             "symbol": "ɔ",
@@ -246,7 +246,7 @@ var UserGenericFactory = function(appVersion, defaultCorpusConnection, Diacritic
   };
 
   this.addCorpusToUser = function(corpus) {
-    this.corpuses.unshift(corpus);
+    this.corpora.unshift(corpus);
   };
 
   this.save = function(user) {
@@ -281,10 +281,11 @@ var UserGenericFactory = function(appVersion, defaultCorpusConnection, Diacritic
       "corpusid": "",
       "datalistid": "",
       "sessionid": "",
-      "couchConnection": {
+      "connection": {
         "protocol": "",
         "domain": "",
         "port": "",
+        "dbname": "",
         "pouchname": "",
         "path": "",
         "authUrls": "",
@@ -294,7 +295,7 @@ var UserGenericFactory = function(appVersion, defaultCorpusConnection, Diacritic
     };
   };
 
-  this.build = function(optionalRequestedUserDetails, optionalRequestedCorpusConnection) {
+  this.build = function(optionalRequestedUserDetails, optionalRequestedConnection) {
     console.log("Creating user with ", optionalRequestedUserDetails);
 
     if (!optionalRequestedUserDetails || !optionalRequestedUserDetails.username) {
@@ -306,11 +307,11 @@ var UserGenericFactory = function(appVersion, defaultCorpusConnection, Diacritic
     if (userNameValidationResults.changes.length > 0) {
       throw new Error(userNameValidationResults.changes.join("\n "));
     }
-    var usersCorpusConnection = optionalRequestedCorpusConnection;
-    if (!usersCorpusConnection) {
-      usersCorpusConnection = JSON.parse(JSON.stringify(this.defaultCorpusConnection));
+    var usersConnection = optionalRequestedConnection;
+    if (!usersConnection) {
+      usersConnection = JSON.parse(JSON.stringify(this.defaultConnection));
     }
-    console.log("Corpus connection ", JSON.stringify(usersCorpusConnection, null, 2));
+    console.log("Corpus connection ", JSON.stringify(usersConnection, null, 2));
 
     return {
       "_id": optionalRequestedUserDetails.username,
@@ -329,41 +330,41 @@ var UserGenericFactory = function(appVersion, defaultCorpusConnection, Diacritic
       "subtitle": optionalRequestedUserDetails.subtitle || "",
       "firstname": optionalRequestedUserDetails.firstname || "",
       "lastname": optionalRequestedUserDetails.lastname || "",
-      "corpuses": [{
+      "corpora": [{
         "corpusid": "TBA",
         "pouchname": optionalRequestedUserDetails.username + "-firstcorpus",
         "dbname": optionalRequestedUserDetails.username + "-firstcorpus",
 
-        "protocol": usersCorpusConnection.protocol,
-        "domain": usersCorpusConnection.domain,
-        "port": usersCorpusConnection.port,
-        "path": usersCorpusConnection.path,
+        "protocol": usersConnection.protocol,
+        "domain": usersConnection.domain,
+        "port": usersConnection.port,
+        "path": usersConnection.path,
 
-        "userFriendlyServerName": usersCorpusConnection.userFriendlyServerName,
-        "authUrls": usersCorpusConnection.authUrls,
-        "clientUrls": usersCorpusConnection.clientUrls,
-        "corpusUrls": usersCorpusConnection.corpusUrls,
-        "lexiconUrls": usersCorpusConnection.lexiconUrls,
-        "searchUrls": usersCorpusConnection.searchUrls,
-        "audioUrls": usersCorpusConnection.audioUrls
+        "userFriendlyServerName": usersConnection.userFriendlyServerName,
+        "authUrls": usersConnection.authUrls,
+        "clientUrls": usersConnection.clientUrls,
+        "corpusUrls": usersConnection.corpusUrls,
+        "lexiconUrls": usersConnection.lexiconUrls,
+        "searchUrls": usersConnection.searchUrls,
+        "audioUrls": usersConnection.audioUrls
       }],
-      "activityCouchConnection": {
+      "activityConnection": {
         "pouchname": optionalRequestedUserDetails.username + "-activity_feed",
         "dbname": optionalRequestedUserDetails.username + "-activity_feed",
 
-        "protocol": usersCorpusConnection.protocol,
-        "domain": usersCorpusConnection.domain,
-        "port": usersCorpusConnection.port,
-        "path": usersCorpusConnection.path,
+        "protocol": usersConnection.protocol,
+        "domain": usersConnection.domain,
+        "port": usersConnection.port,
+        "path": usersConnection.path,
 
-        "userFriendlyServerName": usersCorpusConnection.userFriendlyServerName,
-        "activityUrls": usersCorpusConnection.activityUrls,
+        "userFriendlyServerName": usersConnection.userFriendlyServerName,
+        "activityUrls": usersConnection.activityUrls,
       },
       "recentDataLists": [],
       "recentSessions": [],
       "authUrls": optionalRequestedUserDetails.authUrls || "default",
       "mostRecentIds": this.getMostRecentIds(),
-      "newCorpusConnections": [],
+      "newCorpora": [],
       "hotkeys": [],
       "prefs": UserPreference.create(),
       "serverlogs": {
@@ -419,12 +420,12 @@ var UserGenericFactory = function(appVersion, defaultCorpusConnection, Diacritic
         "type": "email",
         "description": "Emails aren\"t actually required. If the user does provide an email at registration, is used to automaticaly link up their gravatar and send them a welcome email so that they know that they registered (in case they forget their username later). It\"s not used for any other purpose. Why are emails not required? Many academics who would use the service, claim that they don\"t like to share their emails. In practice, almost all the users who have signed up, did provide an email. If the user doesn\"t provide an email, what do they loose? They will have no way of resetting their password, they won\"t recieve a registration email, and they won\"t really have any way of proving who they are if they want to delete their corpus, or request their private data etc. While not requiring an email is not a good idea, we have other ways of identifying bogus accounts and leave whether they provide an email up to the user."
       },
-      "corpuses": {
+      "corpora": {
         "items": {
-          "$ref": "CouchConnection"
+          "$ref": "Connection"
         },
         "type": "Array",
-        "description": "A user can own or have access to any number of corpora. If the user has access to a corpus, it is generally storred in an array called corpuses in their user details. This array can be updated at any time by calling get user corpuses API. Example: &lt;pre>" + JSON.stringify([{
+        "description": "A user can own or have access to any number of corpora. If the user has access to a corpus, it is generally storred in an array called corpora in their user details. This array can be updated at any time by calling get user corpora API. Example: &lt;pre>" + JSON.stringify([{
           "corpusid": "89bc4d7dcc2b1fc9a7bb0f4f4743e705",
           "pouchname": "lingllama-communitycorpus",
           "dbname": "lingllama-communitycorpus",
@@ -457,26 +458,26 @@ var UserGenericFactory = function(appVersion, defaultCorpusConnection, Diacritic
           "protocol": "https://",
           "domain": "corpusdev.fielddb.org",
           "port": "443",
-          "pouchname": "lingllama-cherokee",
+          "dbname": "lingllama-cherokee",
           "path": "",
           "corpusid": "958227C0-FF0E-46AC-8F7B-579330A24A95"
         }, {
           "protocol": "https://",
           "domain": "corpusdev.fielddb.org",
           "port": "443",
-          "pouchname": "lingllama-firstcorpus",
+          "dbname": "lingllama-firstcorpus",
           "path": "",
           "corpusid": "1B6127DC-F156-4F48-B1D8-6F4EBA5848A5"
         }], null, 2) + "&lt;/pre>"
 
       },
-      "activityCouchConnection": {
-        "type": "CouchConnection",
+      "activityConnection": {
+        "type": "Connection",
         "description": "This is where the user's activities can be saved and retrieved. In general, if your client side app let\"s the user do something you should save activites in the user's couch and if its something that has to do with a corpus, and the other team members might want to be in the loop, also save a similar activity in the corpus activity feed (composed of corpusname-activity_feed). Here is an example of the user's feed: &lt;pre>" + JSON.stringify({
           "protocol": "https://",
           "domain": "ifielddevs.iriscouch.com",
           "port": "443",
-          "pouchname": "lingllama-activity_feed",
+          "dbname": "lingllama-activity_feed",
           "path": ""
         }, null, 2) + "&lt;/pre>"
       },
@@ -507,12 +508,12 @@ var UserGenericFactory = function(appVersion, defaultCorpusConnection, Diacritic
           "corpusid": "89bc4d7dcc2b1fc9a7bb0f4f4743e705",
           "datalistid": "89bc4d7dcc2b1fc9a7bb0f4f474432b4",
           "sessionid": "89bc4d7dcc2b1fc9a7bb0f4f474415e4",
-          "corpusUrl": "https://corpusdev.lingsync.org/lingllama-communitycorpus",
-          "couchConnection": {
+          "corpusUrl": "https://corpusdev.example.org/lingllama-communitycorpus",
+          "connection": {
             "protocol": "https://",
             "domain": "corpusdev.fielddb.org",
             "port": "",
-            "pouchname": "lingllama-communitycorpus",
+            "dbname": "lingllama-communitycorpus",
             "path": "",
             "corpusid": "89bc4d7dcc2b1fc9a7bb0f4f4743e705"
           }
@@ -538,9 +539,9 @@ var UserGenericFactory = function(appVersion, defaultCorpusConnection, Diacritic
         "description": "This is the last time the users details were updated (ie login) server side. This doesn\"t mean the last time the user used the app since they can be pretty active offline too, and most of their activity is client side not server side. To find out about recent activity you can query their activity feed instead. &lt;br/>Client side apps cannot modify the user updated date, if they attempt to add information it will be discarded.",
         "required": true
       },
-      "newCorpusConnections": {
+      "newCorpora": {
         "items": {
-          "$ref": "CouchConnection"
+          "$ref": "Connection"
         },
         "type": "Array",
         "description": "deprecated, was used by the client apps to add new corpora to the users details, now use the user corpora API"
@@ -602,9 +603,9 @@ var UserGenericFactory = function(appVersion, defaultCorpusConnection, Diacritic
     }
   };
 
-  this.set = function(user, additionalOptions, optionalRequestedCorpusConnection) {
+  this.set = function(user, additionalOptions, optionalRequestedConnection) {
     if (!user) {
-      user = this.build(additionalOptions, optionalRequestedCorpusConnection);
+      user = this.build(additionalOptions, optionalRequestedConnection);
     }
     for (var option in additionalOptions) {
       user[option] = additionalOptions[option];
@@ -626,13 +627,13 @@ module.exports = UserGenericFactory;
 </div>
 
 <nav>
-    <h2><a href="index.html">Index</a></h2><h3>Modules</h3><ul><li><a href="module-FieldDB.html">FieldDB</a></li></ul><h3>Classes</h3><ul><li><a href="Activities.html">Activities</a></li><li><a href="Activity.html">Activity</a></li><li><a href="App.html">App</a></li><li><a href="AppRouter.html">AppRouter</a></li><li><a href="AudioPlayer.html">AudioPlayer</a></li><li><a href="AudioVideo.html">AudioVideo</a></li><li><a href="AudioVideoRecorder.html">AudioVideoRecorder</a></li><li><a href="AudioVideos.html">AudioVideos</a></li><li><a href="Authentication.html">Authentication</a></li><li><a href="Collection.html">Collection</a></li><li><a href="Comment.html">Comment</a></li><li><a href="Comments.html">Comments</a></li><li><a href="Confidential.html">Confidential</a></li><li><a href="Consultant.html">Consultant</a></li><li><a href="Consultants.html">Consultants</a></li><li><a href="ContextualizableObject.html">ContextualizableObject</a></li><li><a href="Contextualizer.html">Contextualizer</a></li><li><a href="Conversation.html">Conversation</a></li><li><a href="Conversations.html">Conversations</a></li><li><a href="Corpus.html">Corpus</a></li><li><a href="Corpuses.html">Corpuses</a></li><li><a href="CorpusMask.html">CorpusMask</a></li><li><a href="DataList.html">DataList</a></li><li><a href="DataLists.html">DataLists</a></li><li><a href="dataURItoBlob.html">dataURItoBlob</a></li><li><a href="Datum.html">Datum</a></li><li><a href="DatumField.html">DatumField</a></li><li><a href="DatumFields.html">DatumFields</a></li><li><a href="Datums.html">Datums</a></li><li><a href="DatumState.html">DatumState</a></li><li><a href="DatumStates.html">DatumStates</a></li><li><a href="DatumTag.html">DatumTag</a></li><li><a href="DatumTags.html">DatumTags</a></li><li><a href="DocumentCollection.html">DocumentCollection</a></li><li><a href="ELanguages.html">ELanguages</a></li><li><a href="Export.html">Export</a></li><li><a href="FieldDBObject.html">FieldDBObject</a></li><li><a href="HotKey.html">HotKey</a></li><li><a href="HotKeys.html">HotKeys</a></li><li><a href="HTML5Audio.html">HTML5Audio</a></li><li><a href="Image.html">Image</a></li><li><a href="Images.html">Images</a></li><li><a href="InsertUnicode.html">InsertUnicode</a></li><li><a href="InsertUnicodes.html">InsertUnicodes</a></li><li><a href="Lexicon.html">Lexicon</a></li><li><a href="LexiconNode.html">LexiconNode</a></li><li><a href="LexiconNodes.html">LexiconNodes</a></li><li><a href="Participant.html">Participant</a></li><li><a href="Permission.html">Permission</a></li><li><a href="Permissions.html">Permissions</a></li><li><a href="PsycholinguisticsApp.html">PsycholinguisticsApp</a></li><li><a href="ReportBot.html">ReportBot</a></li><li><a href="Response.html">Response</a></li><li><a href="Search.html">Search</a></li><li><a href="Session.html">Session</a></li><li><a href="Sessions.html">Sessions</a></li><li><a href="Speaker.html">Speaker</a></li><li><a href="Stimulus.html">Stimulus</a></li><li><a href="SubExperimentDataList.html">SubExperimentDataList</a></li><li><a href="Team.html">Team</a></li><li><a href="User.html">User</a></li><li><a href="UserApp.html">UserApp</a></li><li><a href="UserMask.html">UserMask</a></li><li><a href="UserPreference.html">UserPreference</a></li><li><a href="UserRouter.html">UserRouter</a></li><li>{String: Exercise}</li></ul><h3>Global</h3><ul><li><a href="global.html#baseSchema">baseSchema</a></li><li><a href="global.html#clone">clone</a></li><li><a href="global.html#CorpusConnection">CorpusConnection</a></li><li><a href="global.html#debugMode">debugMode</a></li><li><a href="global.html#find">find</a></li><li><a href="global.html#getSanitizedDotNotationKey">getSanitizedDotNotationKey</a></li><li><a href="global.html#newCorpusConnection">newCorpusConnection</a></li><li><a href="global.html#sanitizeStringForFileSystem">sanitizeStringForFileSystem</a></li><li><a href="global.html#sanitizeStringForPrimaryKey">sanitizeStringForPrimaryKey</a></li><li><a href="global.html#validateDbnameFormat">validateDbnameFormat</a></li></ul>
+    <h2><a href="index.html">Index</a></h2><h3>Modules</h3><ul><li><a href="module-FieldDB.html">FieldDB</a></li></ul><h3>Classes</h3><ul><li><a href="Activities.html">Activities</a></li><li><a href="Activity.html">Activity</a></li><li><a href="App.html">App</a></li><li><a href="AppRouter.html">AppRouter</a></li><li><a href="AudioPlayer.html">AudioPlayer</a></li><li><a href="AudioVideo.html">AudioVideo</a></li><li><a href="AudioVideoRecorder.html">AudioVideoRecorder</a></li><li><a href="AudioVideos.html">AudioVideos</a></li><li><a href="Authentication.html">Authentication</a></li><li><a href="Collection.html">Collection</a></li><li><a href="Comment.html">Comment</a></li><li><a href="Comments.html">Comments</a></li><li><a href="Confidential.html">Confidential</a></li><li><a href="Connection.html">Connection</a></li><li><a href="Consultant.html">Consultant</a></li><li><a href="Consultants.html">Consultants</a></li><li><a href="ContextualizableObject.html">ContextualizableObject</a></li><li><a href="Contextualizer.html">Contextualizer</a></li><li><a href="Conversation.html">Conversation</a></li><li><a href="Conversations.html">Conversations</a></li><li><a href="Corpus.html">Corpus</a></li><li><a href="CorpusMask.html">CorpusMask</a></li><li><a href="DataList.html">DataList</a></li><li><a href="DataLists.html">DataLists</a></li><li><a href="dataURItoBlob.html">dataURItoBlob</a></li><li><a href="Datum.html">Datum</a></li><li><a href="DatumField.html">DatumField</a></li><li><a href="DatumFields.html">DatumFields</a></li><li><a href="Datums.html">Datums</a></li><li><a href="DatumState.html">DatumState</a></li><li><a href="DatumStates.html">DatumStates</a></li><li><a href="DatumTag.html">DatumTag</a></li><li><a href="DatumTags.html">DatumTags</a></li><li><a href="DocumentCollection.html">DocumentCollection</a></li><li><a href="ELanguages.html">ELanguages</a></li><li><a href="ExperimentDataList.html">ExperimentDataList</a></li><li><a href="Export.html">Export</a></li><li><a href="FieldDBObject.html">FieldDBObject</a></li><li><a href="HotKey.html">HotKey</a></li><li><a href="HotKeys.html">HotKeys</a></li><li><a href="HTML5Audio.html">HTML5Audio</a></li><li><a href="Image.html">Image</a></li><li><a href="Images.html">Images</a></li><li><a href="LexiconNodes.html">LexiconNodes</a></li><li><a href="Participant.html">Participant</a></li><li><a href="Permission.html">Permission</a></li><li><a href="Permissions.html">Permissions</a></li><li><a href="PsycholinguisticsApp.html">PsycholinguisticsApp</a></li><li><a href="ReportBot.html">ReportBot</a></li><li><a href="Response.html">Response</a></li><li><a href="Search.html">Search</a></li><li><a href="Session.html">Session</a></li><li><a href="Sessions.html">Sessions</a></li><li><a href="Speaker.html">Speaker</a></li><li><a href="Stimulus.html">Stimulus</a></li><li><a href="SubExperimentDataList.html">SubExperimentDataList</a></li><li><a href="Team.html">Team</a></li><li><a href="UnicodeSymbol.html">UnicodeSymbol</a></li><li><a href="UnicodeSymbols.html">UnicodeSymbols</a></li><li><a href="User.html">User</a></li><li><a href="UserApp.html">UserApp</a></li><li><a href="UserMask.html">UserMask</a></li><li><a href="UserPreference.html">UserPreference</a></li><li><a href="UserRouter.html">UserRouter</a></li><li><a href="Users.html">Users</a></li><li>{String: Exercise}</li></ul><h3>Global</h3><ul><li><a href="global.html#add">add</a></li><li><a href="global.html#clone">clone</a></li><li><a href="global.html#debugMode">debugMode</a></li><li><a href="global.html#find">find</a></li><li><a href="global.html#getMD5ForFile">getMD5ForFile</a></li><li><a href="global.html#getSanitizedDotNotationKey">getSanitizedDotNotationKey</a></li><li><a href="global.html#sanitizeStringForFileSystem">sanitizeStringForFileSystem</a></li><li><a href="global.html#sanitizeStringForPrimaryKey">sanitizeStringForPrimaryKey</a></li><li><a href="global.html#showDiffs">showDiffs</a></li></ul>
 </nav>
 
 <br clear="both">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.2</a> on Fri Feb 20 2015 15:29:49 GMT+0700 (WIT)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.2</a> on Mon Jul 20 2015 11:06:03 GMT-0400 (EDT)
 </footer>
 
 <script> prettyPrint(); </script>

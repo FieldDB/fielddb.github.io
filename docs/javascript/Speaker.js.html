@@ -73,7 +73,8 @@ var Speaker = function Speaker(options) {
   this.debug("Constructing Speaker: ", options);
   if (!options || (!options._rev && !options.fields)) {
     //If its a new participant with out a revision and without fields use the defaults
-    this.fields = this.defaults.fields;
+    options = options || {};
+    options.fields = this.defaults.fields;
   }
   UserMask.apply(this, arguments);
 };
@@ -124,6 +125,29 @@ Speaker.prototype = Object.create(UserMask.prototype, /** @lends Speaker.prototy
     }
   },
 
+  fields: {
+    get: function() {
+      this.debug("getting fields");
+      return this._fields;
+    },
+    set: function(value) {
+      if (value === this._fields) {
+        return;
+      }
+      if (!value) {
+        delete this._fields;
+        return;
+      } else {
+        if (typeof this.INTERNAL_MODELS["fields"] === "function" && Object.prototype.toString.call(value) === "[object Array]") {
+          value = new this.INTERNAL_MODELS["fields"](value);
+        }
+      }
+      if (!value.confidential) {
+        value.confidential = this.confidential;
+      }
+      this._fields = value;
+    }
+  },
 
   buildGravatar: {
     value: function() {
@@ -165,6 +189,9 @@ Speaker.prototype = Object.create(UserMask.prototype, /** @lends Speaker.prototy
           return this.fields.username.mask;
         }
       } else {
+        if (this.id) {
+          return this.id;
+        }
         return;
       }
     },
@@ -189,13 +216,10 @@ Speaker.prototype = Object.create(UserMask.prototype, /** @lends Speaker.prototy
 
   id: {
     get: function() {
-      // this._id = this.anonymousCode;
       return this.anonymousCode;
     },
     set: function(value) {
-      if (value === this.anonymousCode) {
-        this._id = value;
-      }
+      this.anonymousCode = value;
     }
   },
 
@@ -205,13 +229,15 @@ Speaker.prototype = Object.create(UserMask.prototype, /** @lends Speaker.prototy
         if (this.fields && this.fields.anonymousCode) {
           return this.fields.anonymousCode.value.toUpperCase();
         } else {
-          return;
+          return this._id;
         }
       } catch (e) {
         this.warn("there was a problem getting the anonymousCode of this speaker", e);
+        return this._id;
       }
     },
     set: function(value) {
+
       var actualUsername;
       if (this.fields && this.fields.username && this.fields.username.value) {
         this.fields.username.decryptedMode = true;
@@ -222,11 +248,12 @@ Speaker.prototype = Object.create(UserMask.prototype, /** @lends Speaker.prototy
         this.bug("Cannot set the anonymous code to contain any part of the user's actual username, this would potentially breach their confidentiality.");
         return;
       }
+
       if (!this.fields) {
         this.fields = new DatumFields(this.defaults.fields);
       }
-      this.fields.anonymousCode.value = value;
-      this.id = value;
+      this.fields.anonymousCode.value = this._id = value;
+      this.debug("Set the id and the anonymousCode of this user" + this._id, this);
       if (!this.encryptByCorpus) {
         this.confidential = new Confidential({
           secretkey: value
@@ -237,6 +264,7 @@ Speaker.prototype = Object.create(UserMask.prototype, /** @lends Speaker.prototy
 
   confidential: {
     get: function() {
+      this.debug("using this speaker's confidential encrypter");
       return this.confidentialEncrypter;
     },
     set: function(value) {
@@ -257,20 +285,19 @@ Speaker.prototype = Object.create(UserMask.prototype, /** @lends Speaker.prototy
   dateOfBirth: {
     configurable: true,
     get: function() {
-      if (this.fields) {
+      if (this.fields && this.fields.dateOfBirth) {
         return this.fields.dateOfBirth.value;
       } else {
         return;
       }
     },
     set: function(value) {
-      if (this.fields) {
-        // this.fields.debugMode = true;
-        this.fields.dateOfBirth.value = value;
-      } else {
+      this.debug("Setting dateOfBirth " + value, this.confidential);
+      if (!this.fields) {
         this.fields = new DatumFields(this.defaults.fields);
-        this.fields.dateOfBirth.value = value;
       }
+      // this.fields.debugMode = true;
+      this.fields.dateOfBirth.value = value;
     }
   },
 
@@ -380,34 +407,6 @@ Speaker.prototype = Object.create(UserMask.prototype, /** @lends Speaker.prototy
     }
   },
 
-  fields: {
-    configurable: true,
-    get: function() {
-      if (this._fields) {
-        // this.debug("setting speaker fields confidential in the Speaker.fields get function.");
-
-        // this._fields.encrypted = true;
-        // this._fields.decryptedMode = true;
-        this._fields.confidential = this.confidential;
-      }
-      return this._fields;
-    },
-    set: function(value) {
-      if (value === this._fields) {
-        return;
-      }
-      if (!value) {
-        delete this._fields;
-        return;
-      } else {
-        if (Object.prototype.toString.call(value) === "[object Array]") {
-          value = new this.INTERNAL_MODELS["fields"](value);
-        }
-      }
-      this._fields = value;
-    }
-  },
-
   user: {
     get: function() {
       if (!this.userMask) {
@@ -420,6 +419,8 @@ Speaker.prototype = Object.create(UserMask.prototype, /** @lends Speaker.prototy
             self.debug("Fetched speaker\"s user mask", result);
           }, function(error) {
             self.debug("Failed to fetch speaker\"s user mask", error);
+          }).fail(function(error) {
+            console.error(error.stack, self);
           });
 
         } else {
@@ -440,18 +441,6 @@ Speaker.prototype = Object.create(UserMask.prototype, /** @lends Speaker.prototy
         value = {};
       }
       this.userMask = value;
-    }
-  },
-
-  decryptedMode: {
-    get: function() {
-      return this._decryptedMode;
-    },
-    set: function(value) {
-      this._decryptedMode = value;
-      if (this._fields) {
-        this._fields.decryptedMode = value;
-      }
     }
   },
 
@@ -558,13 +547,13 @@ exports.Speaker = Speaker;
 </div>
 
 <nav>
-    <h2><a href="index.html">Index</a></h2><h3>Modules</h3><ul><li><a href="module-FieldDB.html">FieldDB</a></li></ul><h3>Classes</h3><ul><li><a href="Activities.html">Activities</a></li><li><a href="Activity.html">Activity</a></li><li><a href="App.html">App</a></li><li><a href="AppRouter.html">AppRouter</a></li><li><a href="AudioPlayer.html">AudioPlayer</a></li><li><a href="AudioVideo.html">AudioVideo</a></li><li><a href="AudioVideoRecorder.html">AudioVideoRecorder</a></li><li><a href="AudioVideos.html">AudioVideos</a></li><li><a href="Authentication.html">Authentication</a></li><li><a href="Collection.html">Collection</a></li><li><a href="Comment.html">Comment</a></li><li><a href="Comments.html">Comments</a></li><li><a href="Confidential.html">Confidential</a></li><li><a href="Consultant.html">Consultant</a></li><li><a href="Consultants.html">Consultants</a></li><li><a href="ContextualizableObject.html">ContextualizableObject</a></li><li><a href="Contextualizer.html">Contextualizer</a></li><li><a href="Conversation.html">Conversation</a></li><li><a href="Conversations.html">Conversations</a></li><li><a href="Corpus.html">Corpus</a></li><li><a href="Corpuses.html">Corpuses</a></li><li><a href="CorpusMask.html">CorpusMask</a></li><li><a href="DataList.html">DataList</a></li><li><a href="DataLists.html">DataLists</a></li><li><a href="dataURItoBlob.html">dataURItoBlob</a></li><li><a href="Datum.html">Datum</a></li><li><a href="DatumField.html">DatumField</a></li><li><a href="DatumFields.html">DatumFields</a></li><li><a href="Datums.html">Datums</a></li><li><a href="DatumState.html">DatumState</a></li><li><a href="DatumStates.html">DatumStates</a></li><li><a href="DatumTag.html">DatumTag</a></li><li><a href="DatumTags.html">DatumTags</a></li><li><a href="DocumentCollection.html">DocumentCollection</a></li><li><a href="ELanguages.html">ELanguages</a></li><li><a href="Export.html">Export</a></li><li><a href="FieldDBObject.html">FieldDBObject</a></li><li><a href="HotKey.html">HotKey</a></li><li><a href="HotKeys.html">HotKeys</a></li><li><a href="HTML5Audio.html">HTML5Audio</a></li><li><a href="Image.html">Image</a></li><li><a href="Images.html">Images</a></li><li><a href="InsertUnicode.html">InsertUnicode</a></li><li><a href="InsertUnicodes.html">InsertUnicodes</a></li><li><a href="Lexicon.html">Lexicon</a></li><li><a href="LexiconNode.html">LexiconNode</a></li><li><a href="LexiconNodes.html">LexiconNodes</a></li><li><a href="Participant.html">Participant</a></li><li><a href="Permission.html">Permission</a></li><li><a href="Permissions.html">Permissions</a></li><li><a href="PsycholinguisticsApp.html">PsycholinguisticsApp</a></li><li><a href="ReportBot.html">ReportBot</a></li><li><a href="Response.html">Response</a></li><li><a href="Search.html">Search</a></li><li><a href="Session.html">Session</a></li><li><a href="Sessions.html">Sessions</a></li><li><a href="Speaker.html">Speaker</a></li><li><a href="Stimulus.html">Stimulus</a></li><li><a href="SubExperimentDataList.html">SubExperimentDataList</a></li><li><a href="Team.html">Team</a></li><li><a href="User.html">User</a></li><li><a href="UserApp.html">UserApp</a></li><li><a href="UserMask.html">UserMask</a></li><li><a href="UserPreference.html">UserPreference</a></li><li><a href="UserRouter.html">UserRouter</a></li><li>{String: Exercise}</li></ul><h3>Global</h3><ul><li><a href="global.html#baseSchema">baseSchema</a></li><li><a href="global.html#clone">clone</a></li><li><a href="global.html#CorpusConnection">CorpusConnection</a></li><li><a href="global.html#debugMode">debugMode</a></li><li><a href="global.html#find">find</a></li><li><a href="global.html#getSanitizedDotNotationKey">getSanitizedDotNotationKey</a></li><li><a href="global.html#newCorpusConnection">newCorpusConnection</a></li><li><a href="global.html#sanitizeStringForFileSystem">sanitizeStringForFileSystem</a></li><li><a href="global.html#sanitizeStringForPrimaryKey">sanitizeStringForPrimaryKey</a></li><li><a href="global.html#validateDbnameFormat">validateDbnameFormat</a></li></ul>
+    <h2><a href="index.html">Index</a></h2><h3>Modules</h3><ul><li><a href="module-FieldDB.html">FieldDB</a></li></ul><h3>Classes</h3><ul><li><a href="Activities.html">Activities</a></li><li><a href="Activity.html">Activity</a></li><li><a href="App.html">App</a></li><li><a href="AppRouter.html">AppRouter</a></li><li><a href="AudioPlayer.html">AudioPlayer</a></li><li><a href="AudioVideo.html">AudioVideo</a></li><li><a href="AudioVideoRecorder.html">AudioVideoRecorder</a></li><li><a href="AudioVideos.html">AudioVideos</a></li><li><a href="Authentication.html">Authentication</a></li><li><a href="Collection.html">Collection</a></li><li><a href="Comment.html">Comment</a></li><li><a href="Comments.html">Comments</a></li><li><a href="Confidential.html">Confidential</a></li><li><a href="Connection.html">Connection</a></li><li><a href="Consultant.html">Consultant</a></li><li><a href="Consultants.html">Consultants</a></li><li><a href="ContextualizableObject.html">ContextualizableObject</a></li><li><a href="Contextualizer.html">Contextualizer</a></li><li><a href="Conversation.html">Conversation</a></li><li><a href="Conversations.html">Conversations</a></li><li><a href="Corpus.html">Corpus</a></li><li><a href="CorpusMask.html">CorpusMask</a></li><li><a href="DataList.html">DataList</a></li><li><a href="DataLists.html">DataLists</a></li><li><a href="dataURItoBlob.html">dataURItoBlob</a></li><li><a href="Datum.html">Datum</a></li><li><a href="DatumField.html">DatumField</a></li><li><a href="DatumFields.html">DatumFields</a></li><li><a href="Datums.html">Datums</a></li><li><a href="DatumState.html">DatumState</a></li><li><a href="DatumStates.html">DatumStates</a></li><li><a href="DatumTag.html">DatumTag</a></li><li><a href="DatumTags.html">DatumTags</a></li><li><a href="DocumentCollection.html">DocumentCollection</a></li><li><a href="ELanguages.html">ELanguages</a></li><li><a href="ExperimentDataList.html">ExperimentDataList</a></li><li><a href="Export.html">Export</a></li><li><a href="FieldDBObject.html">FieldDBObject</a></li><li><a href="HotKey.html">HotKey</a></li><li><a href="HotKeys.html">HotKeys</a></li><li><a href="HTML5Audio.html">HTML5Audio</a></li><li><a href="Image.html">Image</a></li><li><a href="Images.html">Images</a></li><li><a href="LexiconNodes.html">LexiconNodes</a></li><li><a href="Participant.html">Participant</a></li><li><a href="Permission.html">Permission</a></li><li><a href="Permissions.html">Permissions</a></li><li><a href="PsycholinguisticsApp.html">PsycholinguisticsApp</a></li><li><a href="ReportBot.html">ReportBot</a></li><li><a href="Response.html">Response</a></li><li><a href="Search.html">Search</a></li><li><a href="Session.html">Session</a></li><li><a href="Sessions.html">Sessions</a></li><li><a href="Speaker.html">Speaker</a></li><li><a href="Stimulus.html">Stimulus</a></li><li><a href="SubExperimentDataList.html">SubExperimentDataList</a></li><li><a href="Team.html">Team</a></li><li><a href="UnicodeSymbol.html">UnicodeSymbol</a></li><li><a href="UnicodeSymbols.html">UnicodeSymbols</a></li><li><a href="User.html">User</a></li><li><a href="UserApp.html">UserApp</a></li><li><a href="UserMask.html">UserMask</a></li><li><a href="UserPreference.html">UserPreference</a></li><li><a href="UserRouter.html">UserRouter</a></li><li><a href="Users.html">Users</a></li><li>{String: Exercise}</li></ul><h3>Global</h3><ul><li><a href="global.html#add">add</a></li><li><a href="global.html#clone">clone</a></li><li><a href="global.html#debugMode">debugMode</a></li><li><a href="global.html#find">find</a></li><li><a href="global.html#getMD5ForFile">getMD5ForFile</a></li><li><a href="global.html#getSanitizedDotNotationKey">getSanitizedDotNotationKey</a></li><li><a href="global.html#sanitizeStringForFileSystem">sanitizeStringForFileSystem</a></li><li><a href="global.html#sanitizeStringForPrimaryKey">sanitizeStringForPrimaryKey</a></li><li><a href="global.html#showDiffs">showDiffs</a></li></ul>
 </nav>
 
 <br clear="both">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.2</a> on Fri Feb 20 2015 15:29:49 GMT+0700 (WIT)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.2</a> on Mon Jul 20 2015 11:06:03 GMT-0400 (EDT)
 </footer>
 
 <script> prettyPrint(); </script>

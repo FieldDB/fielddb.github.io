@@ -64,10 +64,10 @@
     },
 
     routes : {
-      "corpus/:pouchname/:id"           : "showCorpusDashboard",
-      "corpus/:pouchname/"              : "guessCorpusIdAndShowDashboard",
-      "corpus/:pouchname"               : "guessCorpusIdAndShowDashboard",
-      "login/:pouchname"                : "showQuickAuthenticateAndRedirectToDatabase",
+      "corpus/:dbname/:id"           : "showCorpusDashboard",
+      "corpus/:dbname/"              : "guessCorpusIdAndShowDashboard",
+      "corpus/:dbname"               : "guessCorpusIdAndShowDashboard",
+      "login/:dbname"                : "showQuickAuthenticateAndRedirectToDatabase",
       "render/:render"                  : "showDashboard",
       ""                                : "showDashboard"
     },
@@ -88,24 +88,24 @@
     showFullscreenUser : function() {
       if (OPrime.debugMode) OPrime.debug("In showFullscreenUser: " );
     },
-    showQuickAuthenticateAndRedirectToDatabase : function(pouchname){
+    showQuickAuthenticateAndRedirectToDatabase : function(dbname){
       window.app.set("corpus", new Corpus());
       window.app.get("authentication").syncUserWithServer(function(){
-        var optionalCouchAppPath = OPrime.guessCorpusUrlBasedOnWindowOrigin(pouchname);
+        var optionalCouchAppPath = OPrime.guessCorpusUrlBasedOnWindowOrigin(dbname);
         window.location.replace(optionalCouchAppPath+"corpus.html");
     });
     },
-    guessCorpusIdAndShowDashboard : function(pouchname){
-      var connection = JSON.parse(JSON.stringify(window.app.get("authentication").get("userPrivate").get("corpuses")[0]));
+    guessCorpusIdAndShowDashboard : function(dbname){
+      var connection = JSON.parse(JSON.stringify(window.app.get("authentication").get("userPrivate").get("corpora")[0]));
       if(!connection){
         return;
       }
       /* this assumes that the user's corpus connection for this pouch is not on a different server */
-      connection.pouchname = pouchname;
+      connection.dbname = dbname;
       window.app.changePouch(connection, function(){
         var c = new CorpusMask();
         c.set({
-          "pouchname" : pouchname
+          "dbname" : dbname
         });
         c.id = "corpus";
         c.fetch({
@@ -117,7 +117,7 @@
               corpusidfromCorpusMask = model.get("corpusId");
             }
             if(corpusidfromCorpusMask){
-              window.app.router.showCorpusDashboard(pouchname, corpusidfromCorpusMask);
+              window.app.router.showCorpusDashboard(dbname, corpusidfromCorpusMask);
             }else{
               OPrime.bug("There was a problem loading this corpus. Please report this.");
               if(OPrime.isChromeApp()){
@@ -143,34 +143,34 @@
      * Loads the requested corpus, and redirects the user to the corpus dashboard
      *
      * @param {String}
-     *          pouchname The name of the corpus this datum is from.
+     *          dbname The name of the corpus this datum is from.
      */
-    showCorpusDashboard : function(pouchname, corpusid) {
+    showCorpusDashboard : function(dbname, corpusid) {
       if (OPrime.debugMode) OPrime.debug("In showFullscreenCorpus: " );
 
       /*
        * If the corpusid is not specified, then try to guess it by re-routing us to the guess function
        */
       if(!corpusid){
-        window.app.router.navigate("corpus/"+pouchname, {trigger: true});
+        window.app.router.navigate("corpus/"+dbname, {trigger: true});
 
         return;
       }
-      if(!pouchname){
-        if (OPrime.debugMode) OPrime.debug("the pouchname is missing, this should never happen");
+      if(!dbname){
+        if (OPrime.debugMode) OPrime.debug("the dbname is missing, this should never happen");
         return;
       }
-      var connection = JSON.parse(JSON.stringify(window.app.get("authentication").get("userPrivate").get("corpuses")[0]));
+      var connection = JSON.parse(JSON.stringify(window.app.get("authentication").get("userPrivate").get("corpora")[0]));
       if(!connection){
         return;
       }
       var self = this;
-      connection.pouchname = pouchname;
+      connection.dbname = dbname;
       window.app.changePouch(connection, function(){
 
         var c = new Corpus();
         c.set({
-          "pouchname" : pouchname
+          "dbname" : dbname
         });
         c.id = corpusid;
         c.fetch({
@@ -200,7 +200,7 @@
 
             self.bringCorpusToThisDevice(c, function(){
               alert("Downloaded this corpus to this device. Attempting to load the corpus dashboard.");
-              self.showCorpusDashboard(pouchname, corpusid);
+              self.showCorpusDashboard(dbname, corpusid);
               self.islooping = true;
 
             }, function(e){
@@ -218,23 +218,23 @@
           corpusid : c.id,
           datalistid : c.datalists.models[0].id,
           sessionid : c.sessions.models[0].id,
-          couchConnection : c.get("couchConnection")
+          connection : c.get("connection")
         };
         console.log("mostRecentIds", mostRecentIds);
         window.app.get("authentication").get("userPrivate").set("mostRecentIds", mostRecentIds);
         window.app.get("authentication").saveAndInterConnectInApp(function(){
           var optionalCouchAppPath= "";
-          if(c.get("couchConnection").pouchname){
-             optionalCouchAppPath = OPrime.guessCorpusUrlBasedOnWindowOrigin(c.get("couchConnection").pouchname);
+          if(c.get("connection").dbname){
+             optionalCouchAppPath = OPrime.guessCorpusUrlBasedOnWindowOrigin(c.get("connection").dbname);
           }
           window.location.replace(optionalCouchAppPath+"corpus.html");
           return;
         });
     },
     bringCorpusToThisDevice : function(corpus, callback) {
-      for (var x in window.app.get("authentication").get("userPrivate").get("corpuses")){
-        if(window.app.get("authentication").get("userPrivate").get("corpuses")[x].pouchname == corpus.get("pouchname")){
-          corpus.set("couchConnection", window.app.get("authentication").get("userPrivate").get("corpuses")[x]);
+      for (var x in window.app.get("authentication").get("userPrivate").get("corpora")){
+        if(window.app.get("authentication").get("userPrivate").get("corpora")[x].dbname == corpus.get("dbname")){
+          corpus.set("connection", window.app.get("authentication").get("userPrivate").get("corpora")[x]);
           window.app.set("corpus",corpus);
           window.app.get("authentication").staleAuthentication = true;
           window.app.get("authentication").syncUserWithServer(function(){
@@ -278,13 +278,13 @@
 </div>
 
 <nav>
-    <h2><a href="index.html">Index</a></h2><h3>Modules</h3><ul><li><a href="module-FieldDB.html">FieldDB</a></li></ul><h3>Classes</h3><ul><li><a href="Activities.html">Activities</a></li><li><a href="Activity.html">Activity</a></li><li><a href="App.html">App</a></li><li><a href="AppRouter.html">AppRouter</a></li><li><a href="AudioPlayer.html">AudioPlayer</a></li><li><a href="AudioVideo.html">AudioVideo</a></li><li><a href="AudioVideoRecorder.html">AudioVideoRecorder</a></li><li><a href="AudioVideos.html">AudioVideos</a></li><li><a href="Authentication.html">Authentication</a></li><li><a href="Collection.html">Collection</a></li><li><a href="Comment.html">Comment</a></li><li><a href="Comments.html">Comments</a></li><li><a href="Confidential.html">Confidential</a></li><li><a href="Consultant.html">Consultant</a></li><li><a href="Consultants.html">Consultants</a></li><li><a href="ContextualizableObject.html">ContextualizableObject</a></li><li><a href="Contextualizer.html">Contextualizer</a></li><li><a href="Conversation.html">Conversation</a></li><li><a href="Conversations.html">Conversations</a></li><li><a href="Corpus.html">Corpus</a></li><li><a href="Corpuses.html">Corpuses</a></li><li><a href="CorpusMask.html">CorpusMask</a></li><li><a href="DataList.html">DataList</a></li><li><a href="DataLists.html">DataLists</a></li><li><a href="dataURItoBlob.html">dataURItoBlob</a></li><li><a href="Datum.html">Datum</a></li><li><a href="DatumField.html">DatumField</a></li><li><a href="DatumFields.html">DatumFields</a></li><li><a href="Datums.html">Datums</a></li><li><a href="DatumState.html">DatumState</a></li><li><a href="DatumStates.html">DatumStates</a></li><li><a href="DatumTag.html">DatumTag</a></li><li><a href="DatumTags.html">DatumTags</a></li><li><a href="DocumentCollection.html">DocumentCollection</a></li><li><a href="ELanguages.html">ELanguages</a></li><li><a href="Export.html">Export</a></li><li><a href="FieldDBObject.html">FieldDBObject</a></li><li><a href="HotKey.html">HotKey</a></li><li><a href="HotKeys.html">HotKeys</a></li><li><a href="HTML5Audio.html">HTML5Audio</a></li><li><a href="Image.html">Image</a></li><li><a href="Images.html">Images</a></li><li><a href="InsertUnicode.html">InsertUnicode</a></li><li><a href="InsertUnicodes.html">InsertUnicodes</a></li><li><a href="Lexicon.html">Lexicon</a></li><li><a href="LexiconNode.html">LexiconNode</a></li><li><a href="LexiconNodes.html">LexiconNodes</a></li><li><a href="Participant.html">Participant</a></li><li><a href="Permission.html">Permission</a></li><li><a href="Permissions.html">Permissions</a></li><li><a href="PsycholinguisticsApp.html">PsycholinguisticsApp</a></li><li><a href="ReportBot.html">ReportBot</a></li><li><a href="Response.html">Response</a></li><li><a href="Search.html">Search</a></li><li><a href="Session.html">Session</a></li><li><a href="Sessions.html">Sessions</a></li><li><a href="Speaker.html">Speaker</a></li><li><a href="Stimulus.html">Stimulus</a></li><li><a href="SubExperimentDataList.html">SubExperimentDataList</a></li><li><a href="Team.html">Team</a></li><li><a href="User.html">User</a></li><li><a href="UserApp.html">UserApp</a></li><li><a href="UserMask.html">UserMask</a></li><li><a href="UserPreference.html">UserPreference</a></li><li><a href="UserRouter.html">UserRouter</a></li><li>{String: Exercise}</li></ul><h3>Global</h3><ul><li><a href="global.html#baseSchema">baseSchema</a></li><li><a href="global.html#clone">clone</a></li><li><a href="global.html#CorpusConnection">CorpusConnection</a></li><li><a href="global.html#debugMode">debugMode</a></li><li><a href="global.html#find">find</a></li><li><a href="global.html#getSanitizedDotNotationKey">getSanitizedDotNotationKey</a></li><li><a href="global.html#newCorpusConnection">newCorpusConnection</a></li><li><a href="global.html#sanitizeStringForFileSystem">sanitizeStringForFileSystem</a></li><li><a href="global.html#sanitizeStringForPrimaryKey">sanitizeStringForPrimaryKey</a></li><li><a href="global.html#validateDbnameFormat">validateDbnameFormat</a></li></ul>
+    <h2><a href="index.html">Index</a></h2><h3>Modules</h3><ul><li><a href="module-FieldDB.html">FieldDB</a></li></ul><h3>Classes</h3><ul><li><a href="Activities.html">Activities</a></li><li><a href="Activity.html">Activity</a></li><li><a href="App.html">App</a></li><li><a href="AppRouter.html">AppRouter</a></li><li><a href="AudioPlayer.html">AudioPlayer</a></li><li><a href="AudioVideo.html">AudioVideo</a></li><li><a href="AudioVideoRecorder.html">AudioVideoRecorder</a></li><li><a href="AudioVideos.html">AudioVideos</a></li><li><a href="Authentication.html">Authentication</a></li><li><a href="Collection.html">Collection</a></li><li><a href="Comment.html">Comment</a></li><li><a href="Comments.html">Comments</a></li><li><a href="Confidential.html">Confidential</a></li><li><a href="Connection.html">Connection</a></li><li><a href="Consultant.html">Consultant</a></li><li><a href="Consultants.html">Consultants</a></li><li><a href="ContextualizableObject.html">ContextualizableObject</a></li><li><a href="Contextualizer.html">Contextualizer</a></li><li><a href="Conversation.html">Conversation</a></li><li><a href="Conversations.html">Conversations</a></li><li><a href="Corpus.html">Corpus</a></li><li><a href="CorpusMask.html">CorpusMask</a></li><li><a href="DataList.html">DataList</a></li><li><a href="DataLists.html">DataLists</a></li><li><a href="dataURItoBlob.html">dataURItoBlob</a></li><li><a href="Datum.html">Datum</a></li><li><a href="DatumField.html">DatumField</a></li><li><a href="DatumFields.html">DatumFields</a></li><li><a href="Datums.html">Datums</a></li><li><a href="DatumState.html">DatumState</a></li><li><a href="DatumStates.html">DatumStates</a></li><li><a href="DatumTag.html">DatumTag</a></li><li><a href="DatumTags.html">DatumTags</a></li><li><a href="DocumentCollection.html">DocumentCollection</a></li><li><a href="ELanguages.html">ELanguages</a></li><li><a href="ExperimentDataList.html">ExperimentDataList</a></li><li><a href="Export.html">Export</a></li><li><a href="FieldDBObject.html">FieldDBObject</a></li><li><a href="HotKey.html">HotKey</a></li><li><a href="HotKeys.html">HotKeys</a></li><li><a href="HTML5Audio.html">HTML5Audio</a></li><li><a href="Image.html">Image</a></li><li><a href="Images.html">Images</a></li><li><a href="LexiconNodes.html">LexiconNodes</a></li><li><a href="Participant.html">Participant</a></li><li><a href="Permission.html">Permission</a></li><li><a href="Permissions.html">Permissions</a></li><li><a href="PsycholinguisticsApp.html">PsycholinguisticsApp</a></li><li><a href="ReportBot.html">ReportBot</a></li><li><a href="Response.html">Response</a></li><li><a href="Search.html">Search</a></li><li><a href="Session.html">Session</a></li><li><a href="Sessions.html">Sessions</a></li><li><a href="Speaker.html">Speaker</a></li><li><a href="Stimulus.html">Stimulus</a></li><li><a href="SubExperimentDataList.html">SubExperimentDataList</a></li><li><a href="Team.html">Team</a></li><li><a href="UnicodeSymbol.html">UnicodeSymbol</a></li><li><a href="UnicodeSymbols.html">UnicodeSymbols</a></li><li><a href="User.html">User</a></li><li><a href="UserApp.html">UserApp</a></li><li><a href="UserMask.html">UserMask</a></li><li><a href="UserPreference.html">UserPreference</a></li><li><a href="UserRouter.html">UserRouter</a></li><li><a href="Users.html">Users</a></li><li>{String: Exercise}</li></ul><h3>Global</h3><ul><li><a href="global.html#add">add</a></li><li><a href="global.html#clone">clone</a></li><li><a href="global.html#debugMode">debugMode</a></li><li><a href="global.html#find">find</a></li><li><a href="global.html#getMD5ForFile">getMD5ForFile</a></li><li><a href="global.html#getSanitizedDotNotationKey">getSanitizedDotNotationKey</a></li><li><a href="global.html#sanitizeStringForFileSystem">sanitizeStringForFileSystem</a></li><li><a href="global.html#sanitizeStringForPrimaryKey">sanitizeStringForPrimaryKey</a></li><li><a href="global.html#showDiffs">showDiffs</a></li></ul>
 </nav>
 
 <br clear="both">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.2</a> on Fri Feb 20 2015 15:29:49 GMT+0700 (WIT)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.2</a> on Mon Jul 20 2015 11:06:03 GMT-0400 (EDT)
 </footer>
 
 <script> prettyPrint(); </script>

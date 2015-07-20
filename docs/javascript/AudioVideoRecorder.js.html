@@ -34,7 +34,8 @@
     
     <section>
         <article>
-            <pre class="prettyprint source"><code>/* globals document, window, navigator, FieldDB, Media, FileReader */
+            <pre class="prettyprint source"><code>/* globals document, window, navigator, Media, FileReader */
+var FieldDBObject = require("./../FieldDBObject").FieldDBObject;
 var Q = require("q");
 var RecordMP3 = require("recordmp3js/js/recordmp3");
 
@@ -170,8 +171,8 @@ AudioVideoRecorder.prototype = Object.create(Object.prototype, /** @lends AudioV
         deferred = Q.defer(),
         self = this;
 
-      if (FieldDB && FieldDB.FieldDBObject && FieldDB.FieldDBObject.application) {
-        application = FieldDB.FieldDBObject.application;
+      if (FieldDBObject.application) {
+        application = FieldDBObject.application;
       }
       var errorInAudioVideoPeripheralsCheck = function(error) {
         application.videoRecordingVerified = false;
@@ -180,7 +181,7 @@ AudioVideoRecorder.prototype = Object.create(Object.prototype, /** @lends AudioV
       };
 
       Q.nextTick(function() {
-        if(self.peripheralsCheckRunning){
+        if (self.peripheralsCheckRunning) {
           deferred.reject("Already running");
           return;
         }
@@ -188,12 +189,17 @@ AudioVideoRecorder.prototype = Object.create(Object.prototype, /** @lends AudioV
 
         var waitUntilVideoElementIsRendered = function() {
           if (!optionalElements) {
-            optionalElements = {
-              image: document.getElementById("video-snapshot"),
-              video: document.getElementById("video-preview"),
-              audio: document.getElementById("audio-preview"),
-              canvas: document.getElementById("video-snapshot-canvas"),
-            };
+            try {
+              optionalElements = {
+                image: document.getElementById("video-snapshot"),
+                video: document.getElementById("video-preview"),
+                audio: document.getElementById("audio-preview"),
+                canvas: document.getElementById("video-snapshot-canvas"),
+              };
+            } catch (e) {
+              this.warn("There is no DOM, cant run peripheralsCheck unless the elements are supplied ");
+              this.debug(e);
+            }
           }
           if (!optionalElements.canvas) {
             errorInAudioVideoPeripheralsCheck("video-snapshot-canvas is not present, cant verify peripheralsCheck");
@@ -245,9 +251,9 @@ AudioVideoRecorder.prototype = Object.create(Object.prototype, /** @lends AudioV
               optionalElements.video.muted = true;
               navigator.geolocation.getCurrentPosition(function(position) {
                 console.warn("recieved position information");
-                if (FieldDB && FieldDB.FieldDBObject) {
-                  FieldDB.FieldDBObject.software = FieldDB.FieldDBObject.software || {};
-                  FieldDB.FieldDBObject.software.location = position.coords;
+                if (FieldDBObject) {
+                  FieldDBObject.software = FieldDBObject.software || {};
+                  FieldDBObject.software.location = position.coords;
                 }
               });
 
@@ -302,7 +308,7 @@ AudioVideoRecorder.prototype = Object.create(Object.prototype, /** @lends AudioV
 
         if (!optionalElements.video) {
           console.warn("waiting for the video preview to get rendered, did you forget to declare it somewhere? ");
-          window.setTimeout(waitUntilVideoElementIsRendered, 2000);
+          setTimeout(waitUntilVideoElementIsRendered, 2000);
         } else {
           waitUntilVideoElementIsRendered();
         }
@@ -375,33 +381,38 @@ AudioVideoRecorder.prototype = Object.create(Object.prototype, /** @lends AudioV
           // var xhr = new XMLHttpRequest();
           var url = event.target.result;
 
-          // Add audio element and download URL to page.
-          var showAudioArea = document.createElement("p");
-          var au = document.createElement("audio");
-          au.classList = ["fielddb-audio-temp-play-audio"];
-          var hf = document.createElement("a");
-          hf.classList = ["fielddb-audio-temp-save-link"];
-          hf.innerText = "Save to this device";
-          au.controls = true;
-          au.src = url;
-          hf.href = url;
-          hf.download = mp3Name;
-          hf.innerHTML = mp3Name;
-          showAudioArea.appendChild(au);
-          au.play();
-          showAudioArea.appendChild(hf);
-          console.log("todo dont need to append this audio after upload");
+          try {
+            // Add audio element and download URL to page.
+            var showAudioArea = document.createElement("p");
+            var au = document.createElement("audio");
+            au.classList = ["fielddb-audio-temp-play-audio"];
+            var hf = document.createElement("a");
+            hf.classList = ["fielddb-audio-temp-save-link"];
+            hf.innerText = "Save to this device";
+            au.controls = true;
+            au.src = url;
+            hf.href = url;
+            hf.download = mp3Name;
+            hf.innerHTML = mp3Name;
+            showAudioArea.appendChild(au);
+            au.play();
+            showAudioArea.appendChild(hf);
+            console.log("todo dont need to append this audio after upload");
 
-          element.appendChild(showAudioArea);
-          callingContext.parent.addFile({
-            filename: mp3Name,
-            description: "Recorded using spreadsheet app",
-            data: url
-          });
+            element.appendChild(showAudioArea);
+            callingContext.parent.addFile({
+              filename: mp3Name,
+              description: "Recorded using spreadsheet app",
+              data: url
+            });
+          } catch (e) {
+            this.warn("There is no DOM, cant show audio player");
+            this.debug(e);
+          }
           // callingContext.status += "\nmp3name = " + mp3Name;
           // fd.append("filename", encodeURIComponent(mp3Name));
 
-          // xhr.open("POST", new FieldDB.AudioVideo().BASE_SPEECH_URL + "/upload/extract/utterances", true);
+          // xhr.open("POST", new AudioVideo().BASE_SPEECH_URL + "/upload/extract/utterances", true);
           // xhr.onreadystatechange = function(response) {
           //   console.log(response);
           //   if (xhr.readyState === 4) {
@@ -412,7 +423,7 @@ AudioVideoRecorder.prototype = Object.create(Object.prototype, /** @lends AudioV
           //   console.warn("dont clear if upload fialed");
           // };
           // xhr.send(fd);
-            recorder.clear();
+          recorder.clear();
         };
         reader.readAsDataURL(mp3Data);
 
@@ -444,13 +455,13 @@ exports.AudioVideoRecorder = AudioVideoRecorder;
 </div>
 
 <nav>
-    <h2><a href="index.html">Index</a></h2><h3>Modules</h3><ul><li><a href="module-FieldDB.html">FieldDB</a></li></ul><h3>Classes</h3><ul><li><a href="Activities.html">Activities</a></li><li><a href="Activity.html">Activity</a></li><li><a href="App.html">App</a></li><li><a href="AppRouter.html">AppRouter</a></li><li><a href="AudioPlayer.html">AudioPlayer</a></li><li><a href="AudioVideo.html">AudioVideo</a></li><li><a href="AudioVideoRecorder.html">AudioVideoRecorder</a></li><li><a href="AudioVideos.html">AudioVideos</a></li><li><a href="Authentication.html">Authentication</a></li><li><a href="Collection.html">Collection</a></li><li><a href="Comment.html">Comment</a></li><li><a href="Comments.html">Comments</a></li><li><a href="Confidential.html">Confidential</a></li><li><a href="Consultant.html">Consultant</a></li><li><a href="Consultants.html">Consultants</a></li><li><a href="ContextualizableObject.html">ContextualizableObject</a></li><li><a href="Contextualizer.html">Contextualizer</a></li><li><a href="Conversation.html">Conversation</a></li><li><a href="Conversations.html">Conversations</a></li><li><a href="Corpus.html">Corpus</a></li><li><a href="Corpuses.html">Corpuses</a></li><li><a href="CorpusMask.html">CorpusMask</a></li><li><a href="DataList.html">DataList</a></li><li><a href="DataLists.html">DataLists</a></li><li><a href="dataURItoBlob.html">dataURItoBlob</a></li><li><a href="Datum.html">Datum</a></li><li><a href="DatumField.html">DatumField</a></li><li><a href="DatumFields.html">DatumFields</a></li><li><a href="Datums.html">Datums</a></li><li><a href="DatumState.html">DatumState</a></li><li><a href="DatumStates.html">DatumStates</a></li><li><a href="DatumTag.html">DatumTag</a></li><li><a href="DatumTags.html">DatumTags</a></li><li><a href="DocumentCollection.html">DocumentCollection</a></li><li><a href="ELanguages.html">ELanguages</a></li><li><a href="Export.html">Export</a></li><li><a href="FieldDBObject.html">FieldDBObject</a></li><li><a href="HotKey.html">HotKey</a></li><li><a href="HotKeys.html">HotKeys</a></li><li><a href="HTML5Audio.html">HTML5Audio</a></li><li><a href="Image.html">Image</a></li><li><a href="Images.html">Images</a></li><li><a href="InsertUnicode.html">InsertUnicode</a></li><li><a href="InsertUnicodes.html">InsertUnicodes</a></li><li><a href="Lexicon.html">Lexicon</a></li><li><a href="LexiconNode.html">LexiconNode</a></li><li><a href="LexiconNodes.html">LexiconNodes</a></li><li><a href="Participant.html">Participant</a></li><li><a href="Permission.html">Permission</a></li><li><a href="Permissions.html">Permissions</a></li><li><a href="PsycholinguisticsApp.html">PsycholinguisticsApp</a></li><li><a href="ReportBot.html">ReportBot</a></li><li><a href="Response.html">Response</a></li><li><a href="Search.html">Search</a></li><li><a href="Session.html">Session</a></li><li><a href="Sessions.html">Sessions</a></li><li><a href="Speaker.html">Speaker</a></li><li><a href="Stimulus.html">Stimulus</a></li><li><a href="SubExperimentDataList.html">SubExperimentDataList</a></li><li><a href="Team.html">Team</a></li><li><a href="User.html">User</a></li><li><a href="UserApp.html">UserApp</a></li><li><a href="UserMask.html">UserMask</a></li><li><a href="UserPreference.html">UserPreference</a></li><li><a href="UserRouter.html">UserRouter</a></li><li>{String: Exercise}</li></ul><h3>Global</h3><ul><li><a href="global.html#baseSchema">baseSchema</a></li><li><a href="global.html#clone">clone</a></li><li><a href="global.html#CorpusConnection">CorpusConnection</a></li><li><a href="global.html#debugMode">debugMode</a></li><li><a href="global.html#find">find</a></li><li><a href="global.html#getSanitizedDotNotationKey">getSanitizedDotNotationKey</a></li><li><a href="global.html#newCorpusConnection">newCorpusConnection</a></li><li><a href="global.html#sanitizeStringForFileSystem">sanitizeStringForFileSystem</a></li><li><a href="global.html#sanitizeStringForPrimaryKey">sanitizeStringForPrimaryKey</a></li><li><a href="global.html#validateDbnameFormat">validateDbnameFormat</a></li></ul>
+    <h2><a href="index.html">Index</a></h2><h3>Modules</h3><ul><li><a href="module-FieldDB.html">FieldDB</a></li></ul><h3>Classes</h3><ul><li><a href="Activities.html">Activities</a></li><li><a href="Activity.html">Activity</a></li><li><a href="App.html">App</a></li><li><a href="AppRouter.html">AppRouter</a></li><li><a href="AudioPlayer.html">AudioPlayer</a></li><li><a href="AudioVideo.html">AudioVideo</a></li><li><a href="AudioVideoRecorder.html">AudioVideoRecorder</a></li><li><a href="AudioVideos.html">AudioVideos</a></li><li><a href="Authentication.html">Authentication</a></li><li><a href="Collection.html">Collection</a></li><li><a href="Comment.html">Comment</a></li><li><a href="Comments.html">Comments</a></li><li><a href="Confidential.html">Confidential</a></li><li><a href="Connection.html">Connection</a></li><li><a href="Consultant.html">Consultant</a></li><li><a href="Consultants.html">Consultants</a></li><li><a href="ContextualizableObject.html">ContextualizableObject</a></li><li><a href="Contextualizer.html">Contextualizer</a></li><li><a href="Conversation.html">Conversation</a></li><li><a href="Conversations.html">Conversations</a></li><li><a href="Corpus.html">Corpus</a></li><li><a href="CorpusMask.html">CorpusMask</a></li><li><a href="DataList.html">DataList</a></li><li><a href="DataLists.html">DataLists</a></li><li><a href="dataURItoBlob.html">dataURItoBlob</a></li><li><a href="Datum.html">Datum</a></li><li><a href="DatumField.html">DatumField</a></li><li><a href="DatumFields.html">DatumFields</a></li><li><a href="Datums.html">Datums</a></li><li><a href="DatumState.html">DatumState</a></li><li><a href="DatumStates.html">DatumStates</a></li><li><a href="DatumTag.html">DatumTag</a></li><li><a href="DatumTags.html">DatumTags</a></li><li><a href="DocumentCollection.html">DocumentCollection</a></li><li><a href="ELanguages.html">ELanguages</a></li><li><a href="ExperimentDataList.html">ExperimentDataList</a></li><li><a href="Export.html">Export</a></li><li><a href="FieldDBObject.html">FieldDBObject</a></li><li><a href="HotKey.html">HotKey</a></li><li><a href="HotKeys.html">HotKeys</a></li><li><a href="HTML5Audio.html">HTML5Audio</a></li><li><a href="Image.html">Image</a></li><li><a href="Images.html">Images</a></li><li><a href="LexiconNodes.html">LexiconNodes</a></li><li><a href="Participant.html">Participant</a></li><li><a href="Permission.html">Permission</a></li><li><a href="Permissions.html">Permissions</a></li><li><a href="PsycholinguisticsApp.html">PsycholinguisticsApp</a></li><li><a href="ReportBot.html">ReportBot</a></li><li><a href="Response.html">Response</a></li><li><a href="Search.html">Search</a></li><li><a href="Session.html">Session</a></li><li><a href="Sessions.html">Sessions</a></li><li><a href="Speaker.html">Speaker</a></li><li><a href="Stimulus.html">Stimulus</a></li><li><a href="SubExperimentDataList.html">SubExperimentDataList</a></li><li><a href="Team.html">Team</a></li><li><a href="UnicodeSymbol.html">UnicodeSymbol</a></li><li><a href="UnicodeSymbols.html">UnicodeSymbols</a></li><li><a href="User.html">User</a></li><li><a href="UserApp.html">UserApp</a></li><li><a href="UserMask.html">UserMask</a></li><li><a href="UserPreference.html">UserPreference</a></li><li><a href="UserRouter.html">UserRouter</a></li><li><a href="Users.html">Users</a></li><li>{String: Exercise}</li></ul><h3>Global</h3><ul><li><a href="global.html#add">add</a></li><li><a href="global.html#clone">clone</a></li><li><a href="global.html#debugMode">debugMode</a></li><li><a href="global.html#find">find</a></li><li><a href="global.html#getMD5ForFile">getMD5ForFile</a></li><li><a href="global.html#getSanitizedDotNotationKey">getSanitizedDotNotationKey</a></li><li><a href="global.html#sanitizeStringForFileSystem">sanitizeStringForFileSystem</a></li><li><a href="global.html#sanitizeStringForPrimaryKey">sanitizeStringForPrimaryKey</a></li><li><a href="global.html#showDiffs">showDiffs</a></li></ul>
 </nav>
 
 <br clear="both">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.2</a> on Fri Feb 20 2015 15:29:49 GMT+0700 (WIT)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.2</a> on Mon Jul 20 2015 11:06:03 GMT-0400 (EDT)
 </footer>
 
 <script> prettyPrint(); </script>

@@ -35,18 +35,23 @@
     <section>
         <article>
             <pre class="prettyprint source"><code>var Confidential = require("./../confidentiality_encryption/Confidential").Confidential;
+var Activities = require("./../activity/Activities").Activities;
 var Database = require("./Database").Database;
+var Connection = require("./Connection").Connection;
 var DatumFields = require("./../datum/DatumFields").DatumFields;
 var DatumStates = require("./../datum/DatumStates").DatumStates;
 var DatumTags = require("./../datum/DatumTags").DatumTags;
 var Comments = require("./../comment/Comments").Comments;
 var FieldDBObject = require("./../FieldDBObject").FieldDBObject;
-var Sessions = require("./../Collection").Collection;
-var DataLists = require("./../Collection").Collection;
+var Sessions = require("./../datum/DocumentCollection").DocumentCollection;
+var DataLists = require("./../datum/DocumentCollection").DocumentCollection;
 var TeamPreference = require("./../user/UserPreference").UserPreference;
+var Team = require("./../user/Team").Team;
+var Permissions = require("./../permission/Permissions").Permissions;
+var Q = require("q");
 
 
-var DEFAULT_CORPUS_MODEL = require("./corpus.json");
+var DEFAULT_CORPUS_MODEL = require("./corpus_mask.json");
 /**
  * @class The CorpusMask is saved as corpus in the Couch repository,
  *        it is the publicly visible version of a corpus. By default it just says "This
@@ -79,10 +84,8 @@ var DEFAULT_CORPUS_MODEL = require("./corpus.json");
  *           of roughly where the data is from.
  * @property {String} remote The url of the remote eg:
  *           git@fieldlinguist.com:LingLlama/SampleFieldLinguisticsCorpus.git
- * @property {Array} couchConnections The url of couch remote(s) where the
- *           corpus is replicated or backed up.
- * @property {Array} olacConnections The url of OLAC remote(s) where the corpus
- *           is archived or published.
+ * @property {Array} connection The url of remote server(s) where the
+ *           corpus is replicated or backed up as well as other connection it is connected to.
  *
  * @property {Array} members Collection of public browsable/search engine
  *           discoverable members associated to the corpus
@@ -115,7 +118,8 @@ CorpusMask.prototype = Object.create(Database.prototype, /** @lends CorpusMask.p
 
   id: {
     get: function() {
-      return "corpus";
+      this._id = "corpus";
+      return this._id;
     },
     set: function(value) {
       if (value === this._id) {
@@ -134,73 +138,6 @@ CorpusMask.prototype = Object.create(Database.prototype, /** @lends CorpusMask.p
   defaults: {
     get: function() {
       var filteredCorpus = JSON.parse(JSON.stringify(DEFAULT_CORPUS_MODEL));
-      filteredCorpus.title = "Private Corpus";
-      filteredCorpus.description = "The details of this corpus are not public.";
-      filteredCorpus.location = {
-        latitude: 0,
-        longitude: 0,
-        accuracy: 0
-      };
-
-      var publicStates = [];
-      filteredCorpus.validationStati.map(function(state) {
-        if (state.validationStatus === "Checked*") {
-          publicStates.push(state);
-        } else if (state.validationStatus === "Published*") {
-          publicStates.push(state);
-        } else if (state.validationStatus === "ApprovedLanguageLearningContent*") {
-          publicStates.push(state);
-        }
-      });
-      filteredCorpus.validationStati = publicStates;
-
-      var publicableTags = [];
-      filteredCorpus.tags.map(function() {
-        // none
-      });
-      filteredCorpus.tags = publicableTags;
-
-      var publicableDatumFields = [];
-      filteredCorpus.datumFields.map(function(field) {
-        if (field.id === "judgement") {
-          publicableDatumFields.push(field);
-        } else if (field.id === "orthography") {
-          publicableDatumFields.push(field);
-        } else if (field.id === "utterance") {
-          publicableDatumFields.push(field);
-        } else if (field.id === "morphemes") {
-          publicableDatumFields.push(field);
-        } else if (field.id === "gloss") {
-          publicableDatumFields.push(field);
-        } else if (field.id === "translation") {
-          publicableDatumFields.push(field);
-        }
-      });
-      filteredCorpus.datumFields = publicableDatumFields;
-
-      var publicableSessionFields = [];
-      filteredCorpus.sessionFields.map(function(field) {
-        if (field.id === "dialect") {
-          publicableSessionFields.push(field);
-        } else if (field.id === "register") {
-          publicableSessionFields.push(field);
-        } else if (field.id === "language") {
-          publicableSessionFields.push(field);
-        } else if (field.id === "location") {
-          publicableSessionFields.push(field);
-        }
-      });
-      filteredCorpus.sessionFields = publicableSessionFields;
-
-      var publicableSpeakerFields = [];
-      filteredCorpus.speakerFields.map(function(field) {
-        if (field.id === "anonymousCode") {
-          publicableSpeakerFields.push(field);
-        }
-      });
-      filteredCorpus.speakerFields = publicableSpeakerFields;
-
-
       return filteredCorpus;
     }
   },
@@ -223,21 +160,24 @@ CorpusMask.prototype = Object.create(Database.prototype, /** @lends CorpusMask.p
       termsOfUse: FieldDBObject.DEFAULT_OBJECT,
       license: FieldDBObject.DEFAULT_OBJECT,
       copyright: FieldDBObject.DEFAULT_STRING,
-      replicatedCorpusUrls: FieldDBObject.DEFAULT_ARRAY,
-      olacExportConnections: FieldDBObject.DEFAULT_ARRAY,
+      connection: Connection,
+      activityConnection: Activities,
       publicCorpus: FieldDBObject.DEFAULT_STRING,
       confidential: Confidential,
 
       validationStati: DatumStates,
       tags: DatumTags,
 
+      fields: DatumFields,
       datumFields: DatumFields,
       speakerFields: DatumFields,
       participantFields: DatumFields,
       conversationFields: DatumFields,
       sessionFields: DatumFields,
 
-      prefs: TeamPreference
+      prefs: TeamPreference,
+      team: Team,
+      permissions: Permissions
     }
   },
 
@@ -264,15 +204,10 @@ CorpusMask.prototype = Object.create(Database.prototype, /** @lends CorpusMask.p
       return this._title || FieldDBObject.DEFAULT_STRING;
     },
     set: function(value) {
-      if (value === this._title) {
-        return;
+      this.ensureSetViaAppropriateType("title", value);
+      if (this._title) {
+        this._titleAsUrl = this.sanitizeStringForFileSystem(this._title, "_").toLowerCase();
       }
-      if (!value) {
-        delete this._title;
-        return;
-      }
-      this._title = value.trim();
-      this._titleAsUrl = this.sanitizeStringForFileSystem(this._title, "_").toLowerCase(); //this makes the accented char unnecessarily unreadable: encodeURIComponent(attributes.title.replace(/ /g,"_"));
     }
   },
 
@@ -281,34 +216,269 @@ CorpusMask.prototype = Object.create(Database.prototype, /** @lends CorpusMask.p
       return this._description || FieldDBObject.DEFAULT_STRING;
     },
     set: function(value) {
-      if (value === this._description) {
-        return;
+      this.ensureSetViaAppropriateType("description", value);
+    }
+  },
+
+  /**
+   * TODO decide if we want to fetch these from the server, and keep a fossil in the object?
+   * @type {Object}
+   */
+  team: {
+    get: function() {
+      if (!this._team) {
+        this.team = {
+          gravatar: "",
+          username: "",
+          _id: "team"
+        };
+        if (this.dbname) {
+          this._team.gravatar = this._team.gravatar || this.gravatar || this._team.buildGravatar(this.dbname);
+          this._team.username = this._team.username || this.dbname.split("-")[0];
+        }
+        if (this.id && this.rev) {
+          this._team.fetch();
+        }
       }
-      if (!value) {
-        delete this._description;
-        return;
+      return this._team;
+    },
+    set: function(value) {
+      this.ensureSetViaAppropriateType("team", value);
+    }
+  },
+
+  activityConnection: {
+    get: function() {
+      this.debug("getting activityConnection");
+      if (!this._activityConnection && this.rev && this._connection) {
+        this.warn("This corpus is missing its activity connection for some reason.");
+        var copy = this._connection.toJSON();
+        copy.dbname = copy.dbname + "-activity_feed";
+        this.activityConnection = copy;
       }
-      this._description = value.trim();
+      if (this._activityConnection && this._activityConnection.parent !== this) {
+        this._activityConnection.parent = this;
+      }
+      return this._activityConnection;
+    },
+    set: function(value) {
+      if (value) {
+        value.parent = this;
+        if (!value.confidential && this.confidential) {
+          value.confidential = this.confidential;
+        }
+      }
+      this.ensureSetViaAppropriateType("activityConnection", value);
+    }
+  },
+
+  replicatedCorpusUrls: {
+    get: function() {
+      if (this._connection && this._connection.replicatedCorpusUrls) {
+        return this._connection.replicatedCorpusUrls;
+      }
+      return FieldDBObject.DEFAULT_COLLECTION;
+    },
+    set: function(value) {
+      if (this._connection) {
+        this._connection.replicatedCorpusUrls = value;
+      }
+    }
+  },
+
+  olacExportConnections: {
+    get: function() {
+      if (this._connection && this._connection.olacExportConnections) {
+        return this._connection.olacExportConnections;
+      }
+      return FieldDBObject.DEFAULT_COLLECTION;
+    },
+    set: function(value) {
+      if (this._connection) {
+        this._connection.olacExportConnections = value;
+      }
+    }
+  },
+
+  termsOfUse: {
+    get: function() {
+      return this._termsOfUse || FieldDBObject.DEFAULT_OBJECT;
+    },
+    set: function(value) {
+      this.ensureSetViaAppropriateType("termsOfUse", value);
+    }
+  },
+
+  license: {
+    get: function() {
+      return this._license || {};
+    },
+    set: function(value) {
+      this.ensureSetViaAppropriateType("license", value);
+    }
+  },
+
+  copyright: {
+    get: function() {
+      return this._copyright || FieldDBObject.DEFAULT_STRING;
+    },
+    set: function(value) {
+      this.ensureSetViaAppropriateType("copyright", value);
+    }
+  },
+
+  unserializedSessions: {
+    value: null
+  },
+  sessions: {
+    get: function() {
+      return this.unserializedSessions || FieldDBObject.DEFAULT_COLLECTION;
+    },
+    set: function(value) {
+      this.ensureSetViaAppropriateType("sessions", value, "unserializedSessions");
+    }
+  },
+
+  unserializedDatalists: {
+    value: null
+  },
+  datalists: {
+    get: function() {
+      return this.unserializedDatalists || FieldDBObject.DEFAULT_COLLECTION;
+    },
+    set: function(value) {
+      this.ensureSetViaAppropriateType("datalists", value, "unserializedDatalists");
+    }
+  },
+
+  permissions: {
+    get: function() {
+      if (!this._permissions) {
+        this.permissions = {
+          dbname: this.dbname,
+          parent: this
+        };
+      }
+      return this._permissions || FieldDBObject.DEFAULT_COLLECTION;
+    },
+    set: function(value) {
+      this.ensureSetViaAppropriateType("permissions", value);
+    }
+  },
+
+  loadPermissions: {
+    value: function(dataToPost) {
+      var deferred = Q.defer(),
+        self = this;
+
+      Q.nextTick(function() {
+
+        if (!self.permissions || !(self.permissions instanceof Permissions)) {
+          self.permissions = new Permissions(self.permissions);
+        }
+        if (!self.permissions.dbname) {
+          self.permissions.dbname = self.dbname;
+        }
+        self.permissions.parent = self;
+        self.permissions.fetch(dataToPost)
+          .then(deferred.resolve, deferred.reject)
+          .fail(function(error) {
+            console.error(error.stack, self);
+            deferred.reject(error);
+          });
+
+      });
+      return deferred.promise;
+    }
+  },
+
+  datumFields: {
+    get: function() {
+      this.debug("getting datumFields");
+      return this._datumFields;
+    },
+    set: function(value) {
+      if (value && !value.confidential && this.confidential) {
+        value.confidential = this.confidential;
+      }
+      this.ensureSetViaAppropriateType("datumFields", value);
+    }
+  },
+
+  sessionFields: {
+    get: function() {
+      this.debug("getting sessionFields");
+      return this._sessionFields;
+    },
+    set: function(value) {
+      if (value && !value.confidential && this.confidential) {
+        value.confidential = this.confidential;
+      }
+      this.ensureSetViaAppropriateType("sessionFields", value);
+    }
+  },
+
+  speakerFields: {
+    get: function() {
+      this.debug("getting speakerFields");
+      return this._speakerFields;
+    },
+    set: function(value) {
+      if (value && !value.confidential && this.confidential) {
+        value.confidential = this.confidential;
+      }
+      this.ensureSetViaAppropriateType("speakerFields", value);
+    }
+  },
+
+  participantFields: {
+    get: function() {
+      this.debug("getting participantFields");
+      return this._participantFields;
+    },
+    set: function(value) {
+      if (value && !value.confidential && this.confidential) {
+        value.confidential = this.confidential;
+      }
+      this.ensureSetViaAppropriateType("participantFields", value);
+    }
+  },
+
+  conversationFields: {
+    get: function() {
+      this.debug("getting conversationFields");
+      return this._conversationFields;
+    },
+    set: function(value) {
+      if (value && !value.confidential && this.confidential) {
+        value.confidential = this.confidential;
+      }
+      this.ensureSetViaAppropriateType("conversationFields", value);
+    }
+  },
+
+  fields: {
+    get: function() {
+      this.debug("getting fields");
+      return this._fields;
+    },
+    set: function(value) {
+      if (value && !value.confidential && this.confidential) {
+        value.confidential = this.confidential;
+      }
+      this.ensureSetViaAppropriateType("fields", value);
     }
   },
 
   prefs: {
     get: function() {
+      if (!this._prefs && this.INTERNAL_MODELS && this.INTERNAL_MODELS.prefs && this.INTERNAL_MODELS.prefs.prototype && this.INTERNAL_MODELS.prefs.prototype.defaults) {
+        this.prefs = this.INTERNAL_MODELS.prefs.prototype.defaults;
+      }
       return this._prefs;
     },
     set: function(value) {
-      if (value === this._prefs) {
-        return;
-      }
-      if (!value) {
-        delete this._prefs;
-        return;
-      } else {
-        if (Object.prototype.toString.call(value) === "[object Object]") {
-          value = new this.INTERNAL_MODELS["prefs"](value);
-        }
-      }
-      this._prefs = value;
+      this.ensureSetViaAppropriateType("prefs", value);
     }
   },
 
@@ -333,7 +503,7 @@ CorpusMask.prototype = Object.create(Database.prototype, /** @lends CorpusMask.p
         }
         return;
       }
-      this.prefs = this.prefs || new this.INTERNAL_MODELS["prefs"]();
+      this.prefs = this.prefs || {};
       var upgradeSucess = this.upgradeCorpusFieldsToMatchDatumTemplate(value.trim());
       if (!upgradeSucess) {
         this.prefs.preferredDatumTemplate = value.trim();
@@ -354,13 +524,14 @@ CorpusMask.prototype = Object.create(Database.prototype, /** @lends CorpusMask.p
       }
       this.preferredDatumTemplateAtVersion = this.version;
       this.preferredDatumTemplate = null;
-
-      var order = ["judgement", "utterance", "morphemes", "gloss", "translation", "validationStatus", "tags"];
+      this.prefs = this.prefs || {};
+      this.prefs.debug(" this.prefs.preferredSpreadsheetShape.rows ", this.prefs.preferredSpreadsheetShape.rows);
+      var order = ["judgement", "utterance", "morphemes", "gloss", "translation", "context", "documentation"];
       if (value === "compacttemplate") {
         order = ["judgement", "utterance", "morphemes", "gloss", "translation"];
 
       } else if (value === "fulltemplate") {
-        order = ["judgement", "utterance", "morphemes", "gloss", "translation", "validationStatus", "tags"];
+        order = ["judgement", "utterance", "morphemes", "gloss", "translation", "context", "documentation"];
 
       } else if (value === "mcgillfieldmethodsspring2014template") {
         order = ["judgement", "utterance", "morphemes", "gloss", "translation", "validationStatus", "tags"];
@@ -370,9 +541,10 @@ CorpusMask.prototype = Object.create(Database.prototype, /** @lends CorpusMask.p
 
       } else if (value === "yalefieldmethodsspring2014template") {
         order = ["judgement", "orthography", "utterance", "morphemes", "gloss", "translation", "spanish", "Housekeeping", "tags"];
-        this.prefs.fullTemplateDefaultNumberOfFieldsPerColumn = 4;
+        this.prefs.debug("setting to yalefieldmethodsspring2014template");
+        this.prefs.preferredSpreadsheetShape = this.prefs.preferredSpreadsheetShape;
+        this.prefs.preferredSpreadsheetShape.rows = 4;
       }
-
 
       var fieldTemplate = {
         "label": "",
@@ -426,7 +598,7 @@ CorpusMask.prototype = Object.create(Database.prototype, /** @lends CorpusMask.p
         }
         return;
       }
-      this.prefs = this.prefs || new this.INTERNAL_MODELS["prefs"]();
+      this.prefs = this.prefs || {};
       this.prefs.preferredLocale = value.trim();
     }
   },
@@ -447,7 +619,7 @@ CorpusMask.prototype = Object.create(Database.prototype, /** @lends CorpusMask.p
         }
         return;
       }
-      this.prefs = this.prefs || new this.INTERNAL_MODELS["prefs"]();
+      this.prefs = this.prefs || {};
       this.prefs.preferredDashboardLayout = value.trim();
     }
   },
@@ -463,9 +635,9 @@ CorpusMask.prototype = Object.create(Database.prototype, /** @lends CorpusMask.p
     }
   }
 
+
 });
-exports.CorpusMask = CorpusMask;
-</code></pre>
+exports.CorpusMask = CorpusMask;</code></pre>
         </article>
     </section>
 
@@ -475,13 +647,13 @@ exports.CorpusMask = CorpusMask;
 </div>
 
 <nav>
-    <h2><a href="index.html">Index</a></h2><h3>Modules</h3><ul><li><a href="module-FieldDB.html">FieldDB</a></li></ul><h3>Classes</h3><ul><li><a href="Activities.html">Activities</a></li><li><a href="Activity.html">Activity</a></li><li><a href="App.html">App</a></li><li><a href="AppRouter.html">AppRouter</a></li><li><a href="AudioPlayer.html">AudioPlayer</a></li><li><a href="AudioVideo.html">AudioVideo</a></li><li><a href="AudioVideoRecorder.html">AudioVideoRecorder</a></li><li><a href="AudioVideos.html">AudioVideos</a></li><li><a href="Authentication.html">Authentication</a></li><li><a href="Collection.html">Collection</a></li><li><a href="Comment.html">Comment</a></li><li><a href="Comments.html">Comments</a></li><li><a href="Confidential.html">Confidential</a></li><li><a href="Consultant.html">Consultant</a></li><li><a href="Consultants.html">Consultants</a></li><li><a href="ContextualizableObject.html">ContextualizableObject</a></li><li><a href="Contextualizer.html">Contextualizer</a></li><li><a href="Conversation.html">Conversation</a></li><li><a href="Conversations.html">Conversations</a></li><li><a href="Corpus.html">Corpus</a></li><li><a href="Corpuses.html">Corpuses</a></li><li><a href="CorpusMask.html">CorpusMask</a></li><li><a href="DataList.html">DataList</a></li><li><a href="DataLists.html">DataLists</a></li><li><a href="dataURItoBlob.html">dataURItoBlob</a></li><li><a href="Datum.html">Datum</a></li><li><a href="DatumField.html">DatumField</a></li><li><a href="DatumFields.html">DatumFields</a></li><li><a href="Datums.html">Datums</a></li><li><a href="DatumState.html">DatumState</a></li><li><a href="DatumStates.html">DatumStates</a></li><li><a href="DatumTag.html">DatumTag</a></li><li><a href="DatumTags.html">DatumTags</a></li><li><a href="DocumentCollection.html">DocumentCollection</a></li><li><a href="ELanguages.html">ELanguages</a></li><li><a href="Export.html">Export</a></li><li><a href="FieldDBObject.html">FieldDBObject</a></li><li><a href="HotKey.html">HotKey</a></li><li><a href="HotKeys.html">HotKeys</a></li><li><a href="HTML5Audio.html">HTML5Audio</a></li><li><a href="Image.html">Image</a></li><li><a href="Images.html">Images</a></li><li><a href="InsertUnicode.html">InsertUnicode</a></li><li><a href="InsertUnicodes.html">InsertUnicodes</a></li><li><a href="Lexicon.html">Lexicon</a></li><li><a href="LexiconNode.html">LexiconNode</a></li><li><a href="LexiconNodes.html">LexiconNodes</a></li><li><a href="Participant.html">Participant</a></li><li><a href="Permission.html">Permission</a></li><li><a href="Permissions.html">Permissions</a></li><li><a href="PsycholinguisticsApp.html">PsycholinguisticsApp</a></li><li><a href="ReportBot.html">ReportBot</a></li><li><a href="Response.html">Response</a></li><li><a href="Search.html">Search</a></li><li><a href="Session.html">Session</a></li><li><a href="Sessions.html">Sessions</a></li><li><a href="Speaker.html">Speaker</a></li><li><a href="Stimulus.html">Stimulus</a></li><li><a href="SubExperimentDataList.html">SubExperimentDataList</a></li><li><a href="Team.html">Team</a></li><li><a href="User.html">User</a></li><li><a href="UserApp.html">UserApp</a></li><li><a href="UserMask.html">UserMask</a></li><li><a href="UserPreference.html">UserPreference</a></li><li><a href="UserRouter.html">UserRouter</a></li><li>{String: Exercise}</li></ul><h3>Global</h3><ul><li><a href="global.html#baseSchema">baseSchema</a></li><li><a href="global.html#clone">clone</a></li><li><a href="global.html#CorpusConnection">CorpusConnection</a></li><li><a href="global.html#debugMode">debugMode</a></li><li><a href="global.html#find">find</a></li><li><a href="global.html#getSanitizedDotNotationKey">getSanitizedDotNotationKey</a></li><li><a href="global.html#newCorpusConnection">newCorpusConnection</a></li><li><a href="global.html#sanitizeStringForFileSystem">sanitizeStringForFileSystem</a></li><li><a href="global.html#sanitizeStringForPrimaryKey">sanitizeStringForPrimaryKey</a></li><li><a href="global.html#validateDbnameFormat">validateDbnameFormat</a></li></ul>
+    <h2><a href="index.html">Index</a></h2><h3>Modules</h3><ul><li><a href="module-FieldDB.html">FieldDB</a></li></ul><h3>Classes</h3><ul><li><a href="Activities.html">Activities</a></li><li><a href="Activity.html">Activity</a></li><li><a href="App.html">App</a></li><li><a href="AppRouter.html">AppRouter</a></li><li><a href="AudioPlayer.html">AudioPlayer</a></li><li><a href="AudioVideo.html">AudioVideo</a></li><li><a href="AudioVideoRecorder.html">AudioVideoRecorder</a></li><li><a href="AudioVideos.html">AudioVideos</a></li><li><a href="Authentication.html">Authentication</a></li><li><a href="Collection.html">Collection</a></li><li><a href="Comment.html">Comment</a></li><li><a href="Comments.html">Comments</a></li><li><a href="Confidential.html">Confidential</a></li><li><a href="Connection.html">Connection</a></li><li><a href="Consultant.html">Consultant</a></li><li><a href="Consultants.html">Consultants</a></li><li><a href="ContextualizableObject.html">ContextualizableObject</a></li><li><a href="Contextualizer.html">Contextualizer</a></li><li><a href="Conversation.html">Conversation</a></li><li><a href="Conversations.html">Conversations</a></li><li><a href="Corpus.html">Corpus</a></li><li><a href="CorpusMask.html">CorpusMask</a></li><li><a href="DataList.html">DataList</a></li><li><a href="DataLists.html">DataLists</a></li><li><a href="dataURItoBlob.html">dataURItoBlob</a></li><li><a href="Datum.html">Datum</a></li><li><a href="DatumField.html">DatumField</a></li><li><a href="DatumFields.html">DatumFields</a></li><li><a href="Datums.html">Datums</a></li><li><a href="DatumState.html">DatumState</a></li><li><a href="DatumStates.html">DatumStates</a></li><li><a href="DatumTag.html">DatumTag</a></li><li><a href="DatumTags.html">DatumTags</a></li><li><a href="DocumentCollection.html">DocumentCollection</a></li><li><a href="ELanguages.html">ELanguages</a></li><li><a href="ExperimentDataList.html">ExperimentDataList</a></li><li><a href="Export.html">Export</a></li><li><a href="FieldDBObject.html">FieldDBObject</a></li><li><a href="HotKey.html">HotKey</a></li><li><a href="HotKeys.html">HotKeys</a></li><li><a href="HTML5Audio.html">HTML5Audio</a></li><li><a href="Image.html">Image</a></li><li><a href="Images.html">Images</a></li><li><a href="LexiconNodes.html">LexiconNodes</a></li><li><a href="Participant.html">Participant</a></li><li><a href="Permission.html">Permission</a></li><li><a href="Permissions.html">Permissions</a></li><li><a href="PsycholinguisticsApp.html">PsycholinguisticsApp</a></li><li><a href="ReportBot.html">ReportBot</a></li><li><a href="Response.html">Response</a></li><li><a href="Search.html">Search</a></li><li><a href="Session.html">Session</a></li><li><a href="Sessions.html">Sessions</a></li><li><a href="Speaker.html">Speaker</a></li><li><a href="Stimulus.html">Stimulus</a></li><li><a href="SubExperimentDataList.html">SubExperimentDataList</a></li><li><a href="Team.html">Team</a></li><li><a href="UnicodeSymbol.html">UnicodeSymbol</a></li><li><a href="UnicodeSymbols.html">UnicodeSymbols</a></li><li><a href="User.html">User</a></li><li><a href="UserApp.html">UserApp</a></li><li><a href="UserMask.html">UserMask</a></li><li><a href="UserPreference.html">UserPreference</a></li><li><a href="UserRouter.html">UserRouter</a></li><li><a href="Users.html">Users</a></li><li>{String: Exercise}</li></ul><h3>Global</h3><ul><li><a href="global.html#add">add</a></li><li><a href="global.html#clone">clone</a></li><li><a href="global.html#debugMode">debugMode</a></li><li><a href="global.html#find">find</a></li><li><a href="global.html#getMD5ForFile">getMD5ForFile</a></li><li><a href="global.html#getSanitizedDotNotationKey">getSanitizedDotNotationKey</a></li><li><a href="global.html#sanitizeStringForFileSystem">sanitizeStringForFileSystem</a></li><li><a href="global.html#sanitizeStringForPrimaryKey">sanitizeStringForPrimaryKey</a></li><li><a href="global.html#showDiffs">showDiffs</a></li></ul>
 </nav>
 
 <br clear="both">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.2</a> on Fri Feb 20 2015 15:29:49 GMT+0700 (WIT)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.2</a> on Mon Jul 20 2015 11:06:03 GMT-0400 (EDT)
 </footer>
 
 <script> prettyPrint(); </script>
