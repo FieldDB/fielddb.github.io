@@ -35,15 +35,17 @@
     <section>
         <article>
             <pre class="prettyprint source"><code>/* globals alert, confirm, prompt, navigator, Android, FieldDB */
+"use strict";
+
 var Diacritics = require("diacritic");
 var Q = require("q");
-var package;
+var packageJson;
 try {
-  package = require("./../package.json");
+  packageJson = require("./../package.json");
 } catch (e) {
   console.log("failed to load package.json", e);
-  package = {
-    version: "2.2.0"
+  packageJson = {
+    version: "x.x.x"
   };
 }
 // var FieldDBDate = function FieldDBDate(options) {
@@ -124,8 +126,17 @@ var FieldDBObject = function FieldDBObject(json) {
   if (json && json.id) {
     this.useIdNotUnderscore = true;
   }
+  if (json && json.api && this.api) {
+    if (json.api !== this.api) {
+      console.log("Using " + this.api + " when the api of the incoming model was " + json.api);
+    }
+    delete json.api;
+  }
   this.verbose("In parent an json", json);
   // Set the confidential first, so the rest of the fields can be encrypted
+  // if (json && json.corpus) {
+  //   this.corpus = json.corpus;
+  // }
   if (json && json.confidential && this.INTERNAL_MODELS["confidential"]) {
     this.confidential = new this.INTERNAL_MODELS["confidential"](json.confidential);
   }
@@ -153,7 +164,7 @@ var FieldDBObject = function FieldDBObject(json) {
     try {
       this[member] = json[member];
     } catch (e) {
-      console.log(e.stack);
+      this.warn(e.stack);
     }
   }
   if (simpleModels.length > 0) {
@@ -171,6 +182,7 @@ FieldDBObject.internalAttributesToNotJSONify = [
   "application",
   "bugMessage",
   "confirmMessage",
+  "confirmMergePromises",
   "contextualizer",
   "corpus",
   "currentDoc",
@@ -180,6 +192,7 @@ FieldDBObject.internalAttributesToNotJSONify = [
   "db",
   "debugMessages",
   "decryptedMode",
+  "dontRecurse",
   "fetching",
   "fieldsInColumns",
   "fossil",
@@ -215,7 +228,7 @@ FieldDBObject.internalAttributesToAutoMerge = FieldDBObject.internalAttributesTo
 ]);
 
 FieldDBObject.ignore = function(property, ignorelist) {
-  if(!ignorelist){
+  if (!ignorelist) {
     throw new Error("missing the list of ignores");
   }
   if (ignorelist.indexOf(property) > -1 || ignorelist.indexOf(property.replace(/^_/, "")) > -1) {
@@ -230,7 +243,7 @@ FieldDBObject.DEFAULT_STRING = "";
 FieldDBObject.DEFAULT_OBJECT = {};
 FieldDBObject.DEFAULT_ARRAY = [];
 FieldDBObject.DEFAULT_COLLECTION = [];
-FieldDBObject.DEFAULT_VERSION = "v" + package.version;
+FieldDBObject.DEFAULT_VERSION = "v" + packageJson.version;
 FieldDBObject.DEFAULT_DATE = 0;
 
 FieldDBObject.render = function(options) {
@@ -299,6 +312,17 @@ FieldDBObject.todo = function(message, message2, message3, message4) {
   }
 };
 
+FieldDBObject.popup = function(message) {
+  try {
+    alert(message);
+  } catch (e) {
+    this.warn(" Couldn't tell user about a popup: " + message);
+    // console.log("Alert is not defined, this is strange.");
+  }
+  var type = this.fieldDBtype || this._id || "UNKNOWNTYPE";
+  console.log(type.toUpperCase() + " POPUP: " + message);
+};
+
 FieldDBObject.bug = function(message) {
   try {
     alert(message);
@@ -326,22 +350,39 @@ FieldDBObject.warn = function(message, message2, message3, message4) {
   }
 };
 
-FieldDBObject.prompt = function(message, optionalLocale) {
+FieldDBObject.prompt = function(message, optionalLocale, providedInput) {
   var deferred = Q.defer(),
     self = this;
 
   Q.nextTick(function() {
     var response;
 
-    if (self.alwaysReplyToPrompt) {
-      console.warn(self.fieldDBtype.toUpperCase() + " NOT ASKING USER: " + message + " \nThe code decided that they would probably reply " + self.alwaysReplyToPrompt + " and it wasnt worth asking.");
-      response = self.alwaysReplyToPrompt;
+    if (self.alwaysReplyToPrompt !== undefined) {
+      response = providedInput || self.alwaysReplyToPrompt;
+      console.warn(self.fieldDBtype.toUpperCase() + " NOT PROMPTING USER: " + message + " \nThe code decided that they would probably reply `" + response + "` and it wasnt worth prompting.");
     } else {
       try {
-        response = prompt(message);
+        response = prompt(message, providedInput);
+
+        // Let the user enter info, even JSON
+        if (response === "yes") {
+          response = providedInput;
+        } else if (response !== null) {
+          if (typeof providedInput !== "string" && typeof providedInput !== "number") {
+            try {
+              var parsed = JSON.parse(response);
+              response = parsed;
+            } catch (e) {
+              FieldDB.FieldDBObject.bug("There was a problem parsing your input.").then(function() {
+                FieldDB.FieldDBObject.prompt(message, optionalLocale, providedInput);
+              });
+            }
+          }
+        }
+
       } catch (e) {
-        console.warn(self.fieldDBtype.toUpperCase() + " UNABLE TO ASK USER: " + message + " pretending they said " + self.alwaysReplyToPrompt);
-        response = self.alwaysReplyToPrompt;
+        response = null;
+        console.warn(self.fieldDBtype.toUpperCase() + " UNABLE TO PROMPT USER: " + message + " pretending they said `" + response + "`");
       }
     }
     if (response !== null && response !== undefined && typeof response.trim === "function") {
@@ -458,6 +499,9 @@ FieldDBObject.guessType = function(doc) {
   if (guessedType === "FieldDBObject") {
     if (doc.session) {
       guessedType = "Datum";
+      if (doc.fields && doc.fields[0] === "judgement") {
+        guessedType = "LanguageDatum";
+      }
     } else if (doc.datumFields && doc.sessionFields) {
       guessedType = "Corpus";
     } else if (doc.collection === "sessions" && doc.sessionFields) {
@@ -647,6 +691,22 @@ FieldDBObject.prototype = Object.create(Object.prototype, {
       FieldDBObject.bug.apply(this, arguments);
     }
   },
+  popup: {
+    value: function(message) {
+      if (this.popupMessage) {
+        if (this.popupMessage.indexOf(message) > -1) {
+          this.warn("Not repeating popup message: " + message);
+          return;
+        }
+        this.popupMessage += ";;; ";
+      } else {
+        this.popupMessage = "";
+      }
+
+      this.popupMessage = this.popupMessage + message;
+      FieldDBObject.popup.apply(this, arguments);
+    }
+  },
   alwaysConfirmOkay: {
     get: function() {
       if (this.perObjectAlwaysConfirmOkay === undefined) {
@@ -736,6 +796,7 @@ FieldDBObject.prototype = Object.create(Object.prototype, {
 
   ensureSetViaAppropriateType: {
     value: function(propertyname, value, optionalInnerPropertyName) {
+      this.debug("ensureSetViaAppropriateType on " + propertyname, this.INTERNAL_MODELS);
       if (!propertyname) {
         console.error("Invalid call to ensureSetViaAppropriateType", value);
         throw new Error("Invalid call to ensureSetViaAppropriateType");
@@ -757,7 +818,7 @@ FieldDBObject.prototype = Object.create(Object.prototype, {
         !(value instanceof this.INTERNAL_MODELS[propertyname]) &&
         !(this.INTERNAL_MODELS[propertyname].compatibleWithSimpleStrings && typeof value === "string")) {
 
-        this.debug("Converting this into its type.", value.constructor.toString());
+        this.debug("Converting this into  type for " + propertyname, value.constructor.toString());
         value = new this.INTERNAL_MODELS[propertyname](value);
 
       }
@@ -1276,6 +1337,8 @@ FieldDBObject.prototype = Object.create(Object.prototype, {
           typeof anObject[aproperty] !== "function" &&
           !FieldDBObject.ignore(aproperty, FieldDBObject.internalAttributesToNotJSONify)) {
           propertyList[aproperty] = true;
+        } else {
+          this.debug("Not merging " + aproperty, "parent ", anObject.parent ? anObject.parent.length : "");
         }
       }
 
@@ -1284,29 +1347,44 @@ FieldDBObject.prototype = Object.create(Object.prototype, {
           typeof anotherObject[aproperty] !== "function" &&
           !FieldDBObject.ignore(aproperty, FieldDBObject.internalAttributesToNotJSONify)) {
           propertyList[aproperty] = true;
+        } else {
+          this.debug("Not merging " + aproperty, "parent ", anObject.parent ? anObject.parent.length : "");
         }
       }
 
-      this.debug(" Merging properties: ", propertyList);
+      this.debug(" Merging properties: " + this.id, propertyList);
 
       var handleAsyncConfirmMerge = function(self, apropertylocal) {
+        var deferred = Q.defer();
+        var promptInputText = anotherObject[apropertylocal];
+        if (typeof promptInputText === "object") {
+          promptInputText = JSON.stringify(anotherObject[apropertylocal]);
+        }
+        var context = self.id || self._id || "";
+        self.prompt(context + " I found a conflict for " + apropertylocal + ", Do you want to overwrite it from " + JSON.stringify(anObject[apropertylocal]) + " -> " + promptInputText, null, promptInputText)
+          .then(function(reply) {
+            // Let the user enter the value they would like
 
-        self.confirm("I found a conflict for " + apropertylocal + ", Do you want to overwrite it from " + JSON.stringify(anObject[apropertylocal]) + " -> " + JSON.stringify(anotherObject[apropertylocal]))
-          .then(function() {
             if (apropertylocal === "_dbname" && optionalOverwriteOrAsk.indexOf("keepDBname") > -1) {
               // resultObject._dbname = self.dbname;
               self.warn(" Keeping _dbname of " + resultObject.dbname);
             } else {
-              self.warn("Async Overwriting contents of " + apropertylocal + " (this may cause disconnection in listeners)");
-              self.debug("Async Overwriting  ", anObject[apropertylocal], " ->", anotherObject[apropertylocal]);
+              self.debug("Async Overwriting contents of " + apropertylocal + " (this may cause disconnection in listeners)");
+              self.debug("Async Overwriting  ", anObject[apropertylocal], " ->", reply.response);
 
-              resultObject[apropertylocal] = anotherObject[apropertylocal];
+              resultObject[apropertylocal] = reply.response;
             }
-          }, function() {
+            deferred.resolve(reply);
+          }, function(reason) {
             resultObject[apropertylocal] = anObject[apropertylocal];
+            deferred.reject(reason);
           }).fail(function(error) {
             console.error(error.stack, self);
+            deferred.reject(error);
           });
+
+        self.confirmMergePromises = self.confirmMergePromises || [];
+        self.confirmMergePromises.push(deferred.promise);
       };
 
       for (aproperty in propertyList) {
@@ -1315,9 +1393,9 @@ FieldDBObject.prototype = Object.create(Object.prototype, {
           this.debug("  Ignoring ---" + aproperty + "----");
           continue;
         }
-        if (this.debugMode) {
-          this.debug("  Merging ---" + aproperty + "--- \n   :::" + JSON.stringify(resultObject[aproperty]) + ":::\n   :::" + JSON.stringify(anObject[aproperty]) + ":::\n   :::" + JSON.stringify(anotherObject[aproperty]) + ":::");
-        }
+        // if (this.debugMode) {
+        this.debug("  Merging ---" + aproperty + "--- \n   :::" + JSON.stringify(resultObject[aproperty]) + ":::\n   :::" + JSON.stringify(anObject[aproperty]) + ":::\n   :::" + JSON.stringify(anotherObject[aproperty]) + ":::");
+        // }
 
         // if the result is missing the property, clone it from anObject or anotherObject
         if (resultObject[aproperty] === undefined || resultObject[aproperty] === null) {
@@ -1423,7 +1501,7 @@ FieldDBObject.prototype = Object.create(Object.prototype, {
             this.debug("after internal merge ", result);
             this.debug("after internal merge ", resultObject[aproperty]);
           } catch (e) {
-            console.warn("problem merging this " + aproperty, e);
+            console.warn("problem merging this " + aproperty, e.stack);
           }
           continue;
         }
@@ -1439,7 +1517,7 @@ FieldDBObject.prototype = Object.create(Object.prototype, {
             this.warn(" Keeping _dbname of " + resultObject.dbname);
           } else {
             if (!FieldDBObject.ignore(aproperty, FieldDBObject.internalAttributesToAutoMerge)) {
-              this.warn("Overwriting contents of " + aproperty + " (this may cause disconnection in listeners)");
+              this.debug("Overwriting contents of " + aproperty + " (this may cause disconnection in listeners)");
             }
             this.debug("Overwriting  ", anObject[aproperty], " ->", anotherObject[aproperty]);
 
@@ -1612,8 +1690,8 @@ FieldDBObject.prototype = Object.create(Object.prototype, {
 
         try {
           if (FieldDB && FieldDB["Database"]) {
-            db = FieldDB["Database"].prototype;
-            this.warn("  using the Database.prototype to run db calls for " + this._id + ", this could be problematic " + this._id + " .");
+            // db = FieldDB["Database"].prototype;
+            this.debug("  using the Database.prototype to run db calls for " + this._id + ", this could be problematic " + this._id + " .");
             this.debug(" the database", db);
           }
         } catch (e) {
@@ -1627,7 +1705,7 @@ FieldDBObject.prototype = Object.create(Object.prototype, {
         }
       }
       if (!db) {
-        this.warn("Operations that need a database wont work for the " + this._id + " object");
+        this.warn("Operations that need a corpus/database wont work for the " + this._id + " object");
       }
 
       return db;
@@ -1637,6 +1715,7 @@ FieldDBObject.prototype = Object.create(Object.prototype, {
         this.warn("The corpus " + value.db + " cant be set on this item, its db is different" + this.dbname);
         return;
       }
+      this.debug("setting corpus ", value);
       this._corpus = value;
     }
   },
@@ -1841,7 +1920,7 @@ FieldDBObject.prototype = Object.create(Object.prototype, {
       this.todo("We haven't implemented the 'diff' tool yet" +
         " (ie, showing the changes, letting you undo changes etc)." +
         " We will do it eventually, when it becomes a priority. " +
-        "&lt;a target='blank'  href='https://github.com/OpenSourceFieldlinguistics/FieldDB/issues/124'>" +
+        "&lt;a target='blank'  href='https://github.com/FieldDB/FieldDB/issues/124'>" +
         "You can vote for it in our issue tracker&lt;/a>.  " +
         "We use the " +
         "&lt;a target='blank' href='" + this.url + "/" + oldrevision + "?rev=" + newrevision + "'>" + "Futon User Interface&lt;/a> directly to track revisions in the data, you can too (if your a power user type).", "alert", "Track Changes:");
@@ -1906,7 +1985,7 @@ FieldDBObject.prototype = Object.create(Object.prototype, {
           attributesToIgnore = [];
         }
         attributesToIgnore = attributesToIgnore.concat(FieldDBObject.internalAttributesToNotJSONify);
-        // this.debug("Ignoring for json ", attributesToIgnore);
+        this.debug("Ignoring for json ", attributesToIgnore);
         for (aproperty in this) {
           if (this.hasOwnProperty(aproperty) && typeof this[aproperty] !== "function" && !FieldDBObject.ignore(aproperty, attributesToIgnore)) {
             underscorelessProperty = aproperty.replace(/^_/, "");
@@ -1990,8 +2069,8 @@ FieldDBObject.prototype = Object.create(Object.prototype, {
   addRelatedData: {
     value: function(json) {
       var relatedData;
-      if (this.datumFields && this.datumFields.relatedData) {
-        relatedData = this.datumFields.relatedData.json.relatedData || [];
+      if (this.fields && this.fields.relatedData) {
+        relatedData = this.fields.relatedData.json.relatedData || [];
       } else if (this.relatedData) {
         relatedData = this.relatedData;
       } else {
@@ -2034,8 +2113,8 @@ FieldDBObject.prototype = Object.create(Object.prototype, {
       var source = this.id;
       if (this.id && this.rev) {
         var relatedData;
-        if (json.datumFields && json.datumFields.relatedData) {
-          relatedData = json.datumFields.relatedData.json.relatedData || [];
+        if (json.fields && json.fields.relatedData) {
+          relatedData = json.fields.relatedData.json.relatedData || [];
         } else if (json.relatedData) {
           relatedData = json.relatedData;
         } else {
@@ -2098,7 +2177,7 @@ FieldDBObject.prototype = Object.create(Object.prototype, {
         this.debug("sanitizeStringForPrimaryKey " + value);
         return value;
       } else if (typeof value === "number") {
-        return parseInt(value, 10);
+        return parseFloat(value, 10);
       } else {
         return null;
       }
@@ -2139,7 +2218,8 @@ FieldDBObject.prototype = Object.create(Object.prototype, {
 });
 
 exports.FieldDBObject = FieldDBObject;
-exports.Document = FieldDBObject;</code></pre>
+exports.Document = FieldDBObject;
+</code></pre>
         </article>
     </section>
 
@@ -2149,13 +2229,13 @@ exports.Document = FieldDBObject;</code></pre>
 </div>
 
 <nav>
-    <h2><a href="index.html">Index</a></h2><h3>Modules</h3><ul><li><a href="module-FieldDB.html">FieldDB</a></li></ul><h3>Classes</h3><ul><li><a href="Activities.html">Activities</a></li><li><a href="Activity.html">Activity</a></li><li><a href="App.html">App</a></li><li><a href="AppRouter.html">AppRouter</a></li><li><a href="AudioPlayer.html">AudioPlayer</a></li><li><a href="AudioVideo.html">AudioVideo</a></li><li><a href="AudioVideoRecorder.html">AudioVideoRecorder</a></li><li><a href="AudioVideos.html">AudioVideos</a></li><li><a href="Authentication.html">Authentication</a></li><li><a href="Collection.html">Collection</a></li><li><a href="Comment.html">Comment</a></li><li><a href="Comments.html">Comments</a></li><li><a href="Confidential.html">Confidential</a></li><li><a href="Connection.html">Connection</a></li><li><a href="Consultant.html">Consultant</a></li><li><a href="Consultants.html">Consultants</a></li><li><a href="ContextualizableObject.html">ContextualizableObject</a></li><li><a href="Contextualizer.html">Contextualizer</a></li><li><a href="Conversation.html">Conversation</a></li><li><a href="Conversations.html">Conversations</a></li><li><a href="Corpus.html">Corpus</a></li><li><a href="CorpusMask.html">CorpusMask</a></li><li><a href="DataList.html">DataList</a></li><li><a href="DataLists.html">DataLists</a></li><li><a href="dataURItoBlob.html">dataURItoBlob</a></li><li><a href="Datum.html">Datum</a></li><li><a href="DatumField.html">DatumField</a></li><li><a href="DatumFields.html">DatumFields</a></li><li><a href="Datums.html">Datums</a></li><li><a href="DatumState.html">DatumState</a></li><li><a href="DatumStates.html">DatumStates</a></li><li><a href="DatumTag.html">DatumTag</a></li><li><a href="DatumTags.html">DatumTags</a></li><li><a href="DocumentCollection.html">DocumentCollection</a></li><li><a href="ELanguages.html">ELanguages</a></li><li><a href="ExperimentDataList.html">ExperimentDataList</a></li><li><a href="Export.html">Export</a></li><li><a href="FieldDBObject.html">FieldDBObject</a></li><li><a href="HotKey.html">HotKey</a></li><li><a href="HotKeys.html">HotKeys</a></li><li><a href="HTML5Audio.html">HTML5Audio</a></li><li><a href="Image.html">Image</a></li><li><a href="Images.html">Images</a></li><li><a href="LexiconNodes.html">LexiconNodes</a></li><li><a href="Participant.html">Participant</a></li><li><a href="Permission.html">Permission</a></li><li><a href="Permissions.html">Permissions</a></li><li><a href="PsycholinguisticsApp.html">PsycholinguisticsApp</a></li><li><a href="ReportBot.html">ReportBot</a></li><li><a href="Response.html">Response</a></li><li><a href="Search.html">Search</a></li><li><a href="Session.html">Session</a></li><li><a href="Sessions.html">Sessions</a></li><li><a href="Speaker.html">Speaker</a></li><li><a href="Stimulus.html">Stimulus</a></li><li><a href="SubExperimentDataList.html">SubExperimentDataList</a></li><li><a href="Team.html">Team</a></li><li><a href="UnicodeSymbol.html">UnicodeSymbol</a></li><li><a href="UnicodeSymbols.html">UnicodeSymbols</a></li><li><a href="User.html">User</a></li><li><a href="UserApp.html">UserApp</a></li><li><a href="UserMask.html">UserMask</a></li><li><a href="UserPreference.html">UserPreference</a></li><li><a href="UserRouter.html">UserRouter</a></li><li><a href="Users.html">Users</a></li><li>{String: Exercise}</li></ul><h3>Global</h3><ul><li><a href="global.html#add">add</a></li><li><a href="global.html#clone">clone</a></li><li><a href="global.html#debugMode">debugMode</a></li><li><a href="global.html#find">find</a></li><li><a href="global.html#getMD5ForFile">getMD5ForFile</a></li><li><a href="global.html#getSanitizedDotNotationKey">getSanitizedDotNotationKey</a></li><li><a href="global.html#sanitizeStringForFileSystem">sanitizeStringForFileSystem</a></li><li><a href="global.html#sanitizeStringForPrimaryKey">sanitizeStringForPrimaryKey</a></li><li><a href="global.html#showDiffs">showDiffs</a></li></ul>
+    <h2><a href="index.html">Index</a></h2><h3>Modules</h3><ul><li><a href="module-FieldDB.html">FieldDB</a></li></ul><h3>Classes</h3><ul><li><a href="Activities.html">Activities</a></li><li><a href="Activity.html">Activity</a></li><li><a href="App.html">App</a></li><li><a href="AppRouter.html">AppRouter</a></li><li><a href="AudioPlayer.html">AudioPlayer</a></li><li><a href="AudioVideo.html">AudioVideo</a></li><li><a href="AudioVideoRecorder.html">AudioVideoRecorder</a></li><li><a href="AudioVideos.html">AudioVideos</a></li><li><a href="Authentication.html">Authentication</a></li><li><a href="Collection.html">Collection</a></li><li><a href="Comment.html">Comment</a></li><li><a href="Comments.html">Comments</a></li><li><a href="Confidential.html">Confidential</a></li><li><a href="Connection.html">Connection</a></li><li><a href="Consultant.html">Consultant</a></li><li><a href="Consultants.html">Consultants</a></li><li><a href="Contexts.html">Contexts</a></li><li><a href="ContextualizableObject.html">ContextualizableObject</a></li><li><a href="Contextualizer.html">Contextualizer</a></li><li><a href="Conversation.html">Conversation</a></li><li><a href="Conversations.html">Conversations</a></li><li><a href="Corpus.html">Corpus</a></li><li><a href="CorpusMask.html">CorpusMask</a></li><li><a href="DataList.html">DataList</a></li><li><a href="DataLists.html">DataLists</a></li><li><a href="dataURItoBlob.html">dataURItoBlob</a></li><li><a href="Datum.html">Datum</a></li><li><a href="DatumField.html">DatumField</a></li><li><a href="DatumFields.html">DatumFields</a></li><li><a href="Datums.html">Datums</a></li><li><a href="DatumState.html">DatumState</a></li><li><a href="DatumStates.html">DatumStates</a></li><li><a href="DatumTag.html">DatumTag</a></li><li><a href="DatumTags.html">DatumTags</a></li><li><a href="DocumentCollection.html">DocumentCollection</a></li><li><a href="ELanguages.html">ELanguages</a></li><li><a href="ExperimentDataList.html">ExperimentDataList</a></li><li><a href="Export.html">Export</a></li><li><a href="FieldDBObject.html">FieldDBObject</a></li><li><a href="Glosser.html">Glosser</a></li><li><a href="HotKey.html">HotKey</a></li><li><a href="HotKeys.html">HotKeys</a></li><li><a href="HTML5Audio.html">HTML5Audio</a></li><li><a href="Image.html">Image</a></li><li><a href="Images.html">Images</a></li><li><a href="LanguageDatum.html">LanguageDatum</a></li><li><a href="Lexicon.html">Lexicon</a></li><li><a href="LexiconNode.html">LexiconNode</a></li><li><a href="Participant.html">Participant</a></li><li><a href="Permission.html">Permission</a></li><li><a href="Permissions.html">Permissions</a></li><li><a href="PsycholinguisticsApp.html">PsycholinguisticsApp</a></li><li><a href="ReportBot.html">ReportBot</a></li><li><a href="Response.html">Response</a></li><li><a href="Search.html">Search</a></li><li><a href="Session.html">Session</a></li><li><a href="Sessions.html">Sessions</a></li><li><a href="Speaker.html">Speaker</a></li><li><a href="Stimulus.html">Stimulus</a></li><li><a href="SubExperimentDataList.html">SubExperimentDataList</a></li><li><a href="Team.html">Team</a></li><li><a href="UnicodeSymbol.html">UnicodeSymbol</a></li><li><a href="UnicodeSymbols.html">UnicodeSymbols</a></li><li><a href="User.html">User</a></li><li><a href="UserApp.html">UserApp</a></li><li><a href="UserMask.html">UserMask</a></li><li><a href="UserPreference.html">UserPreference</a></li><li><a href="UserRouter.html">UserRouter</a></li><li><a href="Users.html">Users</a></li><li>{String: Exercise}</li></ul><h3>Global</h3><ul><li><a href="global.html#add">add</a></li><li><a href="global.html#clone">clone</a></li><li><a href="global.html#debugMode">debugMode</a></li><li><a href="global.html#find">find</a></li><li><a href="global.html#getMD5ForFile">getMD5ForFile</a></li><li><a href="global.html#getSanitizedDotNotationKey">getSanitizedDotNotationKey</a></li><li><a href="global.html#LexiconFactory">LexiconFactory</a></li><li><a href="global.html#sanitizeStringForFileSystem">sanitizeStringForFileSystem</a></li><li><a href="global.html#sanitizeStringForPrimaryKey">sanitizeStringForPrimaryKey</a></li><li><a href="global.html#showDiffs">showDiffs</a></li></ul>
 </nav>
 
 <br clear="both">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.2</a> on Mon Jul 20 2015 11:06:03 GMT-0400 (EDT)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.2</a> on Thu Aug 13 2015 08:22:52 GMT-0400 (EDT)
 </footer>
 
 <script> prettyPrint(); </script>

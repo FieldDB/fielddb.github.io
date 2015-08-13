@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: lexicon/Contexts.js</title>
+    
+    <script src="scripts/prettify/prettify.js"> </script><script>
+   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+   m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+   })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+   ga('create','UA-35422317-1','auto');
+   ga('set', 'page', 'docs-javascript' + window.location.href.replace(window.location.protocol, "").replace(/^\//,""));
+   ga('send', 'pageview');
+</script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+    
+    <h1 class="page-title">Source: lexicon/Contexts.js</h1>
+    
+    
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source"><code>var Collection = require("./../Collection").Collection;
+var FieldDBObject = require("./../FieldDBObject").FieldDBObject;
+
+
+var Context = function Context(options) {
+  if (!this.fieldDBtype) {
+    this.fieldDBtype = "Context";
+  }
+  if (typeof options === "string") {
+    this.morphemes = options;
+  } else {
+    for (var member in options) {
+      if (!options.hasOwnProperty(member)) {
+        continue;
+      }
+      this[member] = options[member];
+    }
+  }
+  Object.apply(this, arguments);
+};
+
+Context.prototype = Object.create(Object.prototype, /** @lends Context.prototype */ {
+  constructor: {
+    value: Context
+  },
+
+  id: {
+    get: function() {
+      var id = this._id || this.URL || this.context || this.morphemes || this.utterance || this.orthography;
+      // console.log("  id of context: " + id);
+      return id;
+    },
+    set: function(value) {
+      if (value !== this.id) {
+        console.warn("setting id  on context " + value + ", it doesnt match the expected id." + this.id);
+        this._id = value;
+      }
+    }
+  },
+
+  equals: {
+    value: function(anotherObject) {
+      if (!anotherObject) {
+        return undefined;
+      }
+      if (this.id && this.id === anotherObject.id) {
+        return true;
+      }
+    }
+  },
+
+  merge: {
+    value: function(callOnSelf, anotherObject, optionalOverwriteOrAsk) {
+      var anObject,
+        resultObject,
+        aproperty;
+      // targetPropertyIsEmpty,
+      // overwrite,
+      // localCallOnSelf,
+      // propertyList = {},
+      // json;
+
+      if (arguments.length === 0) {
+        this.warn("Invalid call to merge, there was no object provided to merge");
+        return null;
+      }
+
+      if (!anotherObject && !optionalOverwriteOrAsk) {
+        resultObject = anObject = this;
+        anotherObject = FieldDBObject.convertDocIntoItsType(callOnSelf);
+      } else if (callOnSelf === "self") {
+        // console.log("Merging properties into myself. ");
+        anObject = this;
+        resultObject = anObject;
+      } else if (callOnSelf && anotherObject) {
+        anObject = callOnSelf;
+        resultObject = this;
+      } else {
+        this.warn("Invalid call to merge, invalid arguments were provided to merge", arguments);
+        return null;
+      }
+      // console.log("Merging contexts", anObject, anotherObject, "into", resultObject);
+
+      for (aproperty in anObject) {
+        if (!anObject.hasOwnProperty(aproperty) ||
+          typeof anObject[aproperty] === "function") {
+          continue;
+        }
+        // console.log("merging " + aproperty);
+        if (typeof anObject[aproperty] === "number") {
+          resultObject[aproperty] = anObject[aproperty] + anotherObject[aproperty];
+        }
+      }
+      return resultObject;
+    }
+  },
+
+  isEmpty: {
+    value: function() {
+      return FieldDBObject.prototype.isEmpty.apply(this, arguments);
+    }
+  },
+
+  debug: {
+    value: function() {
+      FieldDBObject.prototype.debug.apply(this, arguments);
+    }
+  },
+  
+  toJSON: {
+    value: function(includeEvenEmptyAttributes, removeEmptyAttributes, attributesToIgnore) {
+      attributesToIgnore = attributesToIgnore || [];
+      attributesToIgnore = attributesToIgnore.concat(["fieldDBtype", "dateCreated"]);
+      var json = FieldDBObject.prototype.toJSON.apply(this, [false, true, attributesToIgnore]);
+      json.URL = json.URL || "";
+      json._id = json._id || json.id;
+      if (json._id === json.URL || json._id === json.context || json._id === json.morphemes || json._id === json.utterance || json._id === json.orthography) {
+        delete json._id;
+        delete json.id;
+      }
+      return json;
+    }
+  }
+});
+
+
+/**
+ * @class The Contexts is a type of Collection with any additional fields or
+ * metadata that a team might use to visually ground their data.
+ *
+ * @name  Contexts
+ * @extends Collection
+ * @constructs
+ */
+var Contexts = function Contexts(options) {
+  if (!this._fieldDBtype) {
+    this._fieldDBtype = "Contexts";
+  }
+  this.debug("Constructing Contexts length: ", options);
+  Collection.apply(this, arguments);
+};
+
+Contexts.prototype = Object.create(Collection.prototype, /** @lends Contexts.prototype */ {
+  constructor: {
+    value: Contexts
+  },
+
+  api: {
+    value: "contexts"
+  },
+
+  primaryKey: {
+    value: "id"
+  },
+
+  INTERNAL_MODELS: {
+    value: {
+      item: Context
+    }
+  },
+
+
+  /**
+   *  Cleans a value to become a primary key on an object (replaces punctuation with underscore)
+   *  (replaces the default Collection.sanitizeStringForPrimaryKey method which scrubs unicode from the primary keys)
+   *
+   * @param  String value the potential primary key to be cleaned
+   * @return String       the value cleaned and safe as a primary key
+   */
+  sanitizeStringForPrimaryKey: {
+    value: function(value) {
+      this.debug("sanitizeStringForPrimaryKey");
+      if (!value) {
+        return null;
+      }
+      if (typeof value.replace !== "function") {
+        value = value + "";
+      }
+      value = value.replace(/[""+=?./\[\]{}() ]/g, "");
+      return value;
+    }
+  },
+
+  // primaryKey: {
+  //   get: function() {
+  //     console.log(" getting primaryKey " + this._primaryKey);
+
+  //     return this._primaryKey || "URL";
+  //   },
+  //   set: function(value) {
+  //     console.log(" setting primaryKey " + value);
+  //     this._primaryKey = value;
+  //   }
+  // },
+
+  length: {
+    get: function() {
+      var sum = 0;
+      if (this._collection && typeof this._collection.map === "function") {
+        this._collection.map(function(context) {
+          if (context.count) {
+            sum += context.count;
+          } else {
+            sum += 1;
+          }
+        });
+      }
+      this.debug(" getting number of context lengths of " + this.id + " " + sum);
+      return sum;
+    },
+    set: function(value) {
+      this.debug(" cant set length of " + this.id + " " + value);
+      // this._length = value;
+    }
+  },
+
+  // length: {
+  //   get: function() {
+  //     if (this.collection) {
+  //       return this.collection.length;
+  //     } else {
+  //       return 0;
+  //     }
+  //   }
+  // },
+
+  set: {
+    value: function(searchingFor, originalValue, optionalKeyToIdentifyItem, optionalInverted) {
+      if (!originalValue) {
+        return;
+      }
+      if (typeof originalValue === "string") {
+        // originalValue = {
+        //   URL: "",
+        //   context: originalValue
+        // };
+      }
+      this.debug("context count before" + originalValue.count);
+      // this.debugMode = true;
+      var matches = this.find(originalValue);
+      this.debug("matching contexts ", matches);
+      var value;
+      if (matches && matches.length) {
+        value = matches[0];
+        value.merge("self", originalValue);
+      } else {
+        value = Collection.prototype.set.apply(this, [searchingFor, originalValue, optionalKeyToIdentifyItem, optionalInverted]);
+      }
+      return value;
+    }
+  },
+
+  preview: {
+    configurable: true,
+    get: function() {
+      if (!this.collection) {
+        return "";
+      }
+      var preview = this.map(function(context) {
+        return context.id;
+      });
+      if (!preview && this.length) {
+        preview = this.length + " contexts";
+      } else {
+        preview = preview.join("; ");
+      }
+      return preview;
+    },
+    set: function() {
+      //cant set preview
+    }
+  }
+
+});
+
+exports.Context = Context;
+exports.Contexts = Contexts;
+exports.Contexts.Context = Contexts.Context;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Index</a></h2><h3>Modules</h3><ul><li><a href="module-FieldDB.html">FieldDB</a></li></ul><h3>Classes</h3><ul><li><a href="Activities.html">Activities</a></li><li><a href="Activity.html">Activity</a></li><li><a href="App.html">App</a></li><li><a href="AppRouter.html">AppRouter</a></li><li><a href="AudioPlayer.html">AudioPlayer</a></li><li><a href="AudioVideo.html">AudioVideo</a></li><li><a href="AudioVideoRecorder.html">AudioVideoRecorder</a></li><li><a href="AudioVideos.html">AudioVideos</a></li><li><a href="Authentication.html">Authentication</a></li><li><a href="Collection.html">Collection</a></li><li><a href="Comment.html">Comment</a></li><li><a href="Comments.html">Comments</a></li><li><a href="Confidential.html">Confidential</a></li><li><a href="Connection.html">Connection</a></li><li><a href="Consultant.html">Consultant</a></li><li><a href="Consultants.html">Consultants</a></li><li><a href="Contexts.html">Contexts</a></li><li><a href="ContextualizableObject.html">ContextualizableObject</a></li><li><a href="Contextualizer.html">Contextualizer</a></li><li><a href="Conversation.html">Conversation</a></li><li><a href="Conversations.html">Conversations</a></li><li><a href="Corpus.html">Corpus</a></li><li><a href="CorpusMask.html">CorpusMask</a></li><li><a href="DataList.html">DataList</a></li><li><a href="DataLists.html">DataLists</a></li><li><a href="dataURItoBlob.html">dataURItoBlob</a></li><li><a href="Datum.html">Datum</a></li><li><a href="DatumField.html">DatumField</a></li><li><a href="DatumFields.html">DatumFields</a></li><li><a href="Datums.html">Datums</a></li><li><a href="DatumState.html">DatumState</a></li><li><a href="DatumStates.html">DatumStates</a></li><li><a href="DatumTag.html">DatumTag</a></li><li><a href="DatumTags.html">DatumTags</a></li><li><a href="DocumentCollection.html">DocumentCollection</a></li><li><a href="ELanguages.html">ELanguages</a></li><li><a href="ExperimentDataList.html">ExperimentDataList</a></li><li><a href="Export.html">Export</a></li><li><a href="FieldDBObject.html">FieldDBObject</a></li><li><a href="Glosser.html">Glosser</a></li><li><a href="HotKey.html">HotKey</a></li><li><a href="HotKeys.html">HotKeys</a></li><li><a href="HTML5Audio.html">HTML5Audio</a></li><li><a href="Image.html">Image</a></li><li><a href="Images.html">Images</a></li><li><a href="LanguageDatum.html">LanguageDatum</a></li><li><a href="Lexicon.html">Lexicon</a></li><li><a href="LexiconNode.html">LexiconNode</a></li><li><a href="Participant.html">Participant</a></li><li><a href="Permission.html">Permission</a></li><li><a href="Permissions.html">Permissions</a></li><li><a href="PsycholinguisticsApp.html">PsycholinguisticsApp</a></li><li><a href="ReportBot.html">ReportBot</a></li><li><a href="Response.html">Response</a></li><li><a href="Search.html">Search</a></li><li><a href="Session.html">Session</a></li><li><a href="Sessions.html">Sessions</a></li><li><a href="Speaker.html">Speaker</a></li><li><a href="Stimulus.html">Stimulus</a></li><li><a href="SubExperimentDataList.html">SubExperimentDataList</a></li><li><a href="Team.html">Team</a></li><li><a href="UnicodeSymbol.html">UnicodeSymbol</a></li><li><a href="UnicodeSymbols.html">UnicodeSymbols</a></li><li><a href="User.html">User</a></li><li><a href="UserApp.html">UserApp</a></li><li><a href="UserMask.html">UserMask</a></li><li><a href="UserPreference.html">UserPreference</a></li><li><a href="UserRouter.html">UserRouter</a></li><li><a href="Users.html">Users</a></li><li>{String: Exercise}</li></ul><h3>Global</h3><ul><li><a href="global.html#add">add</a></li><li><a href="global.html#clone">clone</a></li><li><a href="global.html#debugMode">debugMode</a></li><li><a href="global.html#find">find</a></li><li><a href="global.html#getMD5ForFile">getMD5ForFile</a></li><li><a href="global.html#getSanitizedDotNotationKey">getSanitizedDotNotationKey</a></li><li><a href="global.html#LexiconFactory">LexiconFactory</a></li><li><a href="global.html#sanitizeStringForFileSystem">sanitizeStringForFileSystem</a></li><li><a href="global.html#sanitizeStringForPrimaryKey">sanitizeStringForPrimaryKey</a></li><li><a href="global.html#showDiffs">showDiffs</a></li></ul>
+</nav>
+
+<br clear="both">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.2</a> on Thu Aug 13 2015 08:22:52 GMT-0400 (EDT)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
