@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>user/User.js - Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Activities.html">Activities</a></li><li><a href="Activity.html">Activity</a></li><li><a href="App.html">App</a></li><li><a href="AppRouter.html">AppRouter</a><ul class='methods'><li data-type='method'><a href="AppRouter.html#renderDashboardOrNot">renderDashboardOrNot</a></li><li data-type='method'><a href="AppRouter.html#showAllData">showAllData</a></li><li data-type='method'><a href="AppRouter.html#showAllDataInSession">showAllDataInSession</a></li><li data-type='method'><a href="AppRouter.html#showDashboard">showDashboard</a></li><li data-type='method'><a href="AppRouter.html#showEmbeddedCorpus">showEmbeddedCorpus</a></li><li data-type='method'><a href="AppRouter.html#showEmbeddedSearch">showEmbeddedSearch</a></li><li data-type='method'><a href="AppRouter.html#showEmbeddedSession">showEmbeddedSession</a></li><li data-type='method'><a href="AppRouter.html#showFullscreenCorpus">showFullscreenCorpus</a></li><li data-type='method'><a href="AppRouter.html#showFullscreenDataList">showFullscreenDataList</a></li><li data-type='method'><a href="AppRouter.html#showFullscreenSearch">showFullscreenSearch</a></li><li data-type='method'><a href="AppRouter.html#showFullscreenSession">showFullscreenSession</a></li><li data-type='method'><a href="AppRouter.html#showFullscreenUser">showFullscreenUser</a></li></ul></li><li><a href="AudioPlayer.html">AudioPlayer</a></li><li><a href="AudioVideo.html">AudioVideo</a></li><li><a href="AudioVideoRecorder.html">AudioVideoRecorder</a></li><li><a href="AudioVideos.html">AudioVideos</a></li><li><a href="Authentication.html">Authentication</a></li><li><a href="Collection.html">Collection</a></li><li><a href="Comment.html">Comment</a></li><li><a href="Comments.html">Comments</a></li><li><a href="ComputationalLinguisticsDatum.html">ComputationalLinguisticsDatum</a></li><li><a href="Confidential.html">Confidential</a></li><li><a href="Connection.html">Connection</a><ul class='methods'><li data-type='method'><a href="Connection.html#.validateIdentifier">validateIdentifier</a></li></ul></li><li><a href="Consultant.html">Consultant</a></li><li><a href="Consultants.html">Consultants</a></li><li><a href="Contexts.html">Contexts</a></li><li><a href="ContextualizableObject.html">ContextualizableObject</a></li><li><a href="Contextualizer.html">Contextualizer</a></li><li><a href="Conversation.html">Conversation</a><ul class='methods'><li data-type='method'><a href="Conversation.html#saveAndInterConnectInApp">saveAndInterConnectInApp</a></li><li data-type='method'><a href="Conversation.html#setAsCurrentConversation">setAsCurrentConversation</a></li></ul></li><li><a href="Conversations.html">Conversations</a></li><li><a href="Corpus.html">Corpus</a></li><li><a href="CorpusMask.html">CorpusMask</a></li><li><a href="DataList.html">DataList</a></li><li><a href="DataLists.html">DataLists</a></li><li><a href="Datum.html">Datum</a></li><li><a href="DatumField.html">DatumField</a></li><li><a href="DatumFields.html">DatumFields</a></li><li><a href="Datums.html">Datums</a></li><li><a href="DatumState.html">DatumState</a></li><li><a href="DatumStates.html">DatumStates</a></li><li><a href="DatumTag.html">DatumTag</a></li><li><a href="DatumTags.html">DatumTags</a></li><li><a href="DocumentCollection.html">DocumentCollection</a></li><li><a href="ELanguages.html">ELanguages</a></li><li><a href="ExperimentDataList.html">ExperimentDataList</a></li><li><a href="Export.html">Export</a></li><li><a href="FieldDBObject.html">FieldDBObject</a><ul class='methods'><li data-type='method'><a href="FieldDBObject.html#.uuidGenerator">uuidGenerator</a></li></ul></li><li><a href="GitImport.html">GitImport</a></li><li><a href="Glosser.html">Glosser</a><ul class='methods'><li data-type='method'><a href="Glosser.html#.calculateAllAlternativeCombinations">calculateAllAlternativeCombinations</a></li><li data-type='method'><a href="Glosser.html#.removeRedundantCopies">removeRedundantCopies</a></li><li data-type='method'><a href="Glosser.html#.sortAlternatesByLessSegmentation">sortAlternatesByLessSegmentation</a></li><li data-type='method'><a href="Glosser.html#.sortAlternatesByMoreSegmentation">sortAlternatesByMoreSegmentation</a></li></ul></li><li><a href="HotKey.html">HotKey</a></li><li><a href="HotKeys.html">HotKeys</a></li><li><a href="HTML5Audio.html">HTML5Audio</a></li><li><a href="Image.html">Image</a></li><li><a href="Images.html">Images</a></li><li><a href="Import.html">Import</a></li><li><a href="LanguageDatum.html">LanguageDatum</a></li><li><a href="Lexicon.html">Lexicon</a></li><li><a href="LexiconNode.html">LexiconNode</a></li><li><a href="Participant.html">Participant</a></li><li><a href="Permission.html">Permission</a></li><li><a href="Permissions.html">Permissions</a></li><li><a href="PsycholinguisticsApp.html">PsycholinguisticsApp</a></li><li><a href="ReportBot.html">ReportBot</a><ul class='methods'><li data-type='method'><a href="ReportBot.html#schedule">schedule</a></li></ul></li><li><a href="Response.html">Response</a></li><li><a href="Search.html">Search</a></li><li><a href="Session.html">Session</a></li><li><a href="Sessions.html">Sessions</a></li><li><a href="Speaker.html">Speaker</a></li><li><a href="Stimulus.html">Stimulus</a></li><li><a href="SubExperimentDataList.html">SubExperimentDataList</a></li><li><a href="Team.html">Team</a></li><li><a href="UnicodeSymbol.html">UnicodeSymbol</a></li><li><a href="UnicodeSymbols.html">UnicodeSymbols</a></li><li><a href="User.html">User</a></li><li><a href="UserApp.html">UserApp</a></li><li><a href="UserMask.html">UserMask</a></li><li><a href="UserPreference.html">UserPreference</a></li><li><a href="UserRouter.html">UserRouter</a><ul class='methods'><li data-type='method'><a href="UserRouter.html#showCorpusDashboard">showCorpusDashboard</a></li><li data-type='method'><a href="UserRouter.html#showDashboard">showDashboard</a></li><li data-type='method'><a href="UserRouter.html#showFullscreenUser">showFullscreenUser</a></li></ul></li><li><a href="Users.html">Users</a></li><li>{String: Exercise}</li></ul><h3>Modules</h3><ul><li><a href="module-FieldDB.html">FieldDB</a></li></ul><h3>Global</h3><ul><li><a href="global.html#add">add</a></li><li><a href="global.html#clone">clone</a></li><li><a href="global.html#debugMode">debugMode</a></li><li><a href="global.html#find">find</a></li><li><a href="global.html#getMD5ForFile">getMD5ForFile</a></li><li><a href="global.html#getSanitizedDotNotationKey">getSanitizedDotNotationKey</a></li><li><a href="global.html#LexiconFactory">LexiconFactory</a></li><li><a href="global.html#sanitizeStringForFileSystem">sanitizeStringForFileSystem</a></li><li><a href="global.html#sanitizeStringForPrimaryKey">sanitizeStringForPrimaryKey</a></li><li><a href="global.html#showDiffs">showDiffs</a></li></ul>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">user/User.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/* globals localStorage */
+var Activities = require("./../activity/Activities").Activities;
+var FieldDBObject = require("./../FieldDBObject").FieldDBObject;
+var UserMask = require("./UserMask").UserMask;
+var DatumFields = require("./../datum/DatumFields").DatumFields;
+var Connection = require("./../corpus/Connection").Connection;
+var Corpora = require("./../corpus/Corpora").Corpora;
+var Database = require("./../corpus/Database").Database;
+var Confidential = require("./../confidentiality_encryption/Confidential").Confidential;
+var UserPreference = require("./UserPreference").UserPreference;
+var DEFAULT_USER_MODEL = require("./user.json");
+var Q = require("q");
+
+/**
+ * @class User extends from UserGeneric. It inherits the same attributes as UserGeneric but can
+ * login.
+ *
+ * @property {String} firstname The user's first name.
+ * @property {String} lastname The user's last name.
+ * @property {Array} teams This is a list of teams a user belongs to.
+ * @property {Array} sessionHistory
+ * @property {Array} datalistHistory
+ * @property {Permission} permissions This is where permissions are specified (eg. read only; add/edit data etc.)
+ *
+ * @name  User
+ * @extends UserMask
+ * @constructs
+ */
+var User = function User(options) {
+  if (!this._fieldDBtype) {
+    this._fieldDBtype = "User";
+  }
+  if (options &amp;&amp; options.nodejs) {
+    this.todo("creating user from express body, verify options are sanitized ");
+    delete options.nodejs;
+    delete options.password;
+  }
+
+  this.debug("Constructing User length: ", options);
+  UserMask.apply(this, arguments);
+
+  if (this.username) {
+    this.id = this.username;
+  }
+};
+
+User.prototype = Object.create(UserMask.prototype, /** @lends User.prototype */ {
+  constructor: {
+    value: User
+  },
+
+  api: {
+    value: "users"
+  },
+
+  defaults: {
+    get: function() {
+      return JSON.parse(JSON.stringify(DEFAULT_USER_MODEL));
+    }
+  },
+
+  INTERNAL_MODELS: {
+    value: {
+      username: FieldDBObject.DEFAULT_STRING,
+      firstname: FieldDBObject.DEFAULT_STRING,
+      lastname: FieldDBObject.DEFAULT_STRING,
+      email: FieldDBObject.DEFAULT_STRING,
+      gravatar: FieldDBObject.DEFAULT_STRING,
+      researchInterest: FieldDBObject.DEFAULT_STRING,
+      affiliation: FieldDBObject.DEFAULT_STRING,
+      description: FieldDBObject.DEFAULT_STRING,
+      appbrand: FieldDBObject.DEFAULT_STRING,
+      fields: DatumFields,
+      prefs: UserPreference,
+      mostRecentIds: FieldDBObject,
+      activityConnection: Activities,
+      authUrl: FieldDBObject.DEFAULT_STRING,
+      userMask: UserMask,
+      corpora: Corpora,
+      newCorpora: Corpora,
+      sessionHistory: FieldDBObject.DEFAULT_ARRAY,
+      datalistHistory: FieldDBObject.DEFAULT_ARRAY
+    }
+  },
+
+  hotkeys: {
+    get: function() {
+      if (this.prefs) {
+        return this.prefs.hotkeys;
+      }
+    },
+    set: function(value) {
+      if (!this.prefs) {
+        this.prefs = new this.INTERNAL_MODELS["prefs"]();
+      }
+      if (Object.prototype.toString.call(value) !== "[object Array]") {
+        if (!value.firstKey &amp;&amp; !value.secondKey &amp;&amp; !value.description) {
+          value = [];
+        } else {
+          value = [value];
+        }
+      }
+      this.prefs.hotkeys = value;
+      delete this.hotkeys;
+    }
+  },
+
+  authUrl: {
+    get: function() {
+      return this._authUrl || "";
+    },
+    set: function(value) {
+      this.debug("setting authurl", value);
+      if (value === this._authUrl) {
+        return;
+      }
+      if (!value) {
+        delete this._authUrl;
+        return;
+      } else {
+        if (typeof value.trim === "function") {
+          value = value.trim();
+        }
+        value = value.replace(/[^.\/]*.fieldlinguist.com:3183/g, "auth.lingsync.org");
+      }
+      this._authUrl = value;
+    }
+  },
+
+  /*
+   * Deprecated
+   */
+  datalists: {
+    get: function() {
+      return this.datalistHistory;
+    },
+    set: function(value) {
+      if (value &amp;&amp; !this._datalistHistory) {
+        this.datalistHistory = value;
+      }
+    }
+  },
+
+  /*
+   * Deprecated
+   */
+  dataLists: {
+    get: function() {
+      return this.datalistHistory;
+    },
+    set: function(value) {
+      if (value &amp;&amp; !this._datalistHistory) {
+        this.datalistHistory = value;
+      }
+    }
+  },
+
+  datalistHistory: {
+    get: function() {
+      return this._datalistHistory || FieldDBObject.DEFAULT_ARRAY;
+    },
+    set: function(value) {
+      this._datalistHistory = value;
+    }
+  },
+
+  /*
+   * Deprecated
+   */
+  sessions: {
+    get: function() {
+      return this.sessionHistory;
+    },
+    set: function(value) {
+      if (value &amp;&amp; !this._sessionHistory) {
+        this.sessionHistory = value;
+      }
+    }
+  },
+
+  sessionHistory: {
+    get: function() {
+      return this._sessionHistory || FieldDBObject.DEFAULT_ARRAY;
+    },
+    set: function(value) {
+      this._sessionHistory = value;
+    }
+  },
+
+  mostRecentIds: {
+    configurable: true,
+    get: function() {
+      return this._mostRecentIds || FieldDBObject.DEFAULT_OBJECT;
+    },
+    set: function(value) {
+      if (value === this._mostRecentIds) {
+        return;
+      }
+      if (!value) {
+        delete this._mostRecentIds;
+        return;
+      } else {
+        if (!(value instanceof this.INTERNAL_MODELS["mostRecentIds"])) {
+          value = new this.INTERNAL_MODELS["mostRecentIds"](value);
+        }
+      }
+
+      value.connection = value.connection || value.corpusConnection || value.couchConnection;
+      delete value.corpusConnection;
+      delete value.couchConnection;
+      if (value.connection) {
+        value.connection = new Connection(value.connection);
+      }
+      this._mostRecentIds = value;
+    }
+  },
+
+  prefs: {
+    get: function() {
+      // if (!this._prefs &amp;&amp; this.INTERNAL_MODELS["prefs"] &amp;&amp; typeof this.INTERNAL_MODELS["prefs"] === "function") {
+      //   this.prefs = new this.INTERNAL_MODELS["prefs"](this.defaults.prefs);
+      // }
+      return this._prefs;
+    },
+    set: function(value) {
+      this.ensureSetViaAppropriateType("prefs", value);
+      // if(this._prefs){
+      //   this._prefs.parent = this;
+      // }
+    }
+  },
+
+  corpuses: {
+    configurable: true,
+    get: function() {
+      return this.corpora;
+    },
+    set: function(value) {
+      this.corpora = value;
+    }
+  },
+
+  newCorpusConnections: {
+    configurable: true,
+    get: function() {
+      return this.newCorpora;
+    },
+    set: function(value) {
+      this.newCorpora = value;
+    }
+  },
+
+  appbrand: {
+    get: function() {
+      if (this.prefs &amp;&amp; this.prefs.preferredDashboardType === this.prefs.defaults.preferredDashboardType) {
+        if (this._appbrand === "phophlo") {
+          this.debug(" setting preferredDashboardType from user " + this._appbrand);
+
+          this.prefs.preferredDashboardType = "experimenter";
+        }
+      }
+      return this._appbrand || "lingsync";
+    },
+    set: function(value) {
+      if (value === this._appbrand) {
+        return;
+      }
+
+      if (this._appbrand) {
+        this.warn("appbrand cannot be modified by client side apps.");
+      } else {
+        if (value.trim) {
+          value = value.trim();
+        }
+        this._appbrand = value;
+      }
+      this.debug(" setting preferredDashboardType from user " + this._appbrand);
+      if (this.prefs &amp;&amp; this.prefs.preferredDashboardType === this.prefs.defaults.preferredDashboardType) {
+        if (this._appbrand === "phophlo") {
+          this.prefs._preferredDashboardType = "experimenter";
+          this.debug(" it is now " + this.prefs.preferredDashboardType);
+
+        }
+      }
+    }
+  },
+
+  userMask: {
+    get: function() {
+      this.debug("getting userMask");
+      return this._userMask;
+    },
+    set: function(value) {
+      if (value &amp;&amp; typeof value === "object") {
+        value.username = this.username;
+        value.gravatar = value.gravatar || this.gravatar;
+        value.researchInterest = value.researchInterest || "No public information available";
+        value.description = value.description || "No public information available";
+        value.affiliation = value.affiliation || "No public information available";
+        value.id = value.username;
+      }
+      this.ensureSetViaAppropriateType("userMask", value);
+    }
+  },
+
+  publicSelf: {
+    get: function() {
+      return this.userMask;
+    },
+    set: function(value) {
+      this.userMask = value;
+    }
+  },
+
+  activityConnection: {
+    get: function() {
+      this.debug("getting activityConnection");
+      return this._activityConnection;
+    },
+    set: function(value) {
+      if (value) {
+        value.parent = this;
+        if (!value.confidential &amp;&amp; this.confidential) {
+          value.confidential = this.confidential;
+        }
+      }
+      this.ensureSetViaAppropriateType("activityConnection", value);
+
+      if (this.username &amp;&amp; this._activityConnection &amp;&amp; this._activityConnection._connection &amp;&amp; !this._activityConnection._database) {
+        this._activityConnection._database = new Database({
+          dbname: this.username + "-activity_feed",
+          connection: this._activityConnection._connection
+        });
+      }
+    }
+  },
+
+  activityCouchConnection: {
+    configurable: true,
+    get: function() {
+      return this.activityConnection;
+    },
+    set: function(value) {
+      this.activityConnection = value;
+    }
+  },
+
+  toJSON: {
+    value: function(includeEvenEmptyAttributes, removeEmptyAttributes) {
+      this.debug("Customizing toJSON ", includeEvenEmptyAttributes, removeEmptyAttributes);
+      includeEvenEmptyAttributes = true;
+      var json = FieldDBObject.prototype.toJSON.apply(this, arguments);
+
+      // TODO not including the corpuses, instead include corpora
+      if (this.corpora &amp;&amp; typeof this.corpora.toJSON === "function") {
+        json.corpora = this.corpora.toJSON();
+      } else {
+        json.corpora = this.corpora;
+      }
+      delete json.corpuses;
+
+      delete json.connection;
+      delete json.authentication;
+
+      // TODO deprecated
+      json.datalists = this.datalists;
+
+      if (json.mostRecentIds) {
+        delete json.mostRecentIds.fieldDBtype;
+        delete json.mostRecentIds.version;
+        delete json.mostRecentIds.dateCreated;
+        delete json.mostRecentIds.dateModified;
+        delete json.mostRecentIds.comments;
+        if (!json.mostRecentIds.dbname) {
+          delete json.mostRecentIds.dbname;
+        }
+      }
+
+      this.debug(json);
+      return json;
+    }
+  },
+
+  save: {
+    value: function(options) {
+      this.debug("Customizing save ", options);
+      var key,
+        userKey,
+        encryptedUserPreferences,
+        deferred = Q.defer();
+
+      this.whenReady = deferred.promise;
+
+      var self = this;
+      Q.nextTick(function() {
+        deferred.resolve(self);
+      });
+
+      if (!this._rev) {
+        this.warn("Refusing to save a user doc which is incomplete, and doesn't have a rev");
+        return deferred.promise;
+      }
+
+      try {
+        // save the user's preferences encrypted in local storage so they can work without by connecting only to their corpus
+        key = localStorage.getItem("X09qKvcQn8DnANzGdrZFqCRUutIi2C");
+        if (!key) {
+          key = Confidential.secretKeyGenerator();
+          localStorage.setItem("X09qKvcQn8DnANzGdrZFqCRUutIi2C", key);
+        }
+      } catch (e) {
+        this.constructor.prototype.temp = this.constructor.prototype.temp || {};
+        key = this.constructor.prototype.temp.X09qKvcQn8DnANzGdrZFqCRUutIi2C;
+        if (!key) {
+          key = Confidential.secretKeyGenerator();
+          this.constructor.prototype.temp.X09qKvcQn8DnANzGdrZFqCRUutIi2C = key;
+        }
+        this.debug("unable to use local storage, this app wont be very usable offline ");
+        this.debug(" error ", e);
+      }
+      userKey = key + this.username;
+      var userJSON = this.toJSON();
+      self.debug("saving " + userKey, userJSON);
+      encryptedUserPreferences = new Confidential({
+        secretkey: userKey
+      }).encrypt(userJSON);
+
+      try {
+        localStorage.setItem(userKey, encryptedUserPreferences);
+      } catch (e) {
+        this.constructor.prototype.temp = this.constructor.prototype.temp || {};
+        this.constructor.prototype.temp[userKey] = encryptedUserPreferences;
+        this.debug("unable to use local storage, this app wont be very usable offline ");
+        this.debug(" error ", e);
+      }
+
+      return deferred.promise;
+    }
+  },
+
+  fetch: {
+    value: function(options) {
+      this.debug("Customizing fetch ", options);
+      var key,
+        userKey,
+        encryptedUserPreferences,
+        decryptedUser = {},
+        overwriteOrNot,
+        self = this,
+        deferred = Q.defer();
+
+      this.whenReady = deferred.promise;
+
+      Q.nextTick(function() {
+        deferred.resolve(self);
+      });
+
+      try {
+        // fetch the user's preferences encrypted in local storage so they can work without by connecting only to their corpus
+        key = localStorage.getItem("X09qKvcQn8DnANzGdrZFqCRUutIi2C");
+      } catch (e) {
+        self.constructor.prototype.temp = self.constructor.prototype.temp || {};
+        key = self.constructor.prototype.temp.X09qKvcQn8DnANzGdrZFqCRUutIi2C;
+        self.debug("unable to use local storage, this app wont be very usable offline ");
+        self.debug(" error ", e);
+      }
+      if (!key) {
+        self.warn("cannot fetch user info locally");
+        return deferred.promise;
+      }
+      userKey = key + self.username;
+      try {
+        encryptedUserPreferences = localStorage.getItem(userKey);
+      } catch (e) {
+        if (!self.constructor.prototype.temp) {
+          self.warn("no local users have been saved");
+          return FieldDBObject.prototype.fetch.apply(self, arguments);
+        }
+        encryptedUserPreferences = self.constructor.prototype.temp[userKey];
+      }
+      decryptedUser = {};
+      if (!encryptedUserPreferences) {
+        self.warn("This user " + self.username + " hasnt been used this device before, need to request their prefs when they login.");
+        return deferred.promise;
+        // return FieldDBObject.prototype.fetch.apply(self, arguments);
+      }
+      self.debug("userKey is " + userKey);
+      self.debug("user encrypted is " + encryptedUserPreferences);
+      decryptedUser = new Confidential({
+        secretkey: userKey
+      }).decrypt(encryptedUserPreferences);
+
+      self.debug(" Opening user prefs from previous session on self device", decryptedUser);
+      if (!self._rev) {
+        overwriteOrNot = "overwrite";
+      }
+
+      self.merge("self", new User(decryptedUser), overwriteOrNot);
+      return deferred.promise;
+    }
+  }
+
+});
+exports.User = User;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Sat Mar 18 2017 20:02:56 GMT-0400 (EDT) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+</body>
+</html>

@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>activity/Activities.js - Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Activities.html">Activities</a></li><li><a href="Activity.html">Activity</a></li><li><a href="App.html">App</a></li><li><a href="AppRouter.html">AppRouter</a><ul class='methods'><li data-type='method'><a href="AppRouter.html#renderDashboardOrNot">renderDashboardOrNot</a></li><li data-type='method'><a href="AppRouter.html#showAllData">showAllData</a></li><li data-type='method'><a href="AppRouter.html#showAllDataInSession">showAllDataInSession</a></li><li data-type='method'><a href="AppRouter.html#showDashboard">showDashboard</a></li><li data-type='method'><a href="AppRouter.html#showEmbeddedCorpus">showEmbeddedCorpus</a></li><li data-type='method'><a href="AppRouter.html#showEmbeddedSearch">showEmbeddedSearch</a></li><li data-type='method'><a href="AppRouter.html#showEmbeddedSession">showEmbeddedSession</a></li><li data-type='method'><a href="AppRouter.html#showFullscreenCorpus">showFullscreenCorpus</a></li><li data-type='method'><a href="AppRouter.html#showFullscreenDataList">showFullscreenDataList</a></li><li data-type='method'><a href="AppRouter.html#showFullscreenSearch">showFullscreenSearch</a></li><li data-type='method'><a href="AppRouter.html#showFullscreenSession">showFullscreenSession</a></li><li data-type='method'><a href="AppRouter.html#showFullscreenUser">showFullscreenUser</a></li></ul></li><li><a href="AudioPlayer.html">AudioPlayer</a></li><li><a href="AudioVideo.html">AudioVideo</a></li><li><a href="AudioVideoRecorder.html">AudioVideoRecorder</a></li><li><a href="AudioVideos.html">AudioVideos</a></li><li><a href="Authentication.html">Authentication</a></li><li><a href="Collection.html">Collection</a></li><li><a href="Comment.html">Comment</a></li><li><a href="Comments.html">Comments</a></li><li><a href="ComputationalLinguisticsDatum.html">ComputationalLinguisticsDatum</a></li><li><a href="Confidential.html">Confidential</a></li><li><a href="Connection.html">Connection</a><ul class='methods'><li data-type='method'><a href="Connection.html#.validateIdentifier">validateIdentifier</a></li></ul></li><li><a href="Consultant.html">Consultant</a></li><li><a href="Consultants.html">Consultants</a></li><li><a href="Contexts.html">Contexts</a></li><li><a href="ContextualizableObject.html">ContextualizableObject</a></li><li><a href="Contextualizer.html">Contextualizer</a></li><li><a href="Conversation.html">Conversation</a><ul class='methods'><li data-type='method'><a href="Conversation.html#saveAndInterConnectInApp">saveAndInterConnectInApp</a></li><li data-type='method'><a href="Conversation.html#setAsCurrentConversation">setAsCurrentConversation</a></li></ul></li><li><a href="Conversations.html">Conversations</a></li><li><a href="Corpus.html">Corpus</a></li><li><a href="CorpusMask.html">CorpusMask</a></li><li><a href="DataList.html">DataList</a></li><li><a href="DataLists.html">DataLists</a></li><li><a href="Datum.html">Datum</a></li><li><a href="DatumField.html">DatumField</a></li><li><a href="DatumFields.html">DatumFields</a></li><li><a href="Datums.html">Datums</a></li><li><a href="DatumState.html">DatumState</a></li><li><a href="DatumStates.html">DatumStates</a></li><li><a href="DatumTag.html">DatumTag</a></li><li><a href="DatumTags.html">DatumTags</a></li><li><a href="DocumentCollection.html">DocumentCollection</a></li><li><a href="ELanguages.html">ELanguages</a></li><li><a href="ExperimentDataList.html">ExperimentDataList</a></li><li><a href="Export.html">Export</a></li><li><a href="FieldDBObject.html">FieldDBObject</a><ul class='methods'><li data-type='method'><a href="FieldDBObject.html#.uuidGenerator">uuidGenerator</a></li></ul></li><li><a href="GitImport.html">GitImport</a></li><li><a href="Glosser.html">Glosser</a><ul class='methods'><li data-type='method'><a href="Glosser.html#.calculateAllAlternativeCombinations">calculateAllAlternativeCombinations</a></li><li data-type='method'><a href="Glosser.html#.removeRedundantCopies">removeRedundantCopies</a></li><li data-type='method'><a href="Glosser.html#.sortAlternatesByLessSegmentation">sortAlternatesByLessSegmentation</a></li><li data-type='method'><a href="Glosser.html#.sortAlternatesByMoreSegmentation">sortAlternatesByMoreSegmentation</a></li></ul></li><li><a href="HotKey.html">HotKey</a></li><li><a href="HotKeys.html">HotKeys</a></li><li><a href="HTML5Audio.html">HTML5Audio</a></li><li><a href="Image.html">Image</a></li><li><a href="Images.html">Images</a></li><li><a href="Import.html">Import</a></li><li><a href="LanguageDatum.html">LanguageDatum</a></li><li><a href="Lexicon.html">Lexicon</a></li><li><a href="LexiconNode.html">LexiconNode</a></li><li><a href="Participant.html">Participant</a></li><li><a href="Permission.html">Permission</a></li><li><a href="Permissions.html">Permissions</a></li><li><a href="PsycholinguisticsApp.html">PsycholinguisticsApp</a></li><li><a href="ReportBot.html">ReportBot</a><ul class='methods'><li data-type='method'><a href="ReportBot.html#schedule">schedule</a></li></ul></li><li><a href="Response.html">Response</a></li><li><a href="Search.html">Search</a></li><li><a href="Session.html">Session</a></li><li><a href="Sessions.html">Sessions</a></li><li><a href="Speaker.html">Speaker</a></li><li><a href="Stimulus.html">Stimulus</a></li><li><a href="SubExperimentDataList.html">SubExperimentDataList</a></li><li><a href="Team.html">Team</a></li><li><a href="UnicodeSymbol.html">UnicodeSymbol</a></li><li><a href="UnicodeSymbols.html">UnicodeSymbols</a></li><li><a href="User.html">User</a></li><li><a href="UserApp.html">UserApp</a></li><li><a href="UserMask.html">UserMask</a></li><li><a href="UserPreference.html">UserPreference</a></li><li><a href="UserRouter.html">UserRouter</a><ul class='methods'><li data-type='method'><a href="UserRouter.html#showCorpusDashboard">showCorpusDashboard</a></li><li data-type='method'><a href="UserRouter.html#showDashboard">showDashboard</a></li><li data-type='method'><a href="UserRouter.html#showFullscreenUser">showFullscreenUser</a></li></ul></li><li><a href="Users.html">Users</a></li><li>{String: Exercise}</li></ul><h3>Modules</h3><ul><li><a href="module-FieldDB.html">FieldDB</a></li></ul><h3>Global</h3><ul><li><a href="global.html#add">add</a></li><li><a href="global.html#clone">clone</a></li><li><a href="global.html#debugMode">debugMode</a></li><li><a href="global.html#find">find</a></li><li><a href="global.html#getMD5ForFile">getMD5ForFile</a></li><li><a href="global.html#getSanitizedDotNotationKey">getSanitizedDotNotationKey</a></li><li><a href="global.html#LexiconFactory">LexiconFactory</a></li><li><a href="global.html#sanitizeStringForFileSystem">sanitizeStringForFileSystem</a></li><li><a href="global.html#sanitizeStringForPrimaryKey">sanitizeStringForPrimaryKey</a></li><li><a href="global.html#showDiffs">showDiffs</a></li></ul>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">activity/Activities.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>var Confidential = require("./../confidentiality_encryption/Confidential").Confidential;
+var DataList = require("./../data_list/DataList").DataList;
+var Activity = require("./Activity").Activity;
+var Connection = require("./../corpus/Connection").Connection;
+var Comments = require("./../comment/Comments").Comments;
+var DocumentCollection = require("./../datum/DocumentCollection").DocumentCollection;
+var Database = require("./../corpus/Database").Database;
+var ContextualizableObject = require("./../locales/ContextualizableObject").ContextualizableObject;
+var Q = require("q");
+
+var ActivityCollection = function ActivityCollection() {
+  if (!this._fieldDBtype) {
+    this._fieldDBtype = "ActivityCollection";
+  }
+  DocumentCollection.apply(this, arguments);
+};
+ActivityCollection.prototype = Object.create(DocumentCollection.prototype, /** @lends ActivityCollection.prototype */ {
+  constructor: {
+    value: ActivityCollection
+  },
+  primaryKey: {
+    value: "whenWhatWho"
+  },
+  INTERNAL_MODELS: {
+    value: {
+      item: Activity
+    }
+  }
+});
+exports.ActivityCollection = ActivityCollection;
+
+
+/**
+ * @class
+
+ * @name  Activities
+ * @description The Activities is a minimal customization of the DataList
+ * to add an internal model of Activity.
+ *
+ * @extends DataList
+ * @constructs
+ */
+var Activities = function Activities(options) {
+  if (!this._fieldDBtype) {
+    this._fieldDBtype = "Activities";
+  }
+  if (options &amp;&amp; options.port) {
+    options = {
+      connection: options
+    };
+  }
+  this.debug("Constructing Activities ", options);
+  DataList.apply(this, arguments);
+};
+
+Activities.prototype = Object.create(DataList.prototype, /** @lends Activities.prototype */ {
+  constructor: {
+    value: Activities
+  },
+
+  INTERNAL_MODELS: {
+    value: {
+      connection: Connection,
+      comments: Comments,
+      docs: ActivityCollection,
+      title: ContextualizableObject,
+      description: ContextualizableObject,
+      database: Database,
+      confidential: Confidential,
+      item: Activity
+    }
+  },
+
+  api: {
+    get: function() {
+      return "activities";
+    },
+    set: function() {
+      // no op
+    }
+  },
+
+  primaryKey: {
+    get: function() {
+      return "whenWhatWho";
+    },
+    set: function() {
+      // cant change the primary key of the activity feed.
+    }
+  },
+
+  teamOrPersonal: {
+    get: function() {
+      if (this._teamOrPersonal) {
+        return this._teamOrPersonal;
+      }
+
+      if (this.parent &amp;&amp; this.parent.fieldDBtype) {
+        var type = this.parent.fieldDBtype || "";
+        type = type.toLowerCase();
+        if (type.indexOf("user") > -1) {
+          this._teamOrPersonal = "personal";
+          return this._teamOrPersonal;
+        }
+        if (type.indexOf("corpus") > -1) {
+          this._teamOrPersonal = "team";
+          return this._teamOrPersonal;
+        }
+      }
+
+      if (this._connection &amp;&amp; typeof this._connection.guessDbType === "function") {
+        var guessedType = this._connection.guessDbType(this._connection.dbname);
+        this.debug(" acitivyt feed guessed the db type " + guessedType);
+        if (guessedType === "user_activity_feed") {
+          this._teamOrPersonal = "personal";
+          return this._teamOrPersonal;
+        } else if (guessedType === "corpus_activity_feed") {
+          this._teamOrPersonal = "team";
+          return this._teamOrPersonal;
+        }
+      }
+    },
+    set: function() {
+      // no op
+    }
+  },
+
+  connection: {
+    get: function() {
+      this.debug("getting connection");
+
+      if (this.parent &amp;&amp; this.parent.connection &amp;&amp; typeof this.parent.connection.toJSON === "function") {
+        this.connection = this.parent.connection.toJSON();
+      }
+
+      return this._connection;
+    },
+    set: function(value) {
+      this.ensureSetViaAppropriateType("connection", value);
+
+      this.title = this._connection.title || "Activity feed";
+      this.description = this._connection.description || "";
+    }
+  },
+
+  url: {
+    get: function() {
+      if (this.connection &amp;&amp; this.connection.corpusUrl) {
+        return this.connection.corpusUrl;
+      }
+    },
+    set: function(value) {
+      if (this.connection) {
+        this.connection.corpusUrl = value;
+      } else {
+        this.warn("not setting hte url", value);
+      }
+    }
+  },
+
+  parent: {
+    get: function() {
+      return this._parent;
+    },
+    set: function(value) {
+      if (value === this._parent) {
+        return;
+      }
+      if (this.dbname &amp;&amp; this.teamOrPersonal === "personal" &amp;&amp; this.dbname !== value.username + "-activity_feed") {
+        this.bug("Cannot change the " + this.dbname + " activity feed to " + value.username + "-activity_feed");
+        return;
+      }
+      if (this.dbname &amp;&amp; this.teamOrPersonal === "team" &amp;&amp; this.dbname !== value.dbname + "-activity_feed") {
+        this.bug("Cannot change the " + this.dbname + " activity feed to " + value.dbname + "-activity_feed");
+        return;
+      }
+
+      if (value) {
+        this._parent = value;
+        if (value &amp;&amp; value.set &amp;&amp; value.get &amp;&amp; this.teamOrPersonal === "team") {
+          this._database = value;
+        }
+      }
+    }
+  },
+
+  confidential: {
+    get: function() {
+      this.debug("getting confidential");
+      if (this.parent &amp;&amp; this.parent.confidential) {
+        return this.parent.confidential;
+      } else {
+        this.warn("Activites can only be viewed in masked form in this app. The parent of the activity feed is not defined.");
+      }
+    },
+    set: function() {
+      // cant set confidential on activity feeds, it must come from the parent. This means activities cannot be demasked unless in the context of the orignal corpus or user
+    }
+  },
+
+  database: {
+    get: function() {
+      this.debug("getting database");
+      return this._database;
+    },
+    set: function(value) {
+      this.ensureSetViaAppropriateType("database", value);
+    }
+  },
+
+  dbname: {
+    get: function() {
+      if (this.parent &amp;&amp; this.teamOrPersonal === "personal") {
+        return this.parent.username + "-activity_feed";
+      }
+
+      if (this.parent &amp;&amp; this.teamOrPersonal === "team") {
+        return this.parent.dbname + "-activity_feed";
+      }
+
+      if (this._connection &amp;&amp; this._connection.dbname) {
+        return this._connection.dbname;
+      }
+
+      if (this._dbname) {
+        return this._dbname;
+      }
+    },
+    set: function(value) {
+      if (value === this._dbname) {
+        return;
+      }
+      if (this.parent &amp;&amp; this.teamOrPersonal === "personal" &amp;&amp; value !== this.parent.dbname + "-activity_feed") {
+        this.bug("Cannot change the " + this.parent.dbname + "-activity_feed" + " to " + value);
+        return;
+      }
+      if (value) {
+        this._dbname = value;
+      }
+    }
+  },
+
+  add: {
+    value: function(activity, optionalUserWhoSaved) {
+      if (activity.url &amp;&amp; activity.url !== this.url) {
+        this.bug("Cannot add " + activity.url + " activity to " + this.url + " server, please report this. ");
+        return;
+      }
+      if (activity.dbname &amp;&amp; activity.dbname !== this.dbname) {
+        this.bug("Cannot add " + activity.dbname + " activity to " + this.dbname + " activity feed, please report this. ");
+        return;
+      }
+      if (!activity.parent &amp;&amp; this.parent) {
+        activity.parent = this.parent;
+      }
+      activity.dbname = this.dbname;
+      activity.fieldDBtype = "Activity";
+      this.debug("adding activity", activity);
+      activity.timestamp = Date.now();
+
+
+      if (!activity.user) {
+        if (!optionalUserWhoSaved) {
+          optionalUserWhoSaved = {
+            name: "",
+            username: "unknown"
+          };
+          try {
+            if (this.corpus &amp;&amp; this.corpus.connectionInfo &amp;&amp; this.corpus.connectionInfo.userCtx) {
+              optionalUserWhoSaved.username = this.corpus.connectionInfo.userCtx.name;
+            } else if (this.application &amp;&amp; this.application.user &amp;&amp; this.application.user.username) {
+              optionalUserWhoSaved.username = optionalUserWhoSaved.username || this.application.user.username;
+              optionalUserWhoSaved.gravatar = optionalUserWhoSaved.gravatar || this.application.user.gravatar;
+            }
+          } catch (e) {
+            this.warn("Can't get the corpus connection info to guess who saved this.", e);
+          }
+        }
+        // optionalUserWhoSaved._name = optionalUserWhoSaved.name || optionalUserWhoSaved.username || optionalUserWhoSaved.browserVersion;
+        if (typeof optionalUserWhoSaved.toJSON === "function") {
+          var asJson = optionalUserWhoSaved.toJSON();
+          asJson.name = optionalUserWhoSaved.name;
+          optionalUserWhoSaved = asJson;
+        } else {
+          optionalUserWhoSaved.name = optionalUserWhoSaved.name;
+        }
+        // optionalUserWhoSaved.browser = browser;
+
+        activity.user = {
+          username: optionalUserWhoSaved.username,
+          name: optionalUserWhoSaved.name,
+          lastname: optionalUserWhoSaved.lastname,
+          firstname: optionalUserWhoSaved.firstname,
+          gravatar: optionalUserWhoSaved.gravatar
+        };
+      }
+
+      activity.parent = this;
+      var addedActivity;
+      try {
+        addedActivity = DataList.prototype.add.apply(this, [activity]);
+      } catch (e) {
+        this.warn("Error adding this activity", e);
+        var message = e ? e.message : " Error adding this activity.";
+        if (e) {
+          console.error(e.stack);
+        }
+        this.warn(message);
+        activity.errorMessage = message;
+      }
+
+      if (addedActivity) {
+        if (this._database) {
+          addedActivity.corpus = this._database;
+        }
+        if (!addedActivity.rev) {
+          addedActivity.debug("This activity " + addedActivity.directobject + " has no evidence of having been saved before, makeing its fossil empty to trigger save.");
+          addedActivity.unsaved = true;
+          addedActivity.fossil = {};
+          addedActivity.debug("This activity", addedActivity);
+        }
+        return addedActivity;
+      }
+
+      if (!addedActivity) {
+        this.incompleteActivitesStockPile = this.incompleteActivitesStockPile || [];
+        delete activity.parent;
+        this.incompleteActivitesStockPile.push({
+          activity: activity,
+          errorMessage: activity.errorMessage || "Activity was not added."
+        });
+        return undefined;
+      }
+
+    }
+  },
+
+  save: {
+    value: function() {
+      var deferred = Q.defer(),
+        self = this;
+
+      this.whenReady = deferred.promise;
+
+      this.saving = true;
+      if (!this._docs || this._docs.length === 0) {
+        this.warn("Save was unncessary, the activity feed was empty...");
+        Q.nextTick(function() {
+          self.saving = false;
+          deferred.resolve(self);
+          return self;
+        });
+        return deferred.promise;
+      }
+
+      try {
+        this._docs.save(null, null, this.url).done(function() {
+          self.saving = false;
+          deferred.resolve(self);
+          return self;
+        });
+        this.warn("Requested save of activity feed", this.whenReady);
+      } catch (e) {
+        console.log("problem saving activity feed");
+        console.error(e);
+      }
+
+      return deferred.promise;
+    }
+  },
+
+  toJSON: {
+    value: function(includeEvenEmptyAttributes, removeEmptyAttributes) {
+      this.debug("Customizing toJSON ", includeEvenEmptyAttributes, removeEmptyAttributes);
+
+      var json;
+      if (this.connection &amp;&amp; typeof this.connection.toJSON === "function") {
+        json = this.connection.toJSON.apply(this.connection, arguments);
+        json.dbname = this.dbname;
+      } else {
+        json = new Connection().toJSON(includeEvenEmptyAttributes, removeEmptyAttributes);
+      }
+
+      this.debug(json);
+      return json;
+    }
+  }
+
+});
+exports.Activities = Activities;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Sat Mar 18 2017 20:02:56 GMT-0400 (EDT) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+</body>
+</html>

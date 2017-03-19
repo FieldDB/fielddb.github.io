@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>locales/ContextualizableObject.js - Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Activities.html">Activities</a></li><li><a href="Activity.html">Activity</a></li><li><a href="App.html">App</a></li><li><a href="AppRouter.html">AppRouter</a><ul class='methods'><li data-type='method'><a href="AppRouter.html#renderDashboardOrNot">renderDashboardOrNot</a></li><li data-type='method'><a href="AppRouter.html#showAllData">showAllData</a></li><li data-type='method'><a href="AppRouter.html#showAllDataInSession">showAllDataInSession</a></li><li data-type='method'><a href="AppRouter.html#showDashboard">showDashboard</a></li><li data-type='method'><a href="AppRouter.html#showEmbeddedCorpus">showEmbeddedCorpus</a></li><li data-type='method'><a href="AppRouter.html#showEmbeddedSearch">showEmbeddedSearch</a></li><li data-type='method'><a href="AppRouter.html#showEmbeddedSession">showEmbeddedSession</a></li><li data-type='method'><a href="AppRouter.html#showFullscreenCorpus">showFullscreenCorpus</a></li><li data-type='method'><a href="AppRouter.html#showFullscreenDataList">showFullscreenDataList</a></li><li data-type='method'><a href="AppRouter.html#showFullscreenSearch">showFullscreenSearch</a></li><li data-type='method'><a href="AppRouter.html#showFullscreenSession">showFullscreenSession</a></li><li data-type='method'><a href="AppRouter.html#showFullscreenUser">showFullscreenUser</a></li></ul></li><li><a href="AudioPlayer.html">AudioPlayer</a></li><li><a href="AudioVideo.html">AudioVideo</a></li><li><a href="AudioVideoRecorder.html">AudioVideoRecorder</a></li><li><a href="AudioVideos.html">AudioVideos</a></li><li><a href="Authentication.html">Authentication</a></li><li><a href="Collection.html">Collection</a></li><li><a href="Comment.html">Comment</a></li><li><a href="Comments.html">Comments</a></li><li><a href="ComputationalLinguisticsDatum.html">ComputationalLinguisticsDatum</a></li><li><a href="Confidential.html">Confidential</a></li><li><a href="Connection.html">Connection</a><ul class='methods'><li data-type='method'><a href="Connection.html#.validateIdentifier">validateIdentifier</a></li></ul></li><li><a href="Consultant.html">Consultant</a></li><li><a href="Consultants.html">Consultants</a></li><li><a href="Contexts.html">Contexts</a></li><li><a href="ContextualizableObject.html">ContextualizableObject</a></li><li><a href="Contextualizer.html">Contextualizer</a></li><li><a href="Conversation.html">Conversation</a><ul class='methods'><li data-type='method'><a href="Conversation.html#saveAndInterConnectInApp">saveAndInterConnectInApp</a></li><li data-type='method'><a href="Conversation.html#setAsCurrentConversation">setAsCurrentConversation</a></li></ul></li><li><a href="Conversations.html">Conversations</a></li><li><a href="Corpus.html">Corpus</a></li><li><a href="CorpusMask.html">CorpusMask</a></li><li><a href="DataList.html">DataList</a></li><li><a href="DataLists.html">DataLists</a></li><li><a href="Datum.html">Datum</a></li><li><a href="DatumField.html">DatumField</a></li><li><a href="DatumFields.html">DatumFields</a></li><li><a href="Datums.html">Datums</a></li><li><a href="DatumState.html">DatumState</a></li><li><a href="DatumStates.html">DatumStates</a></li><li><a href="DatumTag.html">DatumTag</a></li><li><a href="DatumTags.html">DatumTags</a></li><li><a href="DocumentCollection.html">DocumentCollection</a></li><li><a href="ELanguages.html">ELanguages</a></li><li><a href="ExperimentDataList.html">ExperimentDataList</a></li><li><a href="Export.html">Export</a></li><li><a href="FieldDBObject.html">FieldDBObject</a><ul class='methods'><li data-type='method'><a href="FieldDBObject.html#.uuidGenerator">uuidGenerator</a></li></ul></li><li><a href="GitImport.html">GitImport</a></li><li><a href="Glosser.html">Glosser</a><ul class='methods'><li data-type='method'><a href="Glosser.html#.calculateAllAlternativeCombinations">calculateAllAlternativeCombinations</a></li><li data-type='method'><a href="Glosser.html#.removeRedundantCopies">removeRedundantCopies</a></li><li data-type='method'><a href="Glosser.html#.sortAlternatesByLessSegmentation">sortAlternatesByLessSegmentation</a></li><li data-type='method'><a href="Glosser.html#.sortAlternatesByMoreSegmentation">sortAlternatesByMoreSegmentation</a></li></ul></li><li><a href="HotKey.html">HotKey</a></li><li><a href="HotKeys.html">HotKeys</a></li><li><a href="HTML5Audio.html">HTML5Audio</a></li><li><a href="Image.html">Image</a></li><li><a href="Images.html">Images</a></li><li><a href="Import.html">Import</a></li><li><a href="LanguageDatum.html">LanguageDatum</a></li><li><a href="Lexicon.html">Lexicon</a></li><li><a href="LexiconNode.html">LexiconNode</a></li><li><a href="Participant.html">Participant</a></li><li><a href="Permission.html">Permission</a></li><li><a href="Permissions.html">Permissions</a></li><li><a href="PsycholinguisticsApp.html">PsycholinguisticsApp</a></li><li><a href="ReportBot.html">ReportBot</a><ul class='methods'><li data-type='method'><a href="ReportBot.html#schedule">schedule</a></li></ul></li><li><a href="Response.html">Response</a></li><li><a href="Search.html">Search</a></li><li><a href="Session.html">Session</a></li><li><a href="Sessions.html">Sessions</a></li><li><a href="Speaker.html">Speaker</a></li><li><a href="Stimulus.html">Stimulus</a></li><li><a href="SubExperimentDataList.html">SubExperimentDataList</a></li><li><a href="Team.html">Team</a></li><li><a href="UnicodeSymbol.html">UnicodeSymbol</a></li><li><a href="UnicodeSymbols.html">UnicodeSymbols</a></li><li><a href="User.html">User</a></li><li><a href="UserApp.html">UserApp</a></li><li><a href="UserMask.html">UserMask</a></li><li><a href="UserPreference.html">UserPreference</a></li><li><a href="UserRouter.html">UserRouter</a><ul class='methods'><li data-type='method'><a href="UserRouter.html#showCorpusDashboard">showCorpusDashboard</a></li><li data-type='method'><a href="UserRouter.html#showDashboard">showDashboard</a></li><li data-type='method'><a href="UserRouter.html#showFullscreenUser">showFullscreenUser</a></li></ul></li><li><a href="Users.html">Users</a></li><li>{String: Exercise}</li></ul><h3>Modules</h3><ul><li><a href="module-FieldDB.html">FieldDB</a></li></ul><h3>Global</h3><ul><li><a href="global.html#add">add</a></li><li><a href="global.html#clone">clone</a></li><li><a href="global.html#debugMode">debugMode</a></li><li><a href="global.html#find">find</a></li><li><a href="global.html#getMD5ForFile">getMD5ForFile</a></li><li><a href="global.html#getSanitizedDotNotationKey">getSanitizedDotNotationKey</a></li><li><a href="global.html#LexiconFactory">LexiconFactory</a></li><li><a href="global.html#sanitizeStringForFileSystem">sanitizeStringForFileSystem</a></li><li><a href="global.html#sanitizeStringForPrimaryKey">sanitizeStringForPrimaryKey</a></li><li><a href="global.html#showDiffs">showDiffs</a></li></ul>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">locales/ContextualizableObject.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>var FieldDBObject = require("./../FieldDBObject").FieldDBObject,
+  Q = require("q");
+
+/**
+ * @class The ContextualizableObject allows the user to label data with grammatical tags
+ *        i.e. passive, causative. This is useful for searches.
+ *
+ * @name  ContextualizableObject
+ * @description The initialize function brings up a field in which the user
+ *              can enter tags.@class Object of Datum validation states
+ * @extends Object
+ * @constructs
+ */
+var ContextualizableObject = function ContextualizableObject(json) {
+  // if (!this._fieldDBtype) {
+  //   this._fieldDBtype = "Activities";
+  // }
+  // this.debugMode = true;
+  this.debug("Constructing ContextualizableObject ", json);
+  if (json &amp;&amp; typeof json === "string") {
+    if (ContextualizableObject.compatibleWithSimpleStrings) {
+      // Dont localize this, return what you received to be backward compatible
+
+      // http://stackoverflow.com/questions/1978049/what-values-can-a-constructor-return-to-avoid-returning-this
+      /* jshint ignore:start  */
+      return new String(json);
+      /* jshint ignore:end  */
+
+      // Can also throw the string and catch it and use the original value...
+      // throw json;
+    }
+    var stringAsKey = "locale_" + json.replace(/[^a-zA-Z0-9-]/g, "_");
+    var value = json;
+    json = {
+      default: stringAsKey
+    };
+    this.originalString = value;
+    this.data = this.data || {};
+    this.data[stringAsKey] = {
+      "message": value
+    };
+    this.add(stringAsKey, value);
+
+    // if (this.contextualizer &amp;&amp; this.contextualizer.contextualize(for_context) === for_context) {
+    //   this.contextualizer.updateContextualization(for_context, locale_string)
+    //   this.debug("added to contextualizer "+ this.contextualizer.contextualize(for_context));
+    // }
+  }
+  for (var member in json) {
+    if (!json.hasOwnProperty(member) || member === "contextualizer") {
+      continue;
+    }
+    this.add(member, json[member]);
+  }
+
+  Object.apply(this, arguments);
+};
+
+var forcedebug = false;
+
+ContextualizableObject.compatibleWithSimpleStrings = true;
+ContextualizableObject.prototype = Object.create(Object.prototype, /** @lends ContextualizableObject.prototype */ {
+  constructor: {
+    value: ContextualizableObject
+  },
+
+  fieldDBtype: {
+    value: "ContextualizableObject"
+  },
+
+  contextualizer: {
+    get: function() {
+      return FieldDBObject.prototype.contextualizer;
+    }
+  },
+
+  debug: {
+    value: function(message, message2, message3, message4) {
+      if (FieldDBObject.application &amp;&amp; FieldDBObject.application.contextualizer) {
+        // console.log("using  FieldDBObject.application.contextualizer.debug " +  FieldDBObject.application.contextualizer.debugMode);
+        return FieldDBObject.application.contextualizer.debug;
+      } else {
+        if (forcedebug) {
+          console.log(this.fieldDBtype.toUpperCase() + "-DEBUG FORCED: " + message);
+
+          if (message2) {
+            console.log(message2);
+          }
+          if (message3) {
+            console.log(message3);
+          }
+          if (message4) {
+            console.log(message4);
+          }
+        }
+      }
+    }
+  },
+
+  todo: {
+    value: function() {
+      return FieldDBObject.prototype.todo.apply(this, arguments);
+    }
+  },
+
+  contextualize: {
+    value: function(locale_string) {
+      this.debug("requesting contextualization of " + locale_string);
+      var contextualizedString;
+      if (this.contextualizer) {
+        contextualizedString = this.contextualizer.contextualize(locale_string);
+      }
+      if (!contextualizedString || contextualizedString === locale_string) {
+        if (this.data &amp;&amp; this.data[locale_string]) {
+          contextualizedString = this.data[locale_string].message;
+        } else {
+          contextualizedString = locale_string;
+        }
+      }
+      this.debug("::" + contextualizedString + "::");
+      return contextualizedString;
+    }
+  },
+
+  updateContextualization: {
+    value: function(for_context, locale_string) {
+      this.debug("updateContextualization" + for_context);
+      var updatePromiseOrSyncrhonousConfirmed,
+        self = this;
+
+      if (this.contextualizer) {
+        this.debug(this.contextualizer.data);
+
+        updatePromiseOrSyncrhonousConfirmed = this.contextualizer.updateContextualization(for_context, locale_string);
+        if (updatePromiseOrSyncrhonousConfirmed !== true) {
+          self.todo("Test async updatePromiseOrSyncrhonousConfirmed");
+          Q.nextTick(function() {
+            if (self.contextualizer) {
+              var updated = self.contextualizer.contextualize(for_context);
+              if ((!updated || updated === for_context) &amp;&amp; self.data) {
+                self.data[for_context] = self.data[for_context] || {
+                  message: ""
+                };
+                self.data[for_context].message = locale_string;
+              }
+            } else {
+              console.warn("This is strange, i lost my contextualizer...", self);
+            }
+          });
+        }
+      }
+      // this.data = this.data || {};
+      // this.data[for_context] = {
+      //   message: locale_string
+      // };
+
+      if (this._default === for_context) {
+        this.originalString = locale_string;
+      }
+      return updatePromiseOrSyncrhonousConfirmed;
+    }
+  },
+
+  add: {
+    value: function(for_context, locale_string) {
+      var underscoreNotation = "_" + for_context;
+      this[underscoreNotation] = locale_string;
+      this.__defineGetter__(for_context, function() {
+        this.debug("overidding getter");
+        return this.contextualize(this[underscoreNotation]);
+      });
+      this.__defineSetter__(for_context, function(value) {
+        this.debug("overidding setter " + underscoreNotation, value);
+        this.updateContextualization(this[underscoreNotation], value);
+      });
+      this.debug("adding string to ContextualizableObject's own data " + for_context);
+      //if there is no contextualizer, add this to the local data
+      this.data = this.data || {};
+      this.data[for_context] = {
+        "message": locale_string
+      };
+      if (for_context.indexOf("locale_") === 0 || for_context.indexOf("localized_") === 0) {
+        this.debug("intializing the data in this ContextualizableObject");
+        this.debug(" for_context " + for_context);
+        this.debug(" locale_string " + locale_string);
+        // If the contextualizer doesnt have a value for this string, add it to the contextualizations... (this could introduce a lot of data into the localizations)
+        if (this.contextualizer) {
+          this.debug(" adding to contextualizer: " + for_context + " as " + locale_string);
+          this.contextualizer.updateContextualization(for_context, locale_string);
+          this.debug("added to contextualizer " + this.contextualizer.contextualize(for_context));
+        }
+      }
+      this.debug("data", this.data);
+    }
+  },
+
+  isEmpty: {
+    value: function() {
+      return FieldDBObject.prototype.isEmpty.apply(this, arguments);
+    }
+  },
+
+  toJSON: {
+    value: function(includeEvenEmptyAttributes, removeEmptyAttributes) {
+      var json = {},
+        aproperty,
+        underscorelessProperty;
+
+      // this.debugMode = true;
+      if (!ContextualizableObject.compatibleWithSimpleStrings &amp;&amp; this.originalString) {
+        return this.originalString;
+      } else {
+        this.debug("Original string is not defined, returning an object. ", ContextualizableObject.compatibleWithSimpleStrings, this.originalString);
+      }
+
+      for (aproperty in this) {
+        if (this.hasOwnProperty(aproperty) &amp;&amp; typeof this[aproperty] !== "function" &amp;&amp; aproperty !== "contextualizer" &amp;&amp; aproperty.indexOf("_") === 0) {
+          underscorelessProperty = aproperty.replace(/^_/, "");
+          if (!removeEmptyAttributes || (removeEmptyAttributes &amp;&amp; !this.isEmpty(aproperty))) {
+            if (this[aproperty] &amp;&amp; typeof this[aproperty].toJSON === "function") {
+              json[underscorelessProperty] = this[aproperty].toJSON(includeEvenEmptyAttributes, removeEmptyAttributes);
+            } else {
+              json[underscorelessProperty] = this[aproperty];
+            }
+          }
+        }
+      }
+
+      /* if the caller requests a complete object include the default for all defauls by calling get on them */
+      if (includeEvenEmptyAttributes &amp;&amp; this.INTERNAL_MODELS) {
+        for (aproperty in this.INTERNAL_MODELS) {
+          if (!json[aproperty] &amp;&amp; this.INTERNAL_MODELS) {
+            if (this.INTERNAL_MODELS[aproperty] &amp;&amp; typeof this.INTERNAL_MODELS[aproperty] === "function" &amp;&amp; typeof new this.INTERNAL_MODELS[aproperty]().toJSON === "function") {
+              json[aproperty] = new this.INTERNAL_MODELS[aproperty]().toJSON(includeEvenEmptyAttributes, removeEmptyAttributes);
+            } else {
+              json[aproperty] = this.INTERNAL_MODELS[aproperty];
+            }
+          }
+        }
+      }
+      // Preseve the original string in this mini-contextualizer if it was originally a string
+      if (json.default &amp;&amp; this.originalString) {
+        json[json.default] = this.originalString;
+        delete json.originalString;
+      }
+
+      return json;
+    }
+  }
+
+});
+exports.ContextualizableObject = ContextualizableObject;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Sat Mar 18 2017 20:02:56 GMT-0400 (EDT) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+</body>
+</html>

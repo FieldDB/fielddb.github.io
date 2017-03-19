@@ -2,1208 +2,1314 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Class: Response</title>
-    
-    <script src="scripts/prettify/prettify.js"> </script><script>
-   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-   m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-   })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    <title>Response - Documentation</title>
 
-   ga('create','UA-35422317-1','auto');
-   ga('set', 'page', 'docs-javascript' + window.location.href.replace(window.location.protocol, "").replace(/^\//,""));
-   ga('send', 'pageview');
-</script>
-    <script src="scripts/prettify/lang-css.js"> </script>
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
     <!--[if lt IE 9]>
       <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
-    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
-    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
 </head>
-
 <body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Activities.html">Activities</a></li><li><a href="Activity.html">Activity</a></li><li><a href="App.html">App</a></li><li><a href="AppRouter.html">AppRouter</a><ul class='methods'><li data-type='method'><a href="AppRouter.html#renderDashboardOrNot">renderDashboardOrNot</a></li><li data-type='method'><a href="AppRouter.html#showAllData">showAllData</a></li><li data-type='method'><a href="AppRouter.html#showAllDataInSession">showAllDataInSession</a></li><li data-type='method'><a href="AppRouter.html#showDashboard">showDashboard</a></li><li data-type='method'><a href="AppRouter.html#showEmbeddedCorpus">showEmbeddedCorpus</a></li><li data-type='method'><a href="AppRouter.html#showEmbeddedSearch">showEmbeddedSearch</a></li><li data-type='method'><a href="AppRouter.html#showEmbeddedSession">showEmbeddedSession</a></li><li data-type='method'><a href="AppRouter.html#showFullscreenCorpus">showFullscreenCorpus</a></li><li data-type='method'><a href="AppRouter.html#showFullscreenDataList">showFullscreenDataList</a></li><li data-type='method'><a href="AppRouter.html#showFullscreenSearch">showFullscreenSearch</a></li><li data-type='method'><a href="AppRouter.html#showFullscreenSession">showFullscreenSession</a></li><li data-type='method'><a href="AppRouter.html#showFullscreenUser">showFullscreenUser</a></li></ul></li><li><a href="AudioPlayer.html">AudioPlayer</a></li><li><a href="AudioVideo.html">AudioVideo</a></li><li><a href="AudioVideoRecorder.html">AudioVideoRecorder</a></li><li><a href="AudioVideos.html">AudioVideos</a></li><li><a href="Authentication.html">Authentication</a></li><li><a href="Collection.html">Collection</a></li><li><a href="Comment.html">Comment</a></li><li><a href="Comments.html">Comments</a></li><li><a href="ComputationalLinguisticsDatum.html">ComputationalLinguisticsDatum</a></li><li><a href="Confidential.html">Confidential</a></li><li><a href="Connection.html">Connection</a><ul class='methods'><li data-type='method'><a href="Connection.html#.validateIdentifier">validateIdentifier</a></li></ul></li><li><a href="Consultant.html">Consultant</a></li><li><a href="Consultants.html">Consultants</a></li><li><a href="Contexts.html">Contexts</a></li><li><a href="ContextualizableObject.html">ContextualizableObject</a></li><li><a href="Contextualizer.html">Contextualizer</a></li><li><a href="Conversation.html">Conversation</a><ul class='methods'><li data-type='method'><a href="Conversation.html#saveAndInterConnectInApp">saveAndInterConnectInApp</a></li><li data-type='method'><a href="Conversation.html#setAsCurrentConversation">setAsCurrentConversation</a></li></ul></li><li><a href="Conversations.html">Conversations</a></li><li><a href="Corpus.html">Corpus</a></li><li><a href="CorpusMask.html">CorpusMask</a></li><li><a href="DataList.html">DataList</a></li><li><a href="DataLists.html">DataLists</a></li><li><a href="Datum.html">Datum</a></li><li><a href="DatumField.html">DatumField</a></li><li><a href="DatumFields.html">DatumFields</a></li><li><a href="Datums.html">Datums</a></li><li><a href="DatumState.html">DatumState</a></li><li><a href="DatumStates.html">DatumStates</a></li><li><a href="DatumTag.html">DatumTag</a></li><li><a href="DatumTags.html">DatumTags</a></li><li><a href="DocumentCollection.html">DocumentCollection</a></li><li><a href="ELanguages.html">ELanguages</a></li><li><a href="ExperimentDataList.html">ExperimentDataList</a></li><li><a href="Export.html">Export</a></li><li><a href="FieldDBObject.html">FieldDBObject</a><ul class='methods'><li data-type='method'><a href="FieldDBObject.html#.uuidGenerator">uuidGenerator</a></li></ul></li><li><a href="GitImport.html">GitImport</a></li><li><a href="Glosser.html">Glosser</a><ul class='methods'><li data-type='method'><a href="Glosser.html#.calculateAllAlternativeCombinations">calculateAllAlternativeCombinations</a></li><li data-type='method'><a href="Glosser.html#.removeRedundantCopies">removeRedundantCopies</a></li><li data-type='method'><a href="Glosser.html#.sortAlternatesByLessSegmentation">sortAlternatesByLessSegmentation</a></li><li data-type='method'><a href="Glosser.html#.sortAlternatesByMoreSegmentation">sortAlternatesByMoreSegmentation</a></li></ul></li><li><a href="HotKey.html">HotKey</a></li><li><a href="HotKeys.html">HotKeys</a></li><li><a href="HTML5Audio.html">HTML5Audio</a></li><li><a href="Image.html">Image</a></li><li><a href="Images.html">Images</a></li><li><a href="Import.html">Import</a></li><li><a href="LanguageDatum.html">LanguageDatum</a></li><li><a href="Lexicon.html">Lexicon</a></li><li><a href="LexiconNode.html">LexiconNode</a></li><li><a href="Participant.html">Participant</a></li><li><a href="Permission.html">Permission</a></li><li><a href="Permissions.html">Permissions</a></li><li><a href="PsycholinguisticsApp.html">PsycholinguisticsApp</a></li><li><a href="ReportBot.html">ReportBot</a><ul class='methods'><li data-type='method'><a href="ReportBot.html#schedule">schedule</a></li></ul></li><li><a href="Response.html">Response</a></li><li><a href="Search.html">Search</a></li><li><a href="Session.html">Session</a></li><li><a href="Sessions.html">Sessions</a></li><li><a href="Speaker.html">Speaker</a></li><li><a href="Stimulus.html">Stimulus</a></li><li><a href="SubExperimentDataList.html">SubExperimentDataList</a></li><li><a href="Team.html">Team</a></li><li><a href="UnicodeSymbol.html">UnicodeSymbol</a></li><li><a href="UnicodeSymbols.html">UnicodeSymbols</a></li><li><a href="User.html">User</a></li><li><a href="UserApp.html">UserApp</a></li><li><a href="UserMask.html">UserMask</a></li><li><a href="UserPreference.html">UserPreference</a></li><li><a href="UserRouter.html">UserRouter</a><ul class='methods'><li data-type='method'><a href="UserRouter.html#showCorpusDashboard">showCorpusDashboard</a></li><li data-type='method'><a href="UserRouter.html#showDashboard">showDashboard</a></li><li data-type='method'><a href="UserRouter.html#showFullscreenUser">showFullscreenUser</a></li></ul></li><li><a href="Users.html">Users</a></li><li>{String: Exercise}</li></ul><h3>Modules</h3><ul><li><a href="module-FieldDB.html">FieldDB</a></li></ul><h3>Global</h3><ul><li><a href="global.html#add">add</a></li><li><a href="global.html#clone">clone</a></li><li><a href="global.html#debugMode">debugMode</a></li><li><a href="global.html#find">find</a></li><li><a href="global.html#getMD5ForFile">getMD5ForFile</a></li><li><a href="global.html#getSanitizedDotNotationKey">getSanitizedDotNotationKey</a></li><li><a href="global.html#LexiconFactory">LexiconFactory</a></li><li><a href="global.html#sanitizeStringForFileSystem">sanitizeStringForFileSystem</a></li><li><a href="global.html#sanitizeStringForPrimaryKey">sanitizeStringForPrimaryKey</a></li><li><a href="global.html#showDiffs">showDiffs</a></li></ul>
+</nav>
 
 <div id="main">
     
-    <h1 class="page-title">Class: Response</h1>
+    <h1 class="page-title">Response</h1>
     
+
     
+
 
 
 
 <section>
-    
+
 <header>
-    <h2>
-    Response
-    </h2>
     
-        <div class="class-description">The Response is a minimal customization of a Stimulus which allows the user to add additional information
+        <h2>
+        Response
+        </h2>
+        
+            <div class="class-description">The Response is a minimal customization of a Stimulus which allows the user to add additional information
  which can be used for experiments.</div>
+        
     
-</header>  
+</header>
 
 <article>
     <div class="container-overview">
     
-    
-    
         
-<dt>
+
+    
+    <h2>Constructor</h2>
+    
+
     <h4 class="name" id="Response"><span class="type-signature"></span>new Response<span class="signature">()</span><span class="type-signature"></span></h4>
-    
-    
-</dt>
-<dd>
-    
-    
 
     
-    
-    
-    
-    
-    
-    
+
+
+
+
 <dl class="details">
-    
-        
-    
-    
-    
 
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Response.js.html">datum/Response.js</a>, <a href="Response.js.html#line4">line 4</a>
+        <a href="datum_Response.js.html">datum/Response.js</a>, <a href="datum_Response.js.html#line4">line 4</a>
     </li></ul></dd>
     
+
     
+
     
+
     
+
     
+
     
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
     
 </dl>
 
-    
-    
 
-    
 
-    
-    
-    
-    
-    
-    
-    
-</dd>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     
     </div>
-    
+
     
         <h3 class="subsection-title">Extends</h3>
+
         
-        <ul>
-            <li><a href="Stimulus.html">Stimulus</a></li>
-        </ul>
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-        <h3 class="subsection-title">Members</h3>
-        
-        <dl>
-            
-<dt>
-    <h4 class="name" id="cloneDeprecated"><span class="type-signature"></span>cloneDeprecated<span class="type-signature"></span></h4>
-    
-    
-</dt>
-<dd>
-    
-    <div class="description">
-        Clone the current Datum and return the clone. The clone is put in the current
-Session, regardless of the origin Datum's Session. //TODO it doesn tlook liek this is the case below:
-    </div>
-    
-    
+
+
+    <ul>
+        <li><a href="Stimulus.html">Stimulus</a></li>
+    </ul>
+
+
     
 
     
-<dl class="details">
+
     
+
+     
+
+    
+
+    
+        <h3 class="subsection-title">Members</h3>
+
         
+            
+<h4 class="name" id="cloneDeprecated"><span class="type-signature"></span>cloneDeprecated<span class="type-signature"></span></h4>
+
+
+
+
+
+<dl class="details">
+
     
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="datum_Datum.js.html">datum/Datum.js</a>, <a href="datum_Datum.js.html#line554">line 554</a>
+    </li></ul></dd>
     
+
+    
+
     
 
     
     <dt class="inherited-from">Inherited From:</dt>
     <dd class="inherited-from"><ul class="dummy"><li>
         <a href="Datum.html#cloneDeprecated">Datum#cloneDeprecated</a>
-    </li></dd>
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Datum.js.html">datum/Datum.js</a>, <a href="Datum.js.html#line636">line 636</a>
     </li></ul></dd>
     
+
     
+
     
+
     
+
     
+
     
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
     
 </dl>
 
-    
-    
-</dd>
+
+
+
+
+<div class="description">
+    Clone the current Datum and return the clone. The clone is put in the current
+Session, regardless of the origin Datum's Session. //TODO it doesn tlook liek this is the case below:
+</div>
+
+
+
+
+
+
+
 
         
             
-<dt>
-    <h4 class="name" id="decrypt"><span class="type-signature"></span>decrypt<span class="type-signature"></span></h4>
+<h4 class="name" id="decrypt"><span class="type-signature"></span>decrypt<span class="type-signature"></span></h4>
+
+
+
+
+
+<dl class="details">
+
     
-    
-</dt>
-<dd>
-    
-    <div class="description">
-        Decrypts the datum if it was encrypted
-    </div>
-    
-    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="datum_Datum.js.html">datum/Datum.js</a>, <a href="datum_Datum.js.html#line980">line 980</a>
+    </li></ul></dd>
     
 
     
-<dl class="details">
-    
-        
-    
-    
+
     
 
     
     <dt class="inherited-from">Inherited From:</dt>
     <dd class="inherited-from"><ul class="dummy"><li>
         <a href="Datum.html#decrypt">Datum#decrypt</a>
-    </li></dd>
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Datum.js.html">datum/Datum.js</a>, <a href="Datum.js.html#line1064">line 1064</a>
     </li></ul></dd>
     
+
     
+
     
+
     
+
     
+
     
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
     
 </dl>
 
-    
-    
-</dd>
+
+
+
+
+<div class="description">
+    Decrypts the datum if it was encrypted
+</div>
+
+
+
+
+
+
+
 
         
             
-<dt>
-    <h4 class="name" id="encrypt"><span class="type-signature"></span>encrypt<span class="type-signature"></span></h4>
+<h4 class="name" id="encrypt"><span class="type-signature"></span>encrypt<span class="type-signature"></span></h4>
+
+
+
+
+
+<dl class="details">
+
     
-    
-</dt>
-<dd>
-    
-    <div class="description">
-        Encrypts the datum if it is confidential
-    </div>
-    
-    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="datum_Datum.js.html">datum/Datum.js</a>, <a href="datum_Datum.js.html#line966">line 966</a>
+    </li></ul></dd>
     
 
     
-<dl class="details">
-    
-        
-    
-    
+
     
 
     
     <dt class="inherited-from">Inherited From:</dt>
     <dd class="inherited-from"><ul class="dummy"><li>
         <a href="Datum.html#encrypt">Datum#encrypt</a>
-    </li></dd>
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Datum.js.html">datum/Datum.js</a>, <a href="Datum.js.html#line1050">line 1050</a>
     </li></ul></dd>
     
+
     
+
     
+
     
+
     
+
     
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
     
 </dl>
 
-    
-    
-</dd>
+
+
+
+
+<div class="description">
+    Encrypts the datum if it is confidential
+</div>
+
+
+
+
+
+
+
 
         
             
-<dt>
-    <h4 class="name" id="exportAsCSV"><span class="type-signature"></span>exportAsCSV<span class="type-signature"></span></h4>
+<h4 class="name" id="exportAsCSV"><span class="type-signature"></span>exportAsCSV<span class="type-signature"></span></h4>
+
+
+
+
+
+<dl class="details">
+
     
-    
-</dt>
-<dd>
-    
-    <div class="description">
-        This takes as an argument the order of fields and then creates a row of csv.
-    </div>
-    
-    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="datum_Datum.js.html">datum/Datum.js</a>, <a href="datum_Datum.js.html#line918">line 918</a>
+    </li></ul></dd>
     
 
     
-<dl class="details">
-    
-        
-    
-    
+
     
 
     
     <dt class="inherited-from">Inherited From:</dt>
     <dd class="inherited-from"><ul class="dummy"><li>
         <a href="Datum.html#exportAsCSV">Datum#exportAsCSV</a>
-    </li></dd>
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Datum.js.html">datum/Datum.js</a>, <a href="Datum.js.html#line1002">line 1002</a>
     </li></ul></dd>
     
+
     
+
     
+
     
+
     
+
     
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
     
 </dl>
 
-    
-    
-</dd>
+
+
+
+
+<div class="description">
+    This takes as an argument the order of fields and then creates a row of csv.
+</div>
+
+
+
+
+
+
+
 
         
             
-<dt>
-    <h4 class="name" id="exportAsPlainText"><span class="type-signature"></span>exportAsPlainText<span class="type-signature"></span></h4>
+<h4 class="name" id="exportAsPlainText"><span class="type-signature"></span>exportAsPlainText<span class="type-signature"></span></h4>
+
+
+
+
+
+<dl class="details">
+
     
-    
-</dt>
-<dd>
-    
-    <div class="description">
-        This function simply takes the utterance gloss and translation and puts
-them out as plain text so the user can do as they wish.
-    </div>
-    
-    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="datum_Datum.js.html">datum/Datum.js</a>, <a href="datum_Datum.js.html#line898">line 898</a>
+    </li></ul></dd>
     
 
     
-<dl class="details">
-    
-        
-    
-    
+
     
 
     
     <dt class="inherited-from">Inherited From:</dt>
     <dd class="inherited-from"><ul class="dummy"><li>
         <a href="Datum.html#exportAsPlainText">Datum#exportAsPlainText</a>
-    </li></dd>
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Datum.js.html">datum/Datum.js</a>, <a href="Datum.js.html#line982">line 982</a>
     </li></ul></dd>
     
+
     
+
     
+
     
+
     
+
     
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
     
 </dl>
 
-    
-    
-</dd>
+
+
+
+
+<div class="description">
+    This function simply takes the utterance gloss and translation and puts
+them out as plain text so the user can do as they wish.
+</div>
+
+
+
+
+
+
+
 
         
             
-<dt>
-    <h4 class="name" id="getMostRecentIdsByDate"><span class="type-signature"></span>getMostRecentIdsByDate<span class="type-signature"></span></h4>
-    
-    
-</dt>
-<dd>
-    
-    <div class="description">
-        Gets all the DatumIds in the current Corpus sorted by their date.
-    </div>
-    
-    
-    
+<h4 class="name" id="getValidationStatus"><span class="type-signature"></span>getValidationStatus<span class="type-signature"></span></h4>
 
-    
+
+
+
+
 <dl class="details">
-    
-        
-    
-    
-    
 
-    
-    <dt class="inherited-from">Inherited From:</dt>
-    <dd class="inherited-from"><ul class="dummy"><li>
-        <a href="Datum.html#getMostRecentIdsByDate">Datum#getMostRecentIdsByDate</a>
-    </li></dd>
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Datum.js.html">datum/Datum.js</a>, <a href="Datum.js.html#line279">line 279</a>
+        <a href="datum_Datum.js.html">datum/Datum.js</a>, <a href="datum_Datum.js.html#line590">line 590</a>
     </li></ul></dd>
     
-    
-    
-    
-    
-    
-    
-</dl>
 
     
-    
-</dd>
 
-        
-            
-<dt>
-    <h4 class="name" id="getValidationStatus"><span class="type-signature"></span>getValidationStatus<span class="type-signature"></span></h4>
-    
-    
-</dt>
-<dd>
-    
-    <div class="description">
-        This function is used to get the most prominent datumstate (now called
-ValidationStatus) eg "CheckedWithSeberina" or "Deleted" or "ToBeChecked"
-    </div>
-    
-    
-    
-
-    
-<dl class="details">
-    
-        
-    
-    
     
 
     
     <dt class="inherited-from">Inherited From:</dt>
     <dd class="inherited-from"><ul class="dummy"><li>
         <a href="Datum.html#getValidationStatus">Datum#getValidationStatus</a>
-    </li></dd>
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Datum.js.html">datum/Datum.js</a>, <a href="Datum.js.html#line672">line 672</a>
     </li></ul></dd>
     
+
     
+
     
+
     
+
     
+
     
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
     
 </dl>
 
-    
-    
-</dd>
+
+
+
+
+<div class="description">
+    This function is used to get the most prominent datumstate (now called
+ValidationStatus) eg "CheckedWithSeberina" or "Deleted" or "ToBeChecked"
+</div>
+
+
+
+
+
+
+
 
         
             
-<dt>
-    <h4 class="name" id="getValidationStatusColor"><span class="type-signature"></span>getValidationStatusColor<span class="type-signature"></span></h4>
+<h4 class="name" id="getValidationStatusColor"><span class="type-signature"></span>getValidationStatusColor<span class="type-signature"></span></h4>
+
+
+
+
+
+<dl class="details">
+
     
-    
-</dt>
-<dd>
-    
-    <div class="description">
-        This function is used to colour a datum background to make
-visually salient the validation status of the datum.
-    </div>
-    
-    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="datum_Datum.js.html">datum/Datum.js</a>, <a href="datum_Datum.js.html#line627">line 627</a>
+    </li></ul></dd>
     
 
     
-<dl class="details">
-    
-        
-    
-    
+
     
 
     
     <dt class="inherited-from">Inherited From:</dt>
     <dd class="inherited-from"><ul class="dummy"><li>
         <a href="Datum.html#getValidationStatusColor">Datum#getValidationStatusColor</a>
-    </li></dd>
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Datum.js.html">datum/Datum.js</a>, <a href="Datum.js.html#line709">line 709</a>
     </li></ul></dd>
     
+
     
+
     
+
     
+
     
+
     
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
     
 </dl>
 
-    
-    
-</dd>
+
+
+
+
+<div class="description">
+    This function is used to colour a datum background to make
+visually salient the validation status of the datum.
+</div>
+
+
+
+
+
+
+
 
         
             
-<dt>
-    <h4 class="name" id="laTeXiT"><span class="type-signature"></span>laTeXiT<span class="type-signature"></span></h4>
-    
-    
-</dt>
-<dd>
-    
-    <div class="description">
-        The LaTeXiT function automatically mark-ups an example in LaTeX code
-(\exg. \"a) and then copies it on the export modal so that when the user
-switches over to their LaTeX file they only need to paste it in.
+<h4 class="name" id="laTeXiT"><span class="type-signature"></span>laTeXiT<span class="type-signature"></span></h4>
 
-We did a poll on Facebook among EGGers, and other linguists we know and
-found that Linguex was very popular, and GB4E, so we did the export in
-GB4E.
-    </div>
-    
-    
-    
 
-    
+
+
+
 <dl class="details">
+
     
-        
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="datum_LanguageDatum.js.html">datum/LanguageDatum.js</a>, <a href="datum_LanguageDatum.js.html#line316">line 316</a>
+    </li></ul></dd>
     
+
     
+
     
 
     
     <dt class="inherited-from">Inherited From:</dt>
     <dd class="inherited-from"><ul class="dummy"><li>
         <a href="LanguageDatum.html#laTeXiT">LanguageDatum#laTeXiT</a>
-    </li></dd>
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="LanguageDatum.js.html">datum/LanguageDatum.js</a>, <a href="LanguageDatum.js.html#line303">line 303</a>
     </li></ul></dd>
     
+
     
+
     
+
     
+
     
+
     
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
     
 </dl>
 
-    
-    
-</dd>
+
+
+
+
+<div class="description">
+    The LaTeXiT function automatically mark-ups an example in LaTeX code
+(\exg. \"a) and then copies it on the export modal so that when the user
+switches over to their LaTeX file they only need to paste it in.
+
+We did a poll on Facebook among EGGers, and other linguists we know and
+found that Linguex was very popular, and GB4E, so we did the export in
+GB4E.
+</div>
+
+
+
+
+
+
+
 
         
             
-<dt>
-    <h4 class="name" id="matchesSingleCriteria"><span class="type-signature"></span>matchesSingleCriteria<span class="type-signature"></span></h4>
+<h4 class="name" id="matchesSingleCriteria"><span class="type-signature"></span>matchesSingleCriteria<span class="type-signature"></span></h4>
+
+
+
+
+
+<dl class="details">
+
     
-    
-</dt>
-<dd>
-    
-    <div class="description">
-        Determines whether the given object to search through matches the given
-search criteria.
-    </div>
-    
-    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="datum_Datum.js.html">datum/Datum.js</a>, <a href="datum_Datum.js.html#line460">line 460</a>
+    </li></ul></dd>
     
 
     
-<dl class="details">
-    
-        
-    
-    
+
     
 
     
     <dt class="inherited-from">Inherited From:</dt>
     <dd class="inherited-from"><ul class="dummy"><li>
         <a href="Datum.html#matchesSingleCriteria">Datum#matchesSingleCriteria</a>
-    </li></dd>
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Datum.js.html">datum/Datum.js</a>, <a href="Datum.js.html#line541">line 541</a>
     </li></ul></dd>
     
+
     
+
     
+
     
+
     
+
     
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
     
 </dl>
 
-    
-    
-</dd>
+
+
+
+
+<div class="description">
+    Determines whether the given object to search through matches the given
+search criteria.
+</div>
+
+
+
+
+
+
+
 
         
             
-<dt>
-    <h4 class="name" id="morphemes"><span class="type-signature"></span>morphemes<span class="type-signature"></span></h4>
+<h4 class="name" id="morphemes"><span class="type-signature"></span>morphemes<span class="type-signature"></span></h4>
+
+
+
+
+
+<dl class="details">
+
     
-    
-</dt>
-<dd>
-    
-    <div class="description">
-        Morphemes of the datum, if morphemes is empty it will provide the utterance
-or the orthography as a last resort copy
-    </div>
-    
-    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="datum_LanguageDatum.js.html">datum/LanguageDatum.js</a>, <a href="datum_LanguageDatum.js.html#line126">line 126</a>
+    </li></ul></dd>
     
 
     
-<dl class="details">
-    
-        
-    
-    
+
     
 
     
     <dt class="inherited-from">Inherited From:</dt>
     <dd class="inherited-from"><ul class="dummy"><li>
         <a href="LanguageDatum.html#morphemes">LanguageDatum#morphemes</a>
-    </li></dd>
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="LanguageDatum.js.html">datum/LanguageDatum.js</a>, <a href="LanguageDatum.js.html#line112">line 112</a>
     </li></ul></dd>
     
+
     
+
     
+
     
+
     
+
     
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
     
 </dl>
 
-    
-    
-</dd>
+
+
+
+
+<div class="description">
+    Morphemes of the datum, if morphemes is empty it will provide the utterance
+or the orthography as a last resort copy
+</div>
+
+
+
+
+
+
+
 
         
             
-<dt>
-    <h4 class="name" id="playAudio"><span class="type-signature"></span>playAudio<span class="type-signature"> :Object</span></h4>
+<h4 class="name" id="playAudio"><span class="type-signature"></span>playAudio<span class="type-signature"> :Object</span></h4>
+
+
+
+
+
+<dl class="details">
+
     
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="datum_Response.js.html">datum/Response.js</a>, <a href="datum_Response.js.html#line232">line 232</a>
+    </li></ul></dd>
     
-</dt>
-<dd>
+
     
-    <div class="description">
-        TODO try using a media controller later montage/ui/controller/media-controller
-    </div>
+
     
+
     
+
     
-        <h5>Type:</h5>
-        <ul>
-            <li>
-                
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    TODO try using a media controller later montage/ui/controller/media-controller
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
 <span class="param-type">Object</span>
 
 
-            </li>
-        </ul>
-    
+        </li>
+    </ul>
 
-    
-<dl class="details">
-    
-        
-    
-    
-    
 
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Response.js.html">datum/Response.js</a>, <a href="Response.js.html#line232">line 232</a>
-    </li></ul></dd>
-    
-    
-    
-    
-    
-    
-    
-</dl>
 
-    
-    
-</dd>
+
+
 
         
             
-<dt>
-    <h4 class="name" id="processQueryString"><span class="type-signature"></span>processQueryString<span class="type-signature"></span></h4>
+<h4 class="name" id="processQueryString"><span class="type-signature"></span>processQueryString<span class="type-signature"></span></h4>
+
+
+
+
+
+<dl class="details">
+
     
-    
-</dt>
-<dd>
-    
-    <div class="description">
-        Process the given string into an array of tokens where each token is
-either a search criteria or an operator (AND or OR). Also makes each
-search criteria token lowercase, so that searches will be case-
-insensitive.
-    </div>
-    
-    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="datum_Datum.js.html">datum/Datum.js</a>, <a href="datum_Datum.js.html#line504">line 504</a>
+    </li></ul></dd>
     
 
     
-<dl class="details">
-    
-        
-    
-    
+
     
 
     
     <dt class="inherited-from">Inherited From:</dt>
     <dd class="inherited-from"><ul class="dummy"><li>
         <a href="Datum.html#processQueryString">Datum#processQueryString</a>
-    </li></dd>
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Datum.js.html">datum/Datum.js</a>, <a href="Datum.js.html#line586">line 586</a>
     </li></ul></dd>
     
+
     
+
     
+
     
+
     
+
     
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
     
 </dl>
 
-    
-    
-</dd>
+
+
+
+
+<div class="description">
+    Process the given string into an array of tokens where each token is
+either a search criteria or an operator (AND or OR). Also makes each
+search criteria token lowercase, so that searches will be case-
+insensitive.
+</div>
+
+
+
+
+
+
+
 
         
             
-<dt>
-    <h4 class="name" id="putInTrash"><span class="type-signature"></span>putInTrash<span class="type-signature"></span></h4>
-    
-    
-</dt>
-<dd>
-    
-    <div class="description">
-        Make the  model marked as Deleted, mapreduce function will
-ignore the deleted models so that it does not show in the app,
-but deleted model remains in the database until the admin empties
-the trash.
+<h4 class="name" id="putInTrash"><span class="type-signature"></span>putInTrash<span class="type-signature"></span></h4>
 
-Also remove it from the view so the user cant see it.
-    </div>
-    
-    
-    
 
-    
+
+
+
 <dl class="details">
+
     
-        
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="datum_Datum.js.html">datum/Datum.js</a>, <a href="datum_Datum.js.html#line714">line 714</a>
+    </li></ul></dd>
     
+
     
+
     
 
     
     <dt class="inherited-from">Inherited From:</dt>
     <dd class="inherited-from"><ul class="dummy"><li>
         <a href="Datum.html#putInTrash">Datum#putInTrash</a>
-    </li></dd>
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Datum.js.html">datum/Datum.js</a>, <a href="Datum.js.html#line798">line 798</a>
     </li></ul></dd>
     
+
     
+
     
+
     
+
     
+
     
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
     
 </dl>
 
-    
-    
-</dd>
+
+
+
+
+<div class="description">
+    Make the  model marked as Deleted, mapreduce function will
+ignore the deleted models so that it does not show in the app,
+but deleted model remains in the database until the admin empties
+the trash.
+
+Also remove it from the view so the user cant see it.
+</div>
+
+
+
+
+
+
+
 
         
             
-<dt>
-    <h4 class="name" id="saveAndInterConnectInApp"><span class="type-signature"></span>saveAndInterConnectInApp<span class="type-signature"></span></h4>
-    
-    
-</dt>
-<dd>
-    
-    <div class="description">
-        Accepts two functions to call back when save is successful or
-fails. If the fail callback is not overridden it will alert
-failure to the user.
+<h4 class="name" id="saveAndInterConnectInApp"><span class="type-signature"></span>saveAndInterConnectInApp<span class="type-signature"></span></h4>
 
-- Adds the datum to the top of the default data list in the corpus if it is in the right corpus
-- Adds the datum to the datums container if it wasnt there already
-- Adds an activity to the logged in user with diff in what the user changed.
-    </div>
-    
-    
-    
 
-    
+
+
+
 <dl class="details">
+
     
-        
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="datum_Datum.js.html">datum/Datum.js</a>, <a href="datum_Datum.js.html#line1001">line 1001</a>
+    </li></ul></dd>
     
+
     
+
     
 
     
     <dt class="inherited-from">Inherited From:</dt>
     <dd class="inherited-from"><ul class="dummy"><li>
         <a href="Datum.html#saveAndInterConnectInApp">Datum#saveAndInterConnectInApp</a>
-    </li></dd>
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Datum.js.html">datum/Datum.js</a>, <a href="Datum.js.html#line1085">line 1085</a>
     </li></ul></dd>
     
+
     
+
     
+
     
+
     
+
     
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
     
 </dl>
 
-    
-    
-</dd>
+
+
+
+
+<div class="description">
+    Accepts two functions to call back when save is successful or
+fails. If the fail callback is not overridden it will alert
+failure to the user.
+
+- Adds the datum to the top of the default data list in the corpus if it is in the right corpus
+- Adds the datum to the datums container if it wasnt there already
+- Adds an activity to the logged in user with diff in what the user changed.
+</div>
+
+
+
+
+
+
+
 
         
             
-<dt>
-    <h4 class="name" id="setAsCurrentDatum"><span class="type-signature"></span>setAsCurrentDatum<span class="type-signature"></span></h4>
+<h4 class="name" id="setAsCurrentDatum"><span class="type-signature"></span>setAsCurrentDatum<span class="type-signature"></span></h4>
+
+
+
+
+
+<dl class="details">
+
     
-    
-</dt>
-<dd>
-    
-    <div class="description">
-        Accepts two functions success will be called if sucessfull,
-otherwise it will attempt to render the current datum views. If
-the datum isn't in the current corpus it will call the fail
-callback or it will alert a bug to the user. Override the fail
-callback if you don't want the alert.
-    </div>
-    
-    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="datum_Datum.js.html">datum/Datum.js</a>, <a href="datum_Datum.js.html#line1019">line 1019</a>
+    </li></ul></dd>
     
 
     
-<dl class="details">
-    
-        
-    
-    
+
     
 
     
     <dt class="inherited-from">Inherited From:</dt>
     <dd class="inherited-from"><ul class="dummy"><li>
         <a href="Datum.html#setAsCurrentDatum">Datum#setAsCurrentDatum</a>
-    </li></dd>
+    </li></ul></dd>
     
+
     
+
+    
+
+    
+
+    
+
     
         <dt class="important tag-deprecated">Deprecated:</dt><dd class="yes-def tag-deprecated"><ul class="dummy"><li>Yes</li></ul></dd>
     
+
     
+
     
+
     
+
     
+
     
+
     
-    
-    
-    
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Datum.js.html">datum/Datum.js</a>, <a href="Datum.js.html#line1286">line 1286</a>
-    </li></ul></dd>
-    
-    
-    
-    
-    
-    
+
     
 </dl>
 
-    
-    
-</dd>
+
+
+
+
+<div class="description">
+    Accepts two functions success will be called if sucessfull,
+otherwise it will attempt to render the current datum views. If
+the datum isn't in the current corpus it will call the fail
+callback or it will alert a bug to the user. Override the fail
+callback if you don't want the alert.
+</div>
+
+
+
+
+
+
+
 
         
             
-<dt>
-    <h4 class="name" id="updateDatumState"><span class="type-signature"></span>updateDatumState<span class="type-signature"></span></h4>
+<h4 class="name" id="updateDatumState"><span class="type-signature"></span>updateDatumState<span class="type-signature"></span></h4>
+
+
+
+
+
+<dl class="details">
+
     
-    
-</dt>
-<dd>
-    
-    <div class="description">
-        This function is used to set the primary status of the datum,
-eg. put Deleted as the first item in the validation status.
-    </div>
-    
-    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="datum_Datum.js.html">datum/Datum.js</a>, <a href="datum_Datum.js.html#line653">line 653</a>
+    </li></ul></dd>
     
 
     
-<dl class="details">
-    
-        
-    
-    
+
     
 
     
     <dt class="inherited-from">Inherited From:</dt>
     <dd class="inherited-from"><ul class="dummy"><li>
         <a href="Datum.html#updateDatumState">Datum#updateDatumState</a>
-    </li></dd>
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Datum.js.html">datum/Datum.js</a>, <a href="Datum.js.html#line736">line 736</a>
     </li></ul></dd>
     
+
     
+
     
+
     
+
     
+
     
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
     
 </dl>
 
-    
-    
-</dd>
 
-        </dl>
+
+
+
+<div class="description">
+    This function is used to set the primary status of the datum,
+eg. put Deleted as the first item in the validation status.
+</div>
+
+
+
+
+
+
+
+
+        
     
+
     
+
     
-    
-    
-    
+
     
 </article>
 
-</section>  
+</section>
 
 
 
 
 </div>
 
-<nav>
-    <h2><a href="index.html">Index</a></h2><h3>Modules</h3><ul><li><a href="module-FieldDB.html">FieldDB</a></li></ul><h3>Classes</h3><ul><li><a href="Activities.html">Activities</a></li><li><a href="Activity.html">Activity</a></li><li><a href="App.html">App</a></li><li><a href="AppRouter.html">AppRouter</a></li><li><a href="AudioPlayer.html">AudioPlayer</a></li><li><a href="AudioVideo.html">AudioVideo</a></li><li><a href="AudioVideoRecorder.html">AudioVideoRecorder</a></li><li><a href="AudioVideos.html">AudioVideos</a></li><li><a href="Authentication.html">Authentication</a></li><li><a href="Collection.html">Collection</a></li><li><a href="Comment.html">Comment</a></li><li><a href="Comments.html">Comments</a></li><li><a href="Confidential.html">Confidential</a></li><li><a href="Connection.html">Connection</a></li><li><a href="Consultant.html">Consultant</a></li><li><a href="Consultants.html">Consultants</a></li><li><a href="Contexts.html">Contexts</a></li><li><a href="ContextualizableObject.html">ContextualizableObject</a></li><li><a href="Contextualizer.html">Contextualizer</a></li><li><a href="Conversation.html">Conversation</a></li><li><a href="Conversations.html">Conversations</a></li><li><a href="Corpus.html">Corpus</a></li><li><a href="CorpusMask.html">CorpusMask</a></li><li><a href="DataList.html">DataList</a></li><li><a href="DataLists.html">DataLists</a></li><li><a href="dataURItoBlob.html">dataURItoBlob</a></li><li><a href="Datum.html">Datum</a></li><li><a href="DatumField.html">DatumField</a></li><li><a href="DatumFields.html">DatumFields</a></li><li><a href="Datums.html">Datums</a></li><li><a href="DatumState.html">DatumState</a></li><li><a href="DatumStates.html">DatumStates</a></li><li><a href="DatumTag.html">DatumTag</a></li><li><a href="DatumTags.html">DatumTags</a></li><li><a href="DocumentCollection.html">DocumentCollection</a></li><li><a href="ELanguages.html">ELanguages</a></li><li><a href="ExperimentDataList.html">ExperimentDataList</a></li><li><a href="Export.html">Export</a></li><li><a href="FieldDBObject.html">FieldDBObject</a></li><li><a href="Glosser.html">Glosser</a></li><li><a href="HotKey.html">HotKey</a></li><li><a href="HotKeys.html">HotKeys</a></li><li><a href="HTML5Audio.html">HTML5Audio</a></li><li><a href="Image.html">Image</a></li><li><a href="Images.html">Images</a></li><li><a href="LanguageDatum.html">LanguageDatum</a></li><li><a href="Lexicon.html">Lexicon</a></li><li><a href="LexiconNode.html">LexiconNode</a></li><li><a href="Participant.html">Participant</a></li><li><a href="Permission.html">Permission</a></li><li><a href="Permissions.html">Permissions</a></li><li><a href="PsycholinguisticsApp.html">PsycholinguisticsApp</a></li><li><a href="ReportBot.html">ReportBot</a></li><li><a href="Response.html">Response</a></li><li><a href="Search.html">Search</a></li><li><a href="Session.html">Session</a></li><li><a href="Sessions.html">Sessions</a></li><li><a href="Speaker.html">Speaker</a></li><li><a href="Stimulus.html">Stimulus</a></li><li><a href="SubExperimentDataList.html">SubExperimentDataList</a></li><li><a href="Team.html">Team</a></li><li><a href="UnicodeSymbol.html">UnicodeSymbol</a></li><li><a href="UnicodeSymbols.html">UnicodeSymbols</a></li><li><a href="User.html">User</a></li><li><a href="UserApp.html">UserApp</a></li><li><a href="UserMask.html">UserMask</a></li><li><a href="UserPreference.html">UserPreference</a></li><li><a href="UserRouter.html">UserRouter</a></li><li><a href="Users.html">Users</a></li><li>{String: Exercise}</li></ul><h3>Global</h3><ul><li><a href="global.html#add">add</a></li><li><a href="global.html#clone">clone</a></li><li><a href="global.html#debugMode">debugMode</a></li><li><a href="global.html#find">find</a></li><li><a href="global.html#getMD5ForFile">getMD5ForFile</a></li><li><a href="global.html#getSanitizedDotNotationKey">getSanitizedDotNotationKey</a></li><li><a href="global.html#LexiconFactory">LexiconFactory</a></li><li><a href="global.html#sanitizeStringForFileSystem">sanitizeStringForFileSystem</a></li><li><a href="global.html#sanitizeStringForPrimaryKey">sanitizeStringForPrimaryKey</a></li><li><a href="global.html#showDiffs">showDiffs</a></li></ul>
-</nav>
-
-<br clear="both">
+<br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.2</a> on Thu Aug 13 2015 08:22:53 GMT-0400 (EDT)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Sat Mar 18 2017 20:02:57 GMT-0400 (EDT) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
 </footer>
 
-<script> prettyPrint(); </script>
-<script src="scripts/linenumber.js"> </script>
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
 </body>
 </html>

@@ -2,48 +2,45 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: Collection.js</title>
-    
-    <script src="scripts/prettify/prettify.js"> </script><script>
-   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-   m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-   })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    <title>Collection.js - Documentation</title>
 
-   ga('create','UA-35422317-1','auto');
-   ga('set', 'page', 'docs-javascript' + window.location.href.replace(window.location.protocol, "").replace(/^\//,""));
-   ga('send', 'pageview');
-</script>
-    <script src="scripts/prettify/lang-css.js"> </script>
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
     <!--[if lt IE 9]>
       <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
-    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
-    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
 </head>
-
 <body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Activities.html">Activities</a></li><li><a href="Activity.html">Activity</a></li><li><a href="App.html">App</a></li><li><a href="AppRouter.html">AppRouter</a><ul class='methods'><li data-type='method'><a href="AppRouter.html#renderDashboardOrNot">renderDashboardOrNot</a></li><li data-type='method'><a href="AppRouter.html#showAllData">showAllData</a></li><li data-type='method'><a href="AppRouter.html#showAllDataInSession">showAllDataInSession</a></li><li data-type='method'><a href="AppRouter.html#showDashboard">showDashboard</a></li><li data-type='method'><a href="AppRouter.html#showEmbeddedCorpus">showEmbeddedCorpus</a></li><li data-type='method'><a href="AppRouter.html#showEmbeddedSearch">showEmbeddedSearch</a></li><li data-type='method'><a href="AppRouter.html#showEmbeddedSession">showEmbeddedSession</a></li><li data-type='method'><a href="AppRouter.html#showFullscreenCorpus">showFullscreenCorpus</a></li><li data-type='method'><a href="AppRouter.html#showFullscreenDataList">showFullscreenDataList</a></li><li data-type='method'><a href="AppRouter.html#showFullscreenSearch">showFullscreenSearch</a></li><li data-type='method'><a href="AppRouter.html#showFullscreenSession">showFullscreenSession</a></li><li data-type='method'><a href="AppRouter.html#showFullscreenUser">showFullscreenUser</a></li></ul></li><li><a href="AudioPlayer.html">AudioPlayer</a></li><li><a href="AudioVideo.html">AudioVideo</a></li><li><a href="AudioVideoRecorder.html">AudioVideoRecorder</a></li><li><a href="AudioVideos.html">AudioVideos</a></li><li><a href="Authentication.html">Authentication</a></li><li><a href="Collection.html">Collection</a></li><li><a href="Comment.html">Comment</a></li><li><a href="Comments.html">Comments</a></li><li><a href="ComputationalLinguisticsDatum.html">ComputationalLinguisticsDatum</a></li><li><a href="Confidential.html">Confidential</a></li><li><a href="Connection.html">Connection</a><ul class='methods'><li data-type='method'><a href="Connection.html#.validateIdentifier">validateIdentifier</a></li></ul></li><li><a href="Consultant.html">Consultant</a></li><li><a href="Consultants.html">Consultants</a></li><li><a href="Contexts.html">Contexts</a></li><li><a href="ContextualizableObject.html">ContextualizableObject</a></li><li><a href="Contextualizer.html">Contextualizer</a></li><li><a href="Conversation.html">Conversation</a><ul class='methods'><li data-type='method'><a href="Conversation.html#saveAndInterConnectInApp">saveAndInterConnectInApp</a></li><li data-type='method'><a href="Conversation.html#setAsCurrentConversation">setAsCurrentConversation</a></li></ul></li><li><a href="Conversations.html">Conversations</a></li><li><a href="Corpus.html">Corpus</a></li><li><a href="CorpusMask.html">CorpusMask</a></li><li><a href="DataList.html">DataList</a></li><li><a href="DataLists.html">DataLists</a></li><li><a href="Datum.html">Datum</a></li><li><a href="DatumField.html">DatumField</a></li><li><a href="DatumFields.html">DatumFields</a></li><li><a href="Datums.html">Datums</a></li><li><a href="DatumState.html">DatumState</a></li><li><a href="DatumStates.html">DatumStates</a></li><li><a href="DatumTag.html">DatumTag</a></li><li><a href="DatumTags.html">DatumTags</a></li><li><a href="DocumentCollection.html">DocumentCollection</a></li><li><a href="ELanguages.html">ELanguages</a></li><li><a href="ExperimentDataList.html">ExperimentDataList</a></li><li><a href="Export.html">Export</a></li><li><a href="FieldDBObject.html">FieldDBObject</a><ul class='methods'><li data-type='method'><a href="FieldDBObject.html#.uuidGenerator">uuidGenerator</a></li></ul></li><li><a href="GitImport.html">GitImport</a></li><li><a href="Glosser.html">Glosser</a><ul class='methods'><li data-type='method'><a href="Glosser.html#.calculateAllAlternativeCombinations">calculateAllAlternativeCombinations</a></li><li data-type='method'><a href="Glosser.html#.removeRedundantCopies">removeRedundantCopies</a></li><li data-type='method'><a href="Glosser.html#.sortAlternatesByLessSegmentation">sortAlternatesByLessSegmentation</a></li><li data-type='method'><a href="Glosser.html#.sortAlternatesByMoreSegmentation">sortAlternatesByMoreSegmentation</a></li></ul></li><li><a href="HotKey.html">HotKey</a></li><li><a href="HotKeys.html">HotKeys</a></li><li><a href="HTML5Audio.html">HTML5Audio</a></li><li><a href="Image.html">Image</a></li><li><a href="Images.html">Images</a></li><li><a href="Import.html">Import</a></li><li><a href="LanguageDatum.html">LanguageDatum</a></li><li><a href="Lexicon.html">Lexicon</a></li><li><a href="LexiconNode.html">LexiconNode</a></li><li><a href="Participant.html">Participant</a></li><li><a href="Permission.html">Permission</a></li><li><a href="Permissions.html">Permissions</a></li><li><a href="PsycholinguisticsApp.html">PsycholinguisticsApp</a></li><li><a href="ReportBot.html">ReportBot</a><ul class='methods'><li data-type='method'><a href="ReportBot.html#schedule">schedule</a></li></ul></li><li><a href="Response.html">Response</a></li><li><a href="Search.html">Search</a></li><li><a href="Session.html">Session</a></li><li><a href="Sessions.html">Sessions</a></li><li><a href="Speaker.html">Speaker</a></li><li><a href="Stimulus.html">Stimulus</a></li><li><a href="SubExperimentDataList.html">SubExperimentDataList</a></li><li><a href="Team.html">Team</a></li><li><a href="UnicodeSymbol.html">UnicodeSymbol</a></li><li><a href="UnicodeSymbols.html">UnicodeSymbols</a></li><li><a href="User.html">User</a></li><li><a href="UserApp.html">UserApp</a></li><li><a href="UserMask.html">UserMask</a></li><li><a href="UserPreference.html">UserPreference</a></li><li><a href="UserRouter.html">UserRouter</a><ul class='methods'><li data-type='method'><a href="UserRouter.html#showCorpusDashboard">showCorpusDashboard</a></li><li data-type='method'><a href="UserRouter.html#showDashboard">showDashboard</a></li><li data-type='method'><a href="UserRouter.html#showFullscreenUser">showFullscreenUser</a></li></ul></li><li><a href="Users.html">Users</a></li><li>{String: Exercise}</li></ul><h3>Modules</h3><ul><li><a href="module-FieldDB.html">FieldDB</a></li></ul><h3>Global</h3><ul><li><a href="global.html#add">add</a></li><li><a href="global.html#clone">clone</a></li><li><a href="global.html#debugMode">debugMode</a></li><li><a href="global.html#find">find</a></li><li><a href="global.html#getMD5ForFile">getMD5ForFile</a></li><li><a href="global.html#getSanitizedDotNotationKey">getSanitizedDotNotationKey</a></li><li><a href="global.html#LexiconFactory">LexiconFactory</a></li><li><a href="global.html#sanitizeStringForFileSystem">sanitizeStringForFileSystem</a></li><li><a href="global.html#sanitizeStringForPrimaryKey">sanitizeStringForPrimaryKey</a></li><li><a href="global.html#showDiffs">showDiffs</a></li></ul>
+</nav>
 
 <div id="main">
     
-    <h1 class="page-title">Source: Collection.js</h1>
+    <h1 class="page-title">Collection.js</h1>
     
+
     
+
 
 
     
     <section>
         <article>
-            <pre class="prettyprint source"><code>/* globals FieldDB */
+            <pre class="prettyprint source linenums"><code>/* globals FieldDB */
 
 var FieldDBObject = require("./FieldDBObject").FieldDBObject;
 var Q = require("q");
-
-var regExpEscape = function(s) {
-  return String(s).replace(/([-()\[\]{}+?*.$\^|,:#&lt;!\\])/g, "\\$1").
-  replace(/\x08/g, "\\x08");
-};
-
 
 /**
  * @class An array backed collection that can look up elements loosely based on id or label.
@@ -51,7 +48,7 @@ var regExpEscape = function(s) {
  * @param {Object} options Optional json initialization object
  * @property {String} primaryKey This is the optional attribute to look in the objects when doing a get or find
  * @property {Boolean} inverted This is the optional parameter for whether the collection should be inserted from the bottom or the top of the collection
- 
+
  * @extends Object
  * @tutorial tests/CollectionTest.js
  */
@@ -70,7 +67,7 @@ var Collection = function Collection(json) {
     };
   }
 
-  // if (json && json.corpus) {
+  // if (json &amp;&amp; json.corpus) {
   //   this.corpus = json.corpus;
   // }
 
@@ -92,6 +89,7 @@ var Collection = function Collection(json) {
   Object.apply(this, arguments);
 };
 
+Collection.notWorthSortingSize = 100;
 /** @lends Collection.prototype */
 Collection.prototype = Object.create(Object.prototype, {
   constructor: {
@@ -209,7 +207,7 @@ Collection.prototype = Object.create(Object.prototype, {
       return this._collection;
     },
     set: function(value) {
-      if (value === this._collection || value === [] && this._collection === []) {
+      if (value === this._collection || value === [] &amp;&amp; this._collection === []) {
         return;
       }
       if (!value || value.length === 0) {
@@ -243,10 +241,22 @@ Collection.prototype = Object.create(Object.prototype, {
     }
   },
 
+  sorted: {
+    get: function() {
+      if (this.length &amp;&amp; this.length &lt; Collection.notWorthSortingSize &amp;&amp; this._sorted) {
+        return true;
+      }
+    },
+    set: function(value) {
+      this._sorted = value;
+      //TODO if becoming sorted and worth sorting, do sort now
+    }
+  },
+
   /**
    * Loops through the collection (inefficiently, from start to end) to find
    * something which matches.
-   *
+   * TODO add sorted option with faster search
    *
    * @param  {String} arg1  If run with only one argument, this is the string to look for in the primary keys.
    * @param  {String} arg2  If run with two arguments, this is the string to look for in the first argument
@@ -260,10 +270,10 @@ Collection.prototype = Object.create(Object.prototype, {
         optionalKeyToIdentifyItem,
         sanitzedSearchingFor;
 
-      if (arg1 && arg2) {
+      if (arg1 &amp;&amp; arg2) {
         searchingFor = arg2;
         optionalKeyToIdentifyItem = arg1;
-      } else if (arg1 && !arg2) {
+      } else if (arg1 &amp;&amp; !arg2) {
         searchingFor = arg1;
       }
 
@@ -279,16 +289,16 @@ Collection.prototype = Object.create(Object.prototype, {
         searchingFor = searchingFor[0];
       }
 
-      if (typeof searchingFor === "object" && !(searchingFor instanceof RegExp)) {
+      if (typeof searchingFor === "object" &amp;&amp; !(searchingFor instanceof RegExp)) {
         // this.debug("find is searchingFor an object", searchingFor);
         if (Object.keys(searchingFor).length === 0) {
           return results;
         }
 
         var key = searchingFor[this.primaryKey];
-        if (!key && this.INTERNAL_MODELS && this.INTERNAL_MODELS.item && typeof this.INTERNAL_MODELS.item === "function" && !(searchingFor instanceof this.INTERNAL_MODELS.item)) {
+        if (!key &amp;&amp; this.INTERNAL_MODELS &amp;&amp; this.INTERNAL_MODELS.item &amp;&amp; typeof this.INTERNAL_MODELS.item === "function" &amp;&amp; !(searchingFor instanceof this.INTERNAL_MODELS.item)) {
           searchingFor = new this.INTERNAL_MODELS.item(searchingFor);
-        } else if (!key && !(searchingFor instanceof FieldDBObject)) {
+        } else if (!key &amp;&amp; !(searchingFor instanceof FieldDBObject)) {
           searchingFor = new FieldDBObject(searchingFor);
         } else if (!key) {
           this.bug("This searchingFor is a object, and has no key. this is a problem. ", searchingFor);
@@ -298,7 +308,7 @@ Collection.prototype = Object.create(Object.prototype, {
         // this.debug("find is searchingFor an object whose key is ", searchingFor);
       }
 
-      if (this[searchingFor]) {
+      if (this[searchingFor] &amp;&amp; typeof this[searchingFor] !== "function") {
         results.push(this[searchingFor]);
       }
       if (fuzzy) {
@@ -309,8 +319,8 @@ Collection.prototype = Object.create(Object.prototype, {
       // this.debug("searching for somethign with indexOf", searchingFor);
       if (!searchingFor || !searchingFor.test || typeof searchingFor.test !== "function") {
         /* if not a regex, the excape it */
-        if (searchingFor && searchingFor.indexOf && searchingFor.indexOf("/") !== 0) {
-          searchingFor = regExpEscape(searchingFor);
+        if (searchingFor &amp;&amp; searchingFor.indexOf &amp;&amp; searchingFor.indexOf("/") !== 0) {
+          searchingFor = FieldDBObject.regExpEscape(searchingFor);
         }
         searchingFor = new RegExp("^" + searchingFor + "$");
       }
@@ -322,13 +332,24 @@ Collection.prototype = Object.create(Object.prototype, {
             results.push(this.collection[index]);
           }
           this.debug("Found a match ", results);
-        } else if (fuzzy && sanitzedSearchingFor.test(this.collection[index][optionalKeyToIdentifyItem])) {
+        } else if (fuzzy &amp;&amp; sanitzedSearchingFor.test(this.collection[index][optionalKeyToIdentifyItem])) {
           if (!results[0] || results[0] !== this.collection[index]) {
             results.push(this.collection[index]);
           }
         }
       }
       this.debug("Found total matches ", results.length);
+      // If this is fuzzy find and there are multiple matches, move the exact match first.
+      if (results &amp;&amp; results.length > 1 &amp;&amp; fuzzy) {
+        this.debug("lets look for the best result where " + optionalKeyToIdentifyItem + " = " + arg2, results.length);
+        for (var i = results.length - 1; i >= 0; i--) {
+          if (i !== 0 &amp;&amp; results[i] &amp;&amp; results[i][optionalKeyToIdentifyItem] === arg2) {
+            var bestMatch = results.splice(i);
+            this.debug("a pefect match  ", bestMatch);
+            results.unshift(bestMatch[0]);
+          }
+        }
+      }
       return results;
     }
   },
@@ -348,20 +369,20 @@ Collection.prototype = Object.create(Object.prototype, {
         optionalInverted = this.inverted;
       }
 
-      if (!searchingFor && value) {
+      if (!searchingFor &amp;&amp; value) {
         //previously code in the add function
 
         this.debug("  the constructor of this before casting it ");
         value = FieldDBObject.convertDocIntoItsType(value);
         this.debug(" checking the constructor of this after casting it ");
 
-        if (value &&
-          this.INTERNAL_MODELS &&
-          this.INTERNAL_MODELS.item &&
-          typeof this.INTERNAL_MODELS.item === "function" &&
-          !(value instanceof this.INTERNAL_MODELS.item) &&
-          // value.constructor.toString().substring(9, 22) !== "FieldDBObject" &&
-          !(this.INTERNAL_MODELS.item.compatibleWithSimpleStrings && typeof value === "string")) {
+        if (value &amp;&amp;
+          this.INTERNAL_MODELS &amp;&amp;
+          this.INTERNAL_MODELS.item &amp;&amp;
+          typeof this.INTERNAL_MODELS.item === "function" &amp;&amp;
+          !(value instanceof this.INTERNAL_MODELS.item) &amp;&amp;
+          // value.constructor.toString().substring(9, 22) !== "FieldDBObject" &amp;&amp;
+          !(this.INTERNAL_MODELS.item.compatibleWithSimpleStrings &amp;&amp; typeof value === "string")) {
 
           // this.debug("adding a internamodel ", value);
           // if (!this.INTERNAL_MODELS.item.fieldDBtype || this.INTERNAL_MODELS.item.fieldDBtype !== "Document") {
@@ -392,7 +413,7 @@ Collection.prototype = Object.create(Object.prototype, {
 
       }
 
-      if (value && this[searchingFor] && (value === this[searchingFor] || (typeof this[searchingFor].equals === "function" && this[searchingFor].equals(value)))) {
+      if (value &amp;&amp; this[searchingFor] &amp;&amp; (value === this[searchingFor] || (typeof this[searchingFor].equals === "function" &amp;&amp; this[searchingFor].equals(value)))) {
         this.debug("Not setting " + searchingFor + ", it  was already the same in the collection");
         return this[searchingFor];
       }
@@ -410,7 +431,7 @@ Collection.prototype = Object.create(Object.prototype, {
           // this.collection[index].debugMode = true;
           // value.debugMode = true;
           if (this.collection[index] !== value ||
-            (typeof this.collection[index].equals === "function" && !this.collection[index].equals(value))
+            (typeof this.collection[index].equals === "function" &amp;&amp; !this.collection[index].equals(value))
           ) {
             if (typeof this.collection[index].merge === "function") {
               this.warn("Merging an existing _collection member " + searchingFor + " at index " + index + " (they have the same key but are not equal, nor the same object) ");
@@ -428,7 +449,7 @@ Collection.prototype = Object.create(Object.prototype, {
       if (["collection", "primaryKey", "find", "set", "add", "inverted", "toJSON", "length", "encrypted", "confidential", "decryptedMode"].indexOf(searchingFor) === -1) {
         this[searchingFor] = value;
         /* also provide a case insensitive cleaned version if the key can be lower cased */
-        if (searchingFor && typeof searchingFor.toLowerCase === "function") {
+        if (searchingFor &amp;&amp; typeof searchingFor.toLowerCase === "function") {
           this[searchingFor.toLowerCase().replace(/_/g, "")] = value;
         }
 
@@ -436,7 +457,7 @@ Collection.prototype = Object.create(Object.prototype, {
         this.warn("An item was added to the collection which has a reserved word for its key... dot notation will not work to retreive this object, but find() will work. ", value);
       }
 
-      if (value && typeof value === "object") {
+      if (value &amp;&amp; typeof value === "object") {
         value.parent = this;
       }
 
@@ -499,7 +520,7 @@ Collection.prototype = Object.create(Object.prototype, {
       }
       var oldValue = value;
       value = this.sanitizeStringForPrimaryKey(value);
-      if (value !== oldValue && this.fieldDBtype !== "DatumStates") {
+      if (value !== oldValue &amp;&amp; this.fieldDBtype !== "DatumStates") {
         this.debug("The sanitized the dot notation key of this object is not the same as its primaryKey: " + oldValue + " -> " + value);
       }
       return value;
@@ -514,7 +535,7 @@ Collection.prototype = Object.create(Object.prototype, {
    */
   add: {
     value: function(value) {
-      if (value && Object.prototype.toString.call(value) === "[object Array]") {
+      if (value &amp;&amp; Object.prototype.toString.call(value) === "[object Array]") {
         for (var itemIndex = 0; itemIndex &lt; value.length; itemIndex++) {
           value[itemIndex] = this.add(value[itemIndex]);
         }
@@ -527,7 +548,7 @@ Collection.prototype = Object.create(Object.prototype, {
 
   concat: {
     value: function(anotherCollection) {
-      if (anotherCollection && anotherCollection._collection) {
+      if (anotherCollection &amp;&amp; anotherCollection._collection) {
         return this.add(anotherCollection._collection);
       }
       if (!anotherCollection) {
@@ -658,12 +679,12 @@ Collection.prototype = Object.create(Object.prototype, {
        * For every item in the collection, if it matches, remove it from the collection
        */
       for (itemIndex = this.collection.length - 1; itemIndex >= 0; itemIndex--) {
-        if (searchingFor.indexOf(this.collection[itemIndex]) > -1 && removed.indexOf(this.collection[itemIndex]) === -1) {
+        if (searchingFor.indexOf(this.collection[itemIndex]) > -1 &amp;&amp; removed.indexOf(this.collection[itemIndex]) === -1) {
           var thisremoved = this.collection.splice(itemIndex, 1);
           removed = removed.concat(thisremoved);
           // Find out if each removed item was requested
           for (var removedIndex = 0; removedIndex &lt; thisremoved.length; removedIndex++) {
-            if (typeof requestedRemoveFor[0] === "object" && typeof thisremoved[removedIndex].equals === "function") {
+            if (typeof requestedRemoveFor[0] === "object" &amp;&amp; typeof thisremoved[removedIndex].equals === "function") {
               var itMatches = false;
               for (var requestedIndex = 0; requestedIndex &lt; requestedRemoveFor.length; requestedIndex++) {
                 if (thisremoved[removedIndex].equals(requestedRemoveFor[requestedIndex])) {
@@ -697,7 +718,7 @@ Collection.prototype = Object.create(Object.prototype, {
         var key = doc[this.primaryKey];
         if (!key) {
           doc = this.find(doc);
-          if (doc && doc.length > 0) {
+          if (doc &amp;&amp; doc.length > 0) {
             doc = doc[0];
           } else {
             return -1;
@@ -813,22 +834,18 @@ Collection.prototype = Object.create(Object.prototype, {
       //   deferred.reject(error);
       // });
 
-
       return deferred.promise;
     }
   },
 
   toJSON: {
     value: function(includeEvenEmptyAttributes, removeEmptyAttributes) {
-      if (removeEmptyAttributes) {
-        this.todo("removeEmptyAttributes is not implemented: " + removeEmptyAttributes);
-      }
       var self = this;
 
       var json = this._collection.map(function(item) {
         if (typeof item.toJSON === "function") {
           self.debug("This item has a toJSON, which we will call instead");
-          return item.toJSON();
+          return item.toJSON(includeEvenEmptyAttributes, removeEmptyAttributes);
         } else {
           return item;
         }
@@ -870,7 +887,7 @@ Collection.prototype = Object.create(Object.prototype, {
 
   map: {
     get: function() {
-      if (this._collection && typeof this._collection.map === "function") {
+      if (this._collection &amp;&amp; typeof this._collection.map === "function") {
         var self = this;
         return function(callback) {
           return this._collection.map.apply(self._collection, [callback]);
@@ -894,7 +911,7 @@ Collection.prototype = Object.create(Object.prototype, {
         return null;
       }
       value = FieldDBObject.prototype.sanitizeStringForFileSystem.apply(this, arguments);
-      if (value && value.trim) {
+      if (value &amp;&amp; value.trim) {
         value = this.camelCased(value);
       }
       return value;
@@ -937,7 +954,7 @@ Collection.prototype = Object.create(Object.prototype, {
       if (!anotherCollection) {
         return false;
       }
-      if (!this._collection && !anotherCollection._collection) {
+      if (!this._collection &amp;&amp; !anotherCollection._collection) {
         return true;
       }
 
@@ -999,7 +1016,7 @@ Collection.prototype = Object.create(Object.prototype, {
         var idToMatch = anItem[aCollection.primaryKey].toLowerCase();
         var anotherItem = anotherCollection[idToMatch];
         var resultItem = resultCollection[idToMatch];
-        if (!resultItem && typeof anItem.constructor === "function") {
+        if (!resultItem &amp;&amp; typeof anItem.constructor === "function") {
           self.debug("Cloning into anItem into a fielddbObjects ifits not one already");
           var json = anItem.toJSON ? anItem.toJSON() : anItem;
           resultItem = FieldDBObject.convertDocIntoItsType(json);
@@ -1022,7 +1039,7 @@ Collection.prototype = Object.create(Object.prototype, {
         if (anotherItem === undefined) {
           // no op, the new one isn't set
           self.debug(idToMatch + " was missing in new collection");
-        } else if (resultItem === anotherItem || (typeof resultItem.equals === "function" && resultItem.equals(anotherItem))) {
+        } else if (resultItem === anotherItem || (typeof resultItem.equals === "function" &amp;&amp; resultItem.equals(anotherItem))) {
           // no op, they are equal enough
           self.debug(idToMatch + " were equal.", anItem, anotherItem);
         } else if (!anItem || anItem === [] || anItem.length === 0 || anItem === {}) {
@@ -1030,7 +1047,7 @@ Collection.prototype = Object.create(Object.prototype, {
           resultCollection[idToMatch] = anotherItem;
         } else {
           //  if two arrays: concat
-          if (Object.prototype.toString.call(anItem) === "[object Array]" && Object.prototype.toString.call(anotherItem) === "[object Array]") {
+          if (Object.prototype.toString.call(anItem) === "[object Array]" &amp;&amp; Object.prototype.toString.call(anotherItem) === "[object Array]") {
             self.debug(idToMatch + " was an array, concatinating with the new value", anItem, " ->", anotherItem);
             resultItem = anItem.concat(anotherItem);
 
@@ -1074,7 +1091,7 @@ Collection.prototype = Object.create(Object.prototype, {
           }
         }
       });
-      if (anotherCollection._collection && typeof anotherCollection._collection.map === "function") {
+      if (anotherCollection._collection &amp;&amp; typeof anotherCollection._collection.map === "function") {
 
         anotherCollection._collection.map(function(anotherItem) {
           var idToMatch = anotherItem[aCollection.primaryKey];
@@ -1100,7 +1117,7 @@ Collection.prototype = Object.create(Object.prototype, {
             // no op, the new one isn't set
             self.debug(idToMatch + " was oddly undefined");
             resultCollection[idToMatch] = anItem;
-          } else if (anItem === anotherItem || (typeof anItem.equals === "function" && anItem.equals(anotherItem))) {
+          } else if (anItem === anotherItem || (typeof anItem.equals === "function" &amp;&amp; anItem.equals(anotherItem))) {
             // no op, they are equal enough
             // self.debug(idToMatch + " were equal.", anItem, anotherItem);
             resultCollection[idToMatch] = anItem;
@@ -1177,13 +1194,13 @@ Collection.prototype = Object.create(Object.prototype, {
       if (this._corpus) {
         db = this._corpus;
         this.debug("this " + this._id + " has a _corpus hard coded inside it, using it.", db);
-      } else if (FieldDBObject.application && FieldDBObject.application._corpus) {
+      } else if (FieldDBObject.application &amp;&amp; FieldDBObject.application._corpus) {
         db = FieldDBObject.application._corpus;
         this.debug("this " + this._id + " is running in the context where FieldDBObject.application._corpus is defined, using it.", db);
       } else {
 
         try {
-          if (FieldDB && FieldDB["Database"]) {
+          if (FieldDB &amp;&amp; FieldDB["Database"]) {
             // db = FieldDB["Database"].prototype;
             this.debug("  using the Database.prototype to run db calls for " + this._id + ", this could be problematic " + this._id + " .");
             this.debug(" the database", db);
@@ -1205,7 +1222,7 @@ Collection.prototype = Object.create(Object.prototype, {
       return db;
     },
     set: function(value) {
-      if (value && value.dbname && this.dbname && value.dbname !== this.dbname) {
+      if (value &amp;&amp; value.dbname &amp;&amp; this.dbname &amp;&amp; value.dbname !== this.dbname) {
         this.warn("The corpus " + value.db + " cant be set on this item, its db is different" + this.dbname);
         return;
       }
@@ -1248,17 +1265,13 @@ exports.Collection = Collection;
 
 </div>
 
-<nav>
-    <h2><a href="index.html">Index</a></h2><h3>Modules</h3><ul><li><a href="module-FieldDB.html">FieldDB</a></li></ul><h3>Classes</h3><ul><li><a href="Activities.html">Activities</a></li><li><a href="Activity.html">Activity</a></li><li><a href="App.html">App</a></li><li><a href="AppRouter.html">AppRouter</a></li><li><a href="AudioPlayer.html">AudioPlayer</a></li><li><a href="AudioVideo.html">AudioVideo</a></li><li><a href="AudioVideoRecorder.html">AudioVideoRecorder</a></li><li><a href="AudioVideos.html">AudioVideos</a></li><li><a href="Authentication.html">Authentication</a></li><li><a href="Collection.html">Collection</a></li><li><a href="Comment.html">Comment</a></li><li><a href="Comments.html">Comments</a></li><li><a href="Confidential.html">Confidential</a></li><li><a href="Connection.html">Connection</a></li><li><a href="Consultant.html">Consultant</a></li><li><a href="Consultants.html">Consultants</a></li><li><a href="Contexts.html">Contexts</a></li><li><a href="ContextualizableObject.html">ContextualizableObject</a></li><li><a href="Contextualizer.html">Contextualizer</a></li><li><a href="Conversation.html">Conversation</a></li><li><a href="Conversations.html">Conversations</a></li><li><a href="Corpus.html">Corpus</a></li><li><a href="CorpusMask.html">CorpusMask</a></li><li><a href="DataList.html">DataList</a></li><li><a href="DataLists.html">DataLists</a></li><li><a href="dataURItoBlob.html">dataURItoBlob</a></li><li><a href="Datum.html">Datum</a></li><li><a href="DatumField.html">DatumField</a></li><li><a href="DatumFields.html">DatumFields</a></li><li><a href="Datums.html">Datums</a></li><li><a href="DatumState.html">DatumState</a></li><li><a href="DatumStates.html">DatumStates</a></li><li><a href="DatumTag.html">DatumTag</a></li><li><a href="DatumTags.html">DatumTags</a></li><li><a href="DocumentCollection.html">DocumentCollection</a></li><li><a href="ELanguages.html">ELanguages</a></li><li><a href="ExperimentDataList.html">ExperimentDataList</a></li><li><a href="Export.html">Export</a></li><li><a href="FieldDBObject.html">FieldDBObject</a></li><li><a href="Glosser.html">Glosser</a></li><li><a href="HotKey.html">HotKey</a></li><li><a href="HotKeys.html">HotKeys</a></li><li><a href="HTML5Audio.html">HTML5Audio</a></li><li><a href="Image.html">Image</a></li><li><a href="Images.html">Images</a></li><li><a href="LanguageDatum.html">LanguageDatum</a></li><li><a href="Lexicon.html">Lexicon</a></li><li><a href="LexiconNode.html">LexiconNode</a></li><li><a href="Participant.html">Participant</a></li><li><a href="Permission.html">Permission</a></li><li><a href="Permissions.html">Permissions</a></li><li><a href="PsycholinguisticsApp.html">PsycholinguisticsApp</a></li><li><a href="ReportBot.html">ReportBot</a></li><li><a href="Response.html">Response</a></li><li><a href="Search.html">Search</a></li><li><a href="Session.html">Session</a></li><li><a href="Sessions.html">Sessions</a></li><li><a href="Speaker.html">Speaker</a></li><li><a href="Stimulus.html">Stimulus</a></li><li><a href="SubExperimentDataList.html">SubExperimentDataList</a></li><li><a href="Team.html">Team</a></li><li><a href="UnicodeSymbol.html">UnicodeSymbol</a></li><li><a href="UnicodeSymbols.html">UnicodeSymbols</a></li><li><a href="User.html">User</a></li><li><a href="UserApp.html">UserApp</a></li><li><a href="UserMask.html">UserMask</a></li><li><a href="UserPreference.html">UserPreference</a></li><li><a href="UserRouter.html">UserRouter</a></li><li><a href="Users.html">Users</a></li><li>{String: Exercise}</li></ul><h3>Global</h3><ul><li><a href="global.html#add">add</a></li><li><a href="global.html#clone">clone</a></li><li><a href="global.html#debugMode">debugMode</a></li><li><a href="global.html#find">find</a></li><li><a href="global.html#getMD5ForFile">getMD5ForFile</a></li><li><a href="global.html#getSanitizedDotNotationKey">getSanitizedDotNotationKey</a></li><li><a href="global.html#LexiconFactory">LexiconFactory</a></li><li><a href="global.html#sanitizeStringForFileSystem">sanitizeStringForFileSystem</a></li><li><a href="global.html#sanitizeStringForPrimaryKey">sanitizeStringForPrimaryKey</a></li><li><a href="global.html#showDiffs">showDiffs</a></li></ul>
-</nav>
-
-<br clear="both">
+<br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.2</a> on Thu Aug 13 2015 08:22:52 GMT-0400 (EDT)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Sat Mar 18 2017 20:02:56 GMT-0400 (EDT) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
 </footer>
 
-<script> prettyPrint(); </script>
-<script src="scripts/linenumber.js"> </script>
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
 </body>
 </html>

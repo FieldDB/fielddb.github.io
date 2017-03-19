@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>confidentiality_encryption/Confidential.js - Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Activities.html">Activities</a></li><li><a href="Activity.html">Activity</a></li><li><a href="App.html">App</a></li><li><a href="AppRouter.html">AppRouter</a><ul class='methods'><li data-type='method'><a href="AppRouter.html#renderDashboardOrNot">renderDashboardOrNot</a></li><li data-type='method'><a href="AppRouter.html#showAllData">showAllData</a></li><li data-type='method'><a href="AppRouter.html#showAllDataInSession">showAllDataInSession</a></li><li data-type='method'><a href="AppRouter.html#showDashboard">showDashboard</a></li><li data-type='method'><a href="AppRouter.html#showEmbeddedCorpus">showEmbeddedCorpus</a></li><li data-type='method'><a href="AppRouter.html#showEmbeddedSearch">showEmbeddedSearch</a></li><li data-type='method'><a href="AppRouter.html#showEmbeddedSession">showEmbeddedSession</a></li><li data-type='method'><a href="AppRouter.html#showFullscreenCorpus">showFullscreenCorpus</a></li><li data-type='method'><a href="AppRouter.html#showFullscreenDataList">showFullscreenDataList</a></li><li data-type='method'><a href="AppRouter.html#showFullscreenSearch">showFullscreenSearch</a></li><li data-type='method'><a href="AppRouter.html#showFullscreenSession">showFullscreenSession</a></li><li data-type='method'><a href="AppRouter.html#showFullscreenUser">showFullscreenUser</a></li></ul></li><li><a href="AudioPlayer.html">AudioPlayer</a></li><li><a href="AudioVideo.html">AudioVideo</a></li><li><a href="AudioVideoRecorder.html">AudioVideoRecorder</a></li><li><a href="AudioVideos.html">AudioVideos</a></li><li><a href="Authentication.html">Authentication</a></li><li><a href="Collection.html">Collection</a></li><li><a href="Comment.html">Comment</a></li><li><a href="Comments.html">Comments</a></li><li><a href="ComputationalLinguisticsDatum.html">ComputationalLinguisticsDatum</a></li><li><a href="Confidential.html">Confidential</a></li><li><a href="Connection.html">Connection</a><ul class='methods'><li data-type='method'><a href="Connection.html#.validateIdentifier">validateIdentifier</a></li></ul></li><li><a href="Consultant.html">Consultant</a></li><li><a href="Consultants.html">Consultants</a></li><li><a href="Contexts.html">Contexts</a></li><li><a href="ContextualizableObject.html">ContextualizableObject</a></li><li><a href="Contextualizer.html">Contextualizer</a></li><li><a href="Conversation.html">Conversation</a><ul class='methods'><li data-type='method'><a href="Conversation.html#saveAndInterConnectInApp">saveAndInterConnectInApp</a></li><li data-type='method'><a href="Conversation.html#setAsCurrentConversation">setAsCurrentConversation</a></li></ul></li><li><a href="Conversations.html">Conversations</a></li><li><a href="Corpus.html">Corpus</a></li><li><a href="CorpusMask.html">CorpusMask</a></li><li><a href="DataList.html">DataList</a></li><li><a href="DataLists.html">DataLists</a></li><li><a href="Datum.html">Datum</a></li><li><a href="DatumField.html">DatumField</a></li><li><a href="DatumFields.html">DatumFields</a></li><li><a href="Datums.html">Datums</a></li><li><a href="DatumState.html">DatumState</a></li><li><a href="DatumStates.html">DatumStates</a></li><li><a href="DatumTag.html">DatumTag</a></li><li><a href="DatumTags.html">DatumTags</a></li><li><a href="DocumentCollection.html">DocumentCollection</a></li><li><a href="ELanguages.html">ELanguages</a></li><li><a href="ExperimentDataList.html">ExperimentDataList</a></li><li><a href="Export.html">Export</a></li><li><a href="FieldDBObject.html">FieldDBObject</a><ul class='methods'><li data-type='method'><a href="FieldDBObject.html#.uuidGenerator">uuidGenerator</a></li></ul></li><li><a href="GitImport.html">GitImport</a></li><li><a href="Glosser.html">Glosser</a><ul class='methods'><li data-type='method'><a href="Glosser.html#.calculateAllAlternativeCombinations">calculateAllAlternativeCombinations</a></li><li data-type='method'><a href="Glosser.html#.removeRedundantCopies">removeRedundantCopies</a></li><li data-type='method'><a href="Glosser.html#.sortAlternatesByLessSegmentation">sortAlternatesByLessSegmentation</a></li><li data-type='method'><a href="Glosser.html#.sortAlternatesByMoreSegmentation">sortAlternatesByMoreSegmentation</a></li></ul></li><li><a href="HotKey.html">HotKey</a></li><li><a href="HotKeys.html">HotKeys</a></li><li><a href="HTML5Audio.html">HTML5Audio</a></li><li><a href="Image.html">Image</a></li><li><a href="Images.html">Images</a></li><li><a href="Import.html">Import</a></li><li><a href="LanguageDatum.html">LanguageDatum</a></li><li><a href="Lexicon.html">Lexicon</a></li><li><a href="LexiconNode.html">LexiconNode</a></li><li><a href="Participant.html">Participant</a></li><li><a href="Permission.html">Permission</a></li><li><a href="Permissions.html">Permissions</a></li><li><a href="PsycholinguisticsApp.html">PsycholinguisticsApp</a></li><li><a href="ReportBot.html">ReportBot</a><ul class='methods'><li data-type='method'><a href="ReportBot.html#schedule">schedule</a></li></ul></li><li><a href="Response.html">Response</a></li><li><a href="Search.html">Search</a></li><li><a href="Session.html">Session</a></li><li><a href="Sessions.html">Sessions</a></li><li><a href="Speaker.html">Speaker</a></li><li><a href="Stimulus.html">Stimulus</a></li><li><a href="SubExperimentDataList.html">SubExperimentDataList</a></li><li><a href="Team.html">Team</a></li><li><a href="UnicodeSymbol.html">UnicodeSymbol</a></li><li><a href="UnicodeSymbols.html">UnicodeSymbols</a></li><li><a href="User.html">User</a></li><li><a href="UserApp.html">UserApp</a></li><li><a href="UserMask.html">UserMask</a></li><li><a href="UserPreference.html">UserPreference</a></li><li><a href="UserRouter.html">UserRouter</a><ul class='methods'><li data-type='method'><a href="UserRouter.html#showCorpusDashboard">showCorpusDashboard</a></li><li data-type='method'><a href="UserRouter.html#showDashboard">showDashboard</a></li><li data-type='method'><a href="UserRouter.html#showFullscreenUser">showFullscreenUser</a></li></ul></li><li><a href="Users.html">Users</a></li><li>{String: Exercise}</li></ul><h3>Modules</h3><ul><li><a href="module-FieldDB.html">FieldDB</a></li></ul><h3>Global</h3><ul><li><a href="global.html#add">add</a></li><li><a href="global.html#clone">clone</a></li><li><a href="global.html#debugMode">debugMode</a></li><li><a href="global.html#find">find</a></li><li><a href="global.html#getMD5ForFile">getMD5ForFile</a></li><li><a href="global.html#getSanitizedDotNotationKey">getSanitizedDotNotationKey</a></li><li><a href="global.html#LexiconFactory">LexiconFactory</a></li><li><a href="global.html#sanitizeStringForFileSystem">sanitizeStringForFileSystem</a></li><li><a href="global.html#sanitizeStringForPrimaryKey">sanitizeStringForPrimaryKey</a></li><li><a href="global.html#showDiffs">showDiffs</a></li></ul>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">confidentiality_encryption/Confidential.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/* globals window */
+// var node_cryptojs = require("node-cryptojs-aes");
+// var CryptoJS = node_cryptojs.CryptoJS;
+
+//>> Error: Error: ENOENT, no such file or directory '$HOME/dative/.tmp/scripts/core.js'
+// var forcingCoreToLoadForRequireJS = require("node-cryptojs-aes/lib/core");
+
+// var CryptoEncoding =  {};// require("crypto-js/enc-utf8");
+var FieldDBObject = require("./../FieldDBObject").FieldDBObject;
+var CryptoJS = require("./Crypto_AES").CryptoJS;
+var CryptoEncoding = CryptoJS.enc.Utf8;
+
+var ATOB;
+var BTOA;
+try {
+  if (!window.atob) {
+    console.log("ATOB is not defined, loading from npm");
+  }
+  ATOB = window.atob;
+  BTOA = window.btoa;
+} catch (e) {
+  ATOB = require("atob");
+  BTOA = require("btoa");
+}
+
+/**
+ * @class Confidential
+ * @name Confidential
+ *
+ * @description makes it possible to generate pass phrases (one per
+ *        corpus) to encrypt and decrypt confidential data points. The
+ *        confidential data is stored encrypted, and can only be decrypted
+ *        if one has the corpus" secret key, or if one is logged into the
+ *        system with their user name and password. This allows the corpus
+ *        to be shared with anyone, with out worrying about confidential
+ *        data or consultant stories being publically accessible. We are
+ *        using the AES cipher algorithm.
+ *
+ * The Advanced Encryption Standard (AES) is a U.S. Federal Information
+ * Processing Standard (FIPS). It was selected after a 5-year process where
+ * 15 competing designs were evaluated.
+ *
+ * &lt;a href="http://code.google.com/p/crypto-js/">More information on
+ * CryptoJS&lt;/a>
+ *
+ * @extends Object
+ *
+ * @constructs
+ *
+ */
+var Confidential = function Confidential(options) {
+  if (!this._fieldDBtype) {
+    this._fieldDBtype = "Confidential";
+  }
+  this.debug("Constructing Confidential: ", options);
+  if (options &amp;&amp; options.filledWithDefaults) {
+    this.fillWithDefaults();
+    delete options.filledWithDefaults;
+  }
+  FieldDBObject.apply(this, arguments);
+};
+
+/**
+ * The secretkeygenerator uses a "GUID" like generation to create a string
+ * for the secret key.
+ *
+ * @returns {String} a string which is likely unique, in the format of a
+ *          Globally Unique ID (GUID)
+ */
+Confidential.secretKeyGenerator = FieldDBObject.uuidGenerator;
+
+Confidential.prototype = Object.create(FieldDBObject.prototype, /** @lends Confidential.prototype */ {
+  constructor: {
+    value: Confidential
+  },
+
+  /**
+   * Encrypt accepts a string (UTF8) and returns a CryptoJS object, in base64
+   * encoding so that it looks like a string, and can be saved as a string in
+   * the corpus.
+   *
+   * @param message
+   *          A UTF8 string
+   * @returns Returns a base64 string prefixed with "confidential" so that the
+   *          views can choose to not display the entire string for the user.
+   */
+  encrypt: {
+    value: function(value) {
+      if (!value) {
+        return value;
+      }
+      if (typeof value === "object") {
+        value = JSON.stringify(value);
+        this.debug("Converted object to string before encryption");
+      }
+      if (typeof value === "number") {
+        value = value + "";
+        this.debug("Converted object to string before encryption");
+      }
+      if (!this.secretkey) {
+        throw new Error("This confidential wasnt set up properly, cant encrypt.");
+      }
+      // this.debugMode = true;
+      this.debug("encrypting " + value);
+      var result = CryptoJS.AES.encrypt(value, this.secretkey.toString("base64"));
+      this.verbose(this.secretkey, result.toString(), BTOA(result.toString()));
+      // return the base64 version to save it as a string in the corpus
+      return "confidential:" + BTOA(result.toString());
+    }
+  },
+
+  /**
+   * Decrypt uses this object's secret key to decode its parameter using the
+   * AES algorithm.
+   *
+   * @param encrypted
+   *          A base64 string prefixed (or not) with the word "confidential"
+   * @returns Returns the encrypted result as a UTF8 string.
+   */
+  decrypt: {
+    value: function(encrypted) {
+      var result = encrypted;
+
+      encrypted = encrypted.replace("confidential:", "");
+      // decode base64
+      encrypted = ATOB(encrypted);
+      this.verbose("Decrypting " + encrypted, this.secretkey.toString("base64"));
+      result = CryptoJS.AES.decrypt(encrypted, this.secretkey.toString("base64")).toString(CryptoEncoding);
+      try {
+        if ((result[0] === "{" &amp;&amp; result[result.length - 1] === "}") || (result[0] === "[" &amp;&amp; result[result.length - 1] === "]")) {
+          result = JSON.parse(result);
+          this.debug("Decrypting an object");
+        }
+      } catch (e) {
+        this.verbose("Decrypting a non-object");
+      }
+      return result;
+    }
+  },
+
+  secretkey: {
+    get: function() {
+      if (!this._secretkey) {
+        this._secretkey = "";
+      }
+      return this._secretkey;
+    },
+    set: function(value) {
+      if (value === this._secretkey) {
+        return;
+      }
+      if (this._secretkey &amp;&amp; this._secretkey.length > 2) {
+        throw new Error("Confidential key cant be changed once it was created. Please create another Confidential encrypter if you wish to change the key.");
+      }
+      if (!value) {
+        value = "";
+      }
+      this._secretkey = value.trim();
+    }
+  },
+
+  fillWithDefaults: {
+    value: function() {
+      if (!this.secretkey) {
+        this.secretkey = Confidential.secretKeyGenerator();
+      }
+      return this;
+    }
+  }
+
+});
+
+exports.Confidential = Confidential;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Sat Mar 18 2017 20:02:56 GMT-0400 (EDT) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+</body>
+</html>

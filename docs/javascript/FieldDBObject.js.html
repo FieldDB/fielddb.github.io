@@ -2,42 +2,45 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: FieldDBObject.js</title>
-    
-    <script src="scripts/prettify/prettify.js"> </script><script>
-   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-   m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-   })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    <title>FieldDBObject.js - Documentation</title>
 
-   ga('create','UA-35422317-1','auto');
-   ga('set', 'page', 'docs-javascript' + window.location.href.replace(window.location.protocol, "").replace(/^\//,""));
-   ga('send', 'pageview');
-</script>
-    <script src="scripts/prettify/lang-css.js"> </script>
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
     <!--[if lt IE 9]>
       <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
-    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
-    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
 </head>
-
 <body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Activities.html">Activities</a></li><li><a href="Activity.html">Activity</a></li><li><a href="App.html">App</a></li><li><a href="AppRouter.html">AppRouter</a><ul class='methods'><li data-type='method'><a href="AppRouter.html#renderDashboardOrNot">renderDashboardOrNot</a></li><li data-type='method'><a href="AppRouter.html#showAllData">showAllData</a></li><li data-type='method'><a href="AppRouter.html#showAllDataInSession">showAllDataInSession</a></li><li data-type='method'><a href="AppRouter.html#showDashboard">showDashboard</a></li><li data-type='method'><a href="AppRouter.html#showEmbeddedCorpus">showEmbeddedCorpus</a></li><li data-type='method'><a href="AppRouter.html#showEmbeddedSearch">showEmbeddedSearch</a></li><li data-type='method'><a href="AppRouter.html#showEmbeddedSession">showEmbeddedSession</a></li><li data-type='method'><a href="AppRouter.html#showFullscreenCorpus">showFullscreenCorpus</a></li><li data-type='method'><a href="AppRouter.html#showFullscreenDataList">showFullscreenDataList</a></li><li data-type='method'><a href="AppRouter.html#showFullscreenSearch">showFullscreenSearch</a></li><li data-type='method'><a href="AppRouter.html#showFullscreenSession">showFullscreenSession</a></li><li data-type='method'><a href="AppRouter.html#showFullscreenUser">showFullscreenUser</a></li></ul></li><li><a href="AudioPlayer.html">AudioPlayer</a></li><li><a href="AudioVideo.html">AudioVideo</a></li><li><a href="AudioVideoRecorder.html">AudioVideoRecorder</a></li><li><a href="AudioVideos.html">AudioVideos</a></li><li><a href="Authentication.html">Authentication</a></li><li><a href="Collection.html">Collection</a></li><li><a href="Comment.html">Comment</a></li><li><a href="Comments.html">Comments</a></li><li><a href="ComputationalLinguisticsDatum.html">ComputationalLinguisticsDatum</a></li><li><a href="Confidential.html">Confidential</a></li><li><a href="Connection.html">Connection</a><ul class='methods'><li data-type='method'><a href="Connection.html#.validateIdentifier">validateIdentifier</a></li></ul></li><li><a href="Consultant.html">Consultant</a></li><li><a href="Consultants.html">Consultants</a></li><li><a href="Contexts.html">Contexts</a></li><li><a href="ContextualizableObject.html">ContextualizableObject</a></li><li><a href="Contextualizer.html">Contextualizer</a></li><li><a href="Conversation.html">Conversation</a><ul class='methods'><li data-type='method'><a href="Conversation.html#saveAndInterConnectInApp">saveAndInterConnectInApp</a></li><li data-type='method'><a href="Conversation.html#setAsCurrentConversation">setAsCurrentConversation</a></li></ul></li><li><a href="Conversations.html">Conversations</a></li><li><a href="Corpus.html">Corpus</a></li><li><a href="CorpusMask.html">CorpusMask</a></li><li><a href="DataList.html">DataList</a></li><li><a href="DataLists.html">DataLists</a></li><li><a href="Datum.html">Datum</a></li><li><a href="DatumField.html">DatumField</a></li><li><a href="DatumFields.html">DatumFields</a></li><li><a href="Datums.html">Datums</a></li><li><a href="DatumState.html">DatumState</a></li><li><a href="DatumStates.html">DatumStates</a></li><li><a href="DatumTag.html">DatumTag</a></li><li><a href="DatumTags.html">DatumTags</a></li><li><a href="DocumentCollection.html">DocumentCollection</a></li><li><a href="ELanguages.html">ELanguages</a></li><li><a href="ExperimentDataList.html">ExperimentDataList</a></li><li><a href="Export.html">Export</a></li><li><a href="FieldDBObject.html">FieldDBObject</a><ul class='methods'><li data-type='method'><a href="FieldDBObject.html#.uuidGenerator">uuidGenerator</a></li></ul></li><li><a href="GitImport.html">GitImport</a></li><li><a href="Glosser.html">Glosser</a><ul class='methods'><li data-type='method'><a href="Glosser.html#.calculateAllAlternativeCombinations">calculateAllAlternativeCombinations</a></li><li data-type='method'><a href="Glosser.html#.removeRedundantCopies">removeRedundantCopies</a></li><li data-type='method'><a href="Glosser.html#.sortAlternatesByLessSegmentation">sortAlternatesByLessSegmentation</a></li><li data-type='method'><a href="Glosser.html#.sortAlternatesByMoreSegmentation">sortAlternatesByMoreSegmentation</a></li></ul></li><li><a href="HotKey.html">HotKey</a></li><li><a href="HotKeys.html">HotKeys</a></li><li><a href="HTML5Audio.html">HTML5Audio</a></li><li><a href="Image.html">Image</a></li><li><a href="Images.html">Images</a></li><li><a href="Import.html">Import</a></li><li><a href="LanguageDatum.html">LanguageDatum</a></li><li><a href="Lexicon.html">Lexicon</a></li><li><a href="LexiconNode.html">LexiconNode</a></li><li><a href="Participant.html">Participant</a></li><li><a href="Permission.html">Permission</a></li><li><a href="Permissions.html">Permissions</a></li><li><a href="PsycholinguisticsApp.html">PsycholinguisticsApp</a></li><li><a href="ReportBot.html">ReportBot</a><ul class='methods'><li data-type='method'><a href="ReportBot.html#schedule">schedule</a></li></ul></li><li><a href="Response.html">Response</a></li><li><a href="Search.html">Search</a></li><li><a href="Session.html">Session</a></li><li><a href="Sessions.html">Sessions</a></li><li><a href="Speaker.html">Speaker</a></li><li><a href="Stimulus.html">Stimulus</a></li><li><a href="SubExperimentDataList.html">SubExperimentDataList</a></li><li><a href="Team.html">Team</a></li><li><a href="UnicodeSymbol.html">UnicodeSymbol</a></li><li><a href="UnicodeSymbols.html">UnicodeSymbols</a></li><li><a href="User.html">User</a></li><li><a href="UserApp.html">UserApp</a></li><li><a href="UserMask.html">UserMask</a></li><li><a href="UserPreference.html">UserPreference</a></li><li><a href="UserRouter.html">UserRouter</a><ul class='methods'><li data-type='method'><a href="UserRouter.html#showCorpusDashboard">showCorpusDashboard</a></li><li data-type='method'><a href="UserRouter.html#showDashboard">showDashboard</a></li><li data-type='method'><a href="UserRouter.html#showFullscreenUser">showFullscreenUser</a></li></ul></li><li><a href="Users.html">Users</a></li><li>{String: Exercise}</li></ul><h3>Modules</h3><ul><li><a href="module-FieldDB.html">FieldDB</a></li></ul><h3>Global</h3><ul><li><a href="global.html#add">add</a></li><li><a href="global.html#clone">clone</a></li><li><a href="global.html#debugMode">debugMode</a></li><li><a href="global.html#find">find</a></li><li><a href="global.html#getMD5ForFile">getMD5ForFile</a></li><li><a href="global.html#getSanitizedDotNotationKey">getSanitizedDotNotationKey</a></li><li><a href="global.html#LexiconFactory">LexiconFactory</a></li><li><a href="global.html#sanitizeStringForFileSystem">sanitizeStringForFileSystem</a></li><li><a href="global.html#sanitizeStringForPrimaryKey">sanitizeStringForPrimaryKey</a></li><li><a href="global.html#showDiffs">showDiffs</a></li></ul>
+</nav>
 
 <div id="main">
     
-    <h1 class="page-title">Source: FieldDBObject.js</h1>
+    <h1 class="page-title">FieldDBObject.js</h1>
     
+
     
+
 
 
     
     <section>
         <article>
-            <pre class="prettyprint source"><code>/* globals alert, confirm, prompt, navigator, Android, FieldDB */
+            <pre class="prettyprint source linenums"><code>/* globals alert, confirm, prompt, navigator, Android, FieldDB */
 "use strict";
 
-var Diacritics = require("diacritic");
+var Diacritics = require("diacritics");
 var Q = require("q");
 var packageJson;
 try {
@@ -95,7 +98,7 @@ try {
 //         result = this._timestamp || 0;
 //       }
 
-//       if (removeEmptyAttributes && !this._timestamp) {
+//       if (removeEmptyAttributes &amp;&amp; !this._timestamp) {
 //         result = 0;
 //       }
 //       return result;
@@ -111,22 +114,22 @@ try {
  *           a corpus is created. It must be a file save name, and be a permitted
  *           name in CouchDB which means it is [a-z] with no uppercase letters or
  *           symbols, by convention it cannot contain -, but _ is acceptable.
- 
+
  * @extends Object
  * @tutorial tests/FieldDBObjectTest.js
  */
 var FieldDBObject = function FieldDBObject(json) {
-  if (json && (json instanceof this.constructor || json.constructor.toString() === this.constructor.toString())) {
-    json.warn("This was already the right type, not converting it.");
+  if (json &amp;&amp; (json instanceof this.constructor || json.constructor.toString() === this.constructor.toString())) {
+    json.debug("This was already the right type, not converting it.");
     return json;
   }
   // if (!this._fieldDBtype) {
   //   this._fieldDBtype = "FieldDBObject";
   // }
-  if (json && json.id) {
+  if (json &amp;&amp; json.id) {
     this.useIdNotUnderscore = true;
   }
-  if (json && json.api && this.api) {
+  if (json &amp;&amp; json.api &amp;&amp; this.api) {
     if (json.api !== this.api) {
       console.log("Using " + this.api + " when the api of the incoming model was " + json.api);
     }
@@ -134,10 +137,10 @@ var FieldDBObject = function FieldDBObject(json) {
   }
   this.verbose("In parent an json", json);
   // Set the confidential first, so the rest of the fields can be encrypted
-  // if (json && json.corpus) {
+  // if (json &amp;&amp; json.corpus) {
   //   this.corpus = json.corpus;
   // }
-  if (json && json.confidential && this.INTERNAL_MODELS["confidential"]) {
+  if (json &amp;&amp; json.confidential &amp;&amp; this.INTERNAL_MODELS["confidential"]) {
     this.confidential = new this.INTERNAL_MODELS["confidential"](json.confidential);
   }
   if (this.INTERNAL_MODELS) {
@@ -149,12 +152,12 @@ var FieldDBObject = function FieldDBObject(json) {
       continue;
     }
     this.debug("JSON: " + member);
-    if (json[member] &&
-      this.INTERNAL_MODELS &&
-      this.INTERNAL_MODELS[member] &&
-      typeof this.INTERNAL_MODELS[member] === "function" &&
-      !(json[member] instanceof this.INTERNAL_MODELS[member]) &&
-      !(this.INTERNAL_MODELS[member].compatibleWithSimpleStrings && typeof json[member] === "string")) {
+    if (json[member] &amp;&amp;
+      this.INTERNAL_MODELS &amp;&amp;
+      this.INTERNAL_MODELS[member] &amp;&amp;
+      typeof this.INTERNAL_MODELS[member] === "function" &amp;&amp;
+      !(json[member] instanceof this.INTERNAL_MODELS[member]) &amp;&amp;
+      !(this.INTERNAL_MODELS[member].compatibleWithSimpleStrings &amp;&amp; typeof json[member] === "string")) {
 
       json[member] = new this.INTERNAL_MODELS[member](json[member]);
 
@@ -172,7 +175,7 @@ var FieldDBObject = function FieldDBObject(json) {
   }
   Object.apply(this, arguments);
   // if (!this._rev) {
-  if (!this.id && !this._dateCreated) {
+  if (!this.id &amp;&amp; !this._dateCreated) {
     this.dateCreated = Date.now();
   }
 
@@ -235,7 +238,6 @@ FieldDBObject.ignore = function(property, ignorelist) {
     return true;
   }
 };
-
 FieldDBObject.software = {};
 FieldDBObject.hardware = {};
 
@@ -252,7 +254,7 @@ FieldDBObject.render = function(options) {
 
 FieldDBObject.verbose = function(message, message2, message3, message4) {
   try {
-    if (navigator && navigator.appName === "Microsoft Internet Explorer") {
+    if (navigator &amp;&amp; navigator.appName === "Microsoft Internet Explorer") {
       return;
     }
   } catch (e) {
@@ -276,7 +278,7 @@ FieldDBObject.verbose = function(message, message2, message3, message4) {
 FieldDBObject.debugMode = false;
 FieldDBObject.debug = function(message, message2, message3, message4) {
   try {
-    if (navigator && navigator.appName === "Microsoft Internet Explorer") {
+    if (navigator &amp;&amp; navigator.appName === "Microsoft Internet Explorer") {
       return;
     }
   } catch (e) {
@@ -368,7 +370,7 @@ FieldDBObject.prompt = function(message, optionalLocale, providedInput) {
         if (response === "yes") {
           response = providedInput;
         } else if (response !== null) {
-          if (typeof providedInput !== "string" && typeof providedInput !== "number") {
+          if (typeof providedInput !== "string" &amp;&amp; typeof providedInput !== "number") {
             try {
               var parsed = JSON.parse(response);
               response = parsed;
@@ -385,7 +387,7 @@ FieldDBObject.prompt = function(message, optionalLocale, providedInput) {
         console.warn(self.fieldDBtype.toUpperCase() + " UNABLE TO PROMPT USER: " + message + " pretending they said `" + response + "`");
       }
     }
-    if (response !== null && response !== undefined && typeof response.trim === "function") {
+    if (response !== null &amp;&amp; response !== undefined &amp;&amp; typeof response.trim === "function") {
       response = response.trim();
     }
     if (response) {
@@ -457,6 +459,12 @@ FieldDBObject.uuidGenerator = function() {
   };
   return Date.now() + (S4() + S4() + S4() + S4() + S4() + S4() + S4() + S4());
 };
+
+FieldDBObject.regExpEscape = function(s) {
+  return String(s).replace(/([-()\[\]{}+?*.$\^|,:#&lt;!\\])/g, "\\$1").
+  replace(/\x08/g, "\\x08");
+};
+
 FieldDBObject.getHumanReadableTimestamp = function() {
   var today = new Date();
   var year = today.getFullYear();
@@ -487,7 +495,7 @@ FieldDBObject.guessType = function(doc) {
   }
   FieldDBObject.debug("Guessing type " + doc._id);
   var guessedType = doc.previousFieldDBtype || doc.jsonType || doc.collection || "FieldDBObject";
-  if (doc.api && doc.api.length > 0) {
+  if (doc.api &amp;&amp; doc.api.length > 0) {
     FieldDBObject.debug("using api" + doc.api);
     guessedType = doc.api[0].toUpperCase() + doc.api.substring(1, doc.api.length);
   }
@@ -499,16 +507,16 @@ FieldDBObject.guessType = function(doc) {
   if (guessedType === "FieldDBObject") {
     if (doc.session) {
       guessedType = "Datum";
-      if (doc.fields && doc.fields[0] === "judgement") {
+      if (doc.fields &amp;&amp; doc.fields[0] === "judgement") {
         guessedType = "LanguageDatum";
       }
-    } else if (doc.datumFields && doc.sessionFields) {
+    } else if (doc.datumFields &amp;&amp; doc.sessionFields) {
       guessedType = "Corpus";
-    } else if (doc.collection === "sessions" && doc.sessionFields) {
+    } else if (doc.collection === "sessions" &amp;&amp; doc.sessionFields) {
       guessedType = "Session";
-    } else if (doc.text && doc.username && doc.timestamp && doc.gravatar) {
+    } else if (doc.text &amp;&amp; doc.username &amp;&amp; doc.timestamp &amp;&amp; doc.gravatar) {
       guessedType = "Comment";
-    } else if (doc.symbol && doc.tipa !== undefined) {
+    } else if (doc.symbol &amp;&amp; doc.tipa !== undefined) {
       guessedType = "UnicodeSymbol";
     }
   }
@@ -560,7 +568,7 @@ FieldDBObject.convertDocIntoItsType = function(doc, clone) {
     }
   }
 
-  if (typeof doc.debug === "function" && doc.constructor !== FieldDBObject) {
+  if (typeof doc.debug === "function" &amp;&amp; doc.constructor !== FieldDBObject) {
     // if (doc instanceof FieldDBObject || typeof doc.fuzzyFind === "function") {
     // wasnt able to make it what it should be, but it was at least some extension of FieldDBObject or Collection
     return doc;
@@ -575,7 +583,7 @@ FieldDBObject.convertDocIntoItsType = function(doc, clone) {
     }
     FieldDBObject.debug("Converting doc into type " + guessedType);
 
-    if (FieldDB && FieldDB[guessedType]) {
+    if (FieldDB &amp;&amp; FieldDB[guessedType]) {
       if (doc instanceof FieldDB[guessedType]) {
         return doc;
       }
@@ -589,7 +597,7 @@ FieldDBObject.convertDocIntoItsType = function(doc, clone) {
     FieldDBObject.debug("Couldn't convert this doc to its type " + guessedType + ", it will be a base FieldDBObject: " + JSON.stringify(doc));
     FieldDBObject.debug(" error: ", e);
     var checkPreviousTypeWithoutS = doc.previousFieldDBtype ? doc.previousFieldDBtype.replace(/s$/, "") : "";
-    if (guessedType !== "FieldDBObject" && guessedType !== checkPreviousTypeWithoutS) {
+    if (guessedType !== "FieldDBObject" &amp;&amp; guessedType !== checkPreviousTypeWithoutS) {
       doc.previousFieldDBtype = doc.previousFieldDBtype || "";
       doc.previousFieldDBtype = doc.previousFieldDBtype + guessedType;
     }
@@ -597,7 +605,6 @@ FieldDBObject.convertDocIntoItsType = function(doc, clone) {
   }
   return doc;
 };
-
 
 /** @lends FieldDBObject.prototype */
 FieldDBObject.prototype = Object.create(Object.prototype, {
@@ -812,11 +819,11 @@ FieldDBObject.prototype = Object.create(Object.prototype, {
         return;
       }
 
-      if (this.INTERNAL_MODELS &&
-        this.INTERNAL_MODELS[propertyname] &&
-        typeof this.INTERNAL_MODELS[propertyname] === "function" &&
-        !(value instanceof this.INTERNAL_MODELS[propertyname]) &&
-        !(this.INTERNAL_MODELS[propertyname].compatibleWithSimpleStrings && typeof value === "string")) {
+      if (this.INTERNAL_MODELS &amp;&amp;
+        this.INTERNAL_MODELS[propertyname] &amp;&amp;
+        typeof this.INTERNAL_MODELS[propertyname] === "function" &amp;&amp;
+        !(value instanceof this.INTERNAL_MODELS[propertyname]) &amp;&amp;
+        !(this.INTERNAL_MODELS[propertyname].compatibleWithSimpleStrings &amp;&amp; typeof value === "string")) {
 
         this.debug("Converting this into  type for " + propertyname, value.constructor.toString());
         value = new this.INTERNAL_MODELS[propertyname](value);
@@ -891,7 +898,7 @@ FieldDBObject.prototype = Object.create(Object.prototype, {
         FieldDBObject.software.userAgent = navigator.userAgent;
         FieldDBObject.software.vendor = navigator.vendor;
         FieldDBObject.software.vendorSub = navigator.vendorSub;
-        if (navigator && navigator.geolocation && typeof navigator.geolocation.getCurrentPosition === "function") {
+        if (navigator &amp;&amp; navigator.geolocation &amp;&amp; typeof navigator.geolocation.getCurrentPosition === "function") {
           navigator.geolocation.getCurrentPosition(function(position) {
             self.debug("recieved position information");
             FieldDBObject.software.location = position.coords;
@@ -927,9 +934,9 @@ FieldDBObject.prototype = Object.create(Object.prototype, {
           username: "unknown"
         };
         try {
-          if (this.corpus && this.corpus.connectionInfo && this.corpus.connectionInfo.userCtx) {
+          if (this.corpus &amp;&amp; this.corpus.connectionInfo &amp;&amp; this.corpus.connectionInfo.userCtx) {
             optionalUserWhoSaved.username = this.corpus.connectionInfo.userCtx.name;
-          } else if (FieldDBObject.application && FieldDBObject.application.user && FieldDBObject.application.user.username) {
+          } else if (FieldDBObject.application &amp;&amp; FieldDBObject.application.user &amp;&amp; FieldDBObject.application.user.username) {
             optionalUserWhoSaved.username = optionalUserWhoSaved.username || FieldDBObject.application.user.username;
             optionalUserWhoSaved.gravatar = optionalUserWhoSaved.gravatar || FieldDBObject.application.user.gravatar;
           }
@@ -960,7 +967,7 @@ FieldDBObject.prototype = Object.create(Object.prototype, {
       if (!selfOrSnapshot._rev) {
         selfOrSnapshot._dateCreated = Date.now();
         var enteredByUser = selfOrSnapshot.enteredByUser || {};
-        if (selfOrSnapshot.fields && selfOrSnapshot.fields.enteredbyuser) {
+        if (selfOrSnapshot.fields &amp;&amp; selfOrSnapshot.fields.enteredbyuser) {
           enteredByUser = selfOrSnapshot.fields.enteredbyuser;
         } else if (!selfOrSnapshot.enteredByUser) {
           selfOrSnapshot.enteredByUser = enteredByUser;
@@ -980,7 +987,7 @@ FieldDBObject.prototype = Object.create(Object.prototype, {
         selfOrSnapshot._dateModified = Date.now();
 
         var modifiedByUser = selfOrSnapshot.modifiedByUser || {};
-        if (selfOrSnapshot.fields && selfOrSnapshot.fields.modifiedbyuser) {
+        if (selfOrSnapshot.fields &amp;&amp; selfOrSnapshot.fields.modifiedbyuser) {
           modifiedByUser = selfOrSnapshot.fields.modifiedbyuser;
         } else if (!selfOrSnapshot.modifiedByUser) {
           selfOrSnapshot.modifiedByUser = modifiedByUser;
@@ -1007,17 +1014,17 @@ FieldDBObject.prototype = Object.create(Object.prototype, {
         modifiedByUser.json.users.push(userWhoSaved);
       }
 
-      if (FieldDBObject.software && FieldDBObject.software.location) {
+      if (FieldDBObject.software &amp;&amp; FieldDBObject.software.location) {
         var location;
         if (selfOrSnapshot.location) {
           location = selfOrSnapshot.location;
-        } else if (selfOrSnapshot.fields && selfOrSnapshot.fields.location) {
+        } else if (selfOrSnapshot.fields &amp;&amp; selfOrSnapshot.fields.location) {
           location = selfOrSnapshot.fields.location;
         }
         if (location) {
           location.json = location.json || {};
           location.json.previousLocations = location.json.previousLocations || [];
-          if (location.json && location.json.location && location.json.location.latitude) {
+          if (location.json &amp;&amp; location.json.location &amp;&amp; location.json.location.latitude) {
             location.json.previousLocations.push(location.json.location);
           }
           this.debug("overwriting location ", location);
@@ -1060,7 +1067,7 @@ FieldDBObject.prototype = Object.create(Object.prototype, {
       } else {
         self.debug("    Checking to see if item needs to be saved.", saveEvenIfSeemsUnchanged, this.unsaved);
 
-        if (!this.unsaved && !this.calculateUnsaved()) {
+        if (!this.unsaved &amp;&amp; !this.calculateUnsaved()) {
           self.warn("Item hasn't really changed, no need to save...");
           Q.nextTick(function() {
             deferred.resolve(self);
@@ -1228,7 +1235,7 @@ FieldDBObject.prototype = Object.create(Object.prototype, {
           return false;
         }
 
-        if /* use fielddb equality function first */ (this[aproperty] && typeof this[aproperty].equals === "function") {
+        if /* use fielddb equality function first */ (this[aproperty] &amp;&amp; typeof this[aproperty].equals === "function") {
           if (!this[aproperty].equals(anotherObject[aproperty])) {
             this.debug("  " + aproperty + ": ", this[aproperty], " not equalivalent to ", anotherObject[aproperty]);
             if (this.debugMode) {
@@ -1244,14 +1251,14 @@ FieldDBObject.prototype = Object.create(Object.prototype, {
         else if (JSON.stringify(this[aproperty]) === JSON.stringify(anotherObject[aproperty])) {
           this.debug(aproperty + ": " + this[aproperty] + " equals " + anotherObject[aproperty]);
           // return true;
-        } else if (anotherObject[aproperty] === undefined && (aproperty !== "_dateCreated" && aproperty !== "perObjectDebugMode")) {
+        } else if (anotherObject[aproperty] === undefined &amp;&amp; (aproperty !== "_dateCreated" &amp;&amp; aproperty !== "perObjectDebugMode")) {
           this.debug(aproperty + " is missing " + this[aproperty] + " on anotherObject " + anotherObject[aproperty]);
           if (this.debugMode) {
             console.error("objects are not equal stactrace");
           }
           return false;
         } else {
-          if (aproperty !== "_dateCreated" && aproperty !== "perObjectDebugMode") {
+          if (aproperty !== "_dateCreated" &amp;&amp; aproperty !== "perObjectDebugMode") {
             this.debug(aproperty + ": ", this[aproperty], " not equal ", anotherObject[aproperty]);
             if (this.debugMode) {
               console.error("objects are not equal stactrace");
@@ -1296,14 +1303,14 @@ FieldDBObject.prototype = Object.create(Object.prototype, {
         return null;
       }
 
-      if (!anotherObject && !optionalOverwriteOrAsk) {
+      if (!anotherObject &amp;&amp; !optionalOverwriteOrAsk) {
         resultObject = anObject = this;
         anotherObject = FieldDBObject.convertDocIntoItsType(callOnSelf);
       } else if (callOnSelf === "self") {
         this.debug("Merging properties into myself. ");
         anObject = this;
         resultObject = anObject;
-      } else if (callOnSelf && anotherObject) {
+      } else if (callOnSelf &amp;&amp; anotherObject) {
         anObject = FieldDBObject.convertDocIntoItsType(callOnSelf);
         anotherObject = FieldDBObject.convertDocIntoItsType(anotherObject);
         resultObject = this;
@@ -1316,12 +1323,12 @@ FieldDBObject.prototype = Object.create(Object.prototype, {
         optionalOverwriteOrAsk = "";
       }
 
-      if (anObject.id && anotherObject.id && anObject.id !== anotherObject.id) {
+      if (anObject.id &amp;&amp; anotherObject.id &amp;&amp; anObject.id !== anotherObject.id) {
         this.warn("Refusing to merge these objects, they have different ids: " + anObject.id + "  and " + anotherObject.id);
         this.debug("Refusing to merge" + anObject.id + "  and " + anotherObject.id, anObject, anotherObject);
         return null;
       }
-      if (anObject.dbname && anotherObject.dbname && anObject.dbname !== anotherObject.dbname) {
+      if (anObject.dbname &amp;&amp; anotherObject.dbname &amp;&amp; anObject.dbname !== anotherObject.dbname) {
         if (optionalOverwriteOrAsk.indexOf("keepDBname") > -1) {
           this.warn("Permitting a merge of objects from different databases: " + anObject.dbname + "  and " + anotherObject.dbname);
           this.debug("Merging ", anObject, anotherObject);
@@ -1333,8 +1340,8 @@ FieldDBObject.prototype = Object.create(Object.prototype, {
       }
 
       for (aproperty in anObject) {
-        if (anObject.hasOwnProperty(aproperty) &&
-          typeof anObject[aproperty] !== "function" &&
+        if (anObject.hasOwnProperty(aproperty) &amp;&amp;
+          typeof anObject[aproperty] !== "function" &amp;&amp;
           !FieldDBObject.ignore(aproperty, FieldDBObject.internalAttributesToNotJSONify)) {
           propertyList[aproperty] = true;
         } else {
@@ -1343,8 +1350,8 @@ FieldDBObject.prototype = Object.create(Object.prototype, {
       }
 
       for (aproperty in anotherObject) {
-        if (anotherObject.hasOwnProperty(aproperty) &&
-          typeof anotherObject[aproperty] !== "function" &&
+        if (anotherObject.hasOwnProperty(aproperty) &amp;&amp;
+          typeof anotherObject[aproperty] !== "function" &amp;&amp;
           !FieldDBObject.ignore(aproperty, FieldDBObject.internalAttributesToNotJSONify)) {
           propertyList[aproperty] = true;
         } else {
@@ -1365,7 +1372,7 @@ FieldDBObject.prototype = Object.create(Object.prototype, {
           .then(function(reply) {
             // Let the user enter the value they would like
 
-            if (apropertylocal === "_dbname" && optionalOverwriteOrAsk.indexOf("keepDBname") > -1) {
+            if (apropertylocal === "_dbname" &amp;&amp; optionalOverwriteOrAsk.indexOf("keepDBname") > -1) {
               // resultObject._dbname = self.dbname;
               self.warn(" Keeping _dbname of " + resultObject.dbname);
             } else {
@@ -1399,8 +1406,8 @@ FieldDBObject.prototype = Object.create(Object.prototype, {
 
         // if the result is missing the property, clone it from anObject or anotherObject
         if (resultObject[aproperty] === undefined || resultObject[aproperty] === null) {
-          if (anObject[aproperty] !== undefined && anObject[aproperty] !== null) {
-            if (typeof anObject[aproperty] !== "string" && typeof anObject[aproperty].constructor === "function") {
+          if (anObject[aproperty] !== undefined &amp;&amp; anObject[aproperty] !== null) {
+            if (typeof anObject[aproperty] !== "string" &amp;&amp; typeof anObject[aproperty].constructor === "function") {
               json = anObject[aproperty].toJSON ? anObject[aproperty].toJSON() : anObject[aproperty];
               resultObject[aproperty] = new anObject[aproperty].constructor(json);
               this.debug(" " + aproperty + " resultObject will have anObject's Cloned contents because it was empty");
@@ -1411,7 +1418,7 @@ FieldDBObject.prototype = Object.create(Object.prototype, {
               }
               this.debug(" " + aproperty + " resultObject will have anObject's contents because it was empty");
             }
-          } else if (anotherObject[aproperty] !== undefined && anotherObject[aproperty] !== null) {
+          } else if (anotherObject[aproperty] !== undefined &amp;&amp; anotherObject[aproperty] !== null) {
             this.debug("Using a constructor");
             this.todo(" use clone only if not merging self.");
             if (callOnSelf === "self") {
@@ -1436,7 +1443,7 @@ FieldDBObject.prototype = Object.create(Object.prototype, {
         }
 
         // Don't bother with equivalentcy, we will merge the internal elements recursively if they are not equivalent so this doesn't save time.
-        // if (anObject[aproperty] && typeof anObject[aproperty].equals === "function" && anObject[aproperty].equals(anotherObject[aproperty])) {
+        // if (anObject[aproperty] &amp;&amp; typeof anObject[aproperty].equals === "function" &amp;&amp; anObject[aproperty].equals(anotherObject[aproperty])) {
         //   this.debug(aproperty + " were equivalent or had no conflict.");
         //   if (!anObject[aproperty].equals(resultObject[aproperty])) {
         //     if(resultObject[aproperty] != anObject[aproperty]){resultObject[aproperty] = anObject[aproperty];}
@@ -1444,7 +1451,7 @@ FieldDBObject.prototype = Object.create(Object.prototype, {
         //   continue;
         // }
 
-        if ((anotherObject[aproperty] === undefined || anotherObject[aproperty] === null) && resultObject[aproperty] != anObject[aproperty]) {
+        if ((anotherObject[aproperty] === undefined || anotherObject[aproperty] === null) &amp;&amp; resultObject[aproperty] != anObject[aproperty]) {
           this.debug(aproperty + " was missing in new object, using the original");
           if (resultObject[aproperty] != anObject[aproperty]) {
             resultObject[aproperty] = anObject[aproperty];
@@ -1452,14 +1459,14 @@ FieldDBObject.prototype = Object.create(Object.prototype, {
           continue;
         }
 
-        if (anotherObject[aproperty] && (anObject[aproperty] === undefined || anObject[aproperty] === null || anObject[aproperty] === [] || anObject[aproperty].length === 0 || anObject[aproperty] === {})) {
+        if (anotherObject[aproperty] &amp;&amp; (anObject[aproperty] === undefined || anObject[aproperty] === null || anObject[aproperty] === [] || anObject[aproperty].length === 0 || anObject[aproperty] === {})) {
           targetPropertyIsEmpty = true;
           this.debug(aproperty + " was previously empty, taking the new value");
           resultObject[aproperty] = anotherObject[aproperty];
           continue;
         }
 
-        if ((anObject[aproperty] !== undefined || anObject[aproperty] !== null) && (anotherObject[aproperty] === undefined || anotherObject[aproperty] === null || anotherObject[aproperty] === [] || anotherObject[aproperty].length === 0 || anotherObject[aproperty] === {})) {
+        if ((anObject[aproperty] !== undefined || anObject[aproperty] !== null) &amp;&amp; (anotherObject[aproperty] === undefined || anotherObject[aproperty] === null || anotherObject[aproperty] === [] || anotherObject[aproperty].length === 0 || anotherObject[aproperty] === {})) {
           targetPropertyIsEmpty = true;
           this.debug(aproperty + " target is empty, taking the old value");
           if (resultObject[aproperty] != anObject[aproperty]) {
@@ -1469,7 +1476,7 @@ FieldDBObject.prototype = Object.create(Object.prototype, {
         }
 
         //  if two arrays: concat
-        if (Object.prototype.toString.call(anObject[aproperty]) === "[object Array]" && Object.prototype.toString.call(anotherObject[aproperty]) === "[object Array]") {
+        if (Object.prototype.toString.call(anObject[aproperty]) === "[object Array]" &amp;&amp; Object.prototype.toString.call(anotherObject[aproperty]) === "[object Array]") {
           this.debug(aproperty + " was an array, concatinating with the new value", anObject[aproperty], " ->", anotherObject[aproperty]);
           resultObject[aproperty] = anObject[aproperty].concat([]);
 
@@ -1489,7 +1496,7 @@ FieldDBObject.prototype = Object.create(Object.prototype, {
         }
 
         // if two objects with merge function: recursively merge
-        if (resultObject[aproperty] && typeof resultObject[aproperty].merge === "function") {
+        if (resultObject[aproperty] &amp;&amp; typeof resultObject[aproperty].merge === "function") {
           if (callOnSelf === "self") {
             localCallOnSelf = callOnSelf;
           } else {
@@ -1508,11 +1515,11 @@ FieldDBObject.prototype = Object.create(Object.prototype, {
 
         overwrite = optionalOverwriteOrAsk;
         this.debug("Found conflict for " + aproperty + " Requested with " + optionalOverwriteOrAsk + " " + optionalOverwriteOrAsk.indexOf("overwrite"));
-        if (optionalOverwriteOrAsk.indexOf("overwrite") === -1 && !FieldDBObject.ignore(aproperty, FieldDBObject.internalAttributesToAutoMerge)) {
+        if (optionalOverwriteOrAsk.indexOf("overwrite") === -1 &amp;&amp; !FieldDBObject.ignore(aproperty, FieldDBObject.internalAttributesToAutoMerge)) {
           handleAsyncConfirmMerge(this, aproperty);
         }
         if (overwrite || FieldDBObject.ignore(aproperty, FieldDBObject.internalAttributesToAutoMerge)) {
-          if (aproperty === "_dbname" && optionalOverwriteOrAsk.indexOf("keepDBname") > -1) {
+          if (aproperty === "_dbname" &amp;&amp; optionalOverwriteOrAsk.indexOf("keepDBname") > -1) {
             // resultObject._dbname = this.dbname;
             this.warn(" Keeping _dbname of " + resultObject.dbname);
           } else {
@@ -1588,8 +1595,7 @@ FieldDBObject.prototype = Object.create(Object.prototype, {
       var deferred = Q.defer(),
         self = this;
 
-
-      if (this.fetching && this.whenReady) {
+      if (this.fetching &amp;&amp; this.whenReady) {
         self.warn("Fetching is in process, don't need to fetch right now...");
         return this.whenReady;
       }
@@ -1622,7 +1628,7 @@ FieldDBObject.prototype = Object.create(Object.prototype, {
         self.loaded = true;
 
         // If this had no revision number before, and it does now, then this is a good fossil point
-        if (!oldRev && (result._rev || result.rev)) {
+        if (!oldRev &amp;&amp; (result._rev || result.rev)) {
           self.warn(self.id + " was probabbly a placeholder (didnt have .rev before fetch, but now it does) which is now filled in, calling merge with overwrite from server.");
 
           self.merge("self", FieldDBObject.convertDocIntoItsType(result), "overwrite");
@@ -1677,19 +1683,19 @@ FieldDBObject.prototype = Object.create(Object.prototype, {
     get: function() {
       var db = null;
       // this.debugMode = true;
-      if (this.resumeAuthenticationSession && typeof this.resumeAuthenticationSession === "function") {
+      if (this.resumeAuthenticationSession &amp;&amp; typeof this.resumeAuthenticationSession === "function") {
         db = this;
         this.debug("this " + this._id + " has the functions of a corpus, using it.", db);
       } else if (this._corpus) {
         db = this._corpus;
         this.debug("this " + this._id + " has a _corpus hard coded inside it, using it.", db);
-      } else if (FieldDBObject.application && FieldDBObject.application._corpus) {
+      } else if (FieldDBObject.application &amp;&amp; FieldDBObject.application._corpus) {
         db = FieldDBObject.application._corpus;
         this.debug("this " + this._id + " is running in the context where FieldDBObject.application._corpus is defined, using it.", db);
       } else {
 
         try {
-          if (FieldDB && FieldDB["Database"]) {
+          if (FieldDB &amp;&amp; FieldDB["Database"]) {
             // db = FieldDB["Database"].prototype;
             this.debug("  using the Database.prototype to run db calls for " + this._id + ", this could be problematic " + this._id + " .");
             this.debug(" the database", db);
@@ -1711,7 +1717,7 @@ FieldDBObject.prototype = Object.create(Object.prototype, {
       return db;
     },
     set: function(value) {
-      if (value && value.dbname && this.dbname && value.dbname !== this.dbname) {
+      if (value &amp;&amp; value.dbname &amp;&amp; this.dbname &amp;&amp; value.dbname !== this.dbname) {
         this.warn("The corpus " + value.db + " cant be set on this item, its db is different" + this.dbname);
         return;
       }
@@ -1772,7 +1778,7 @@ FieldDBObject.prototype = Object.create(Object.prototype, {
       if (value === this._dbname) {
         return;
       }
-      if (this._dbname && this._dbname !== "default" && this.rev) {
+      if (this._dbname &amp;&amp; this._dbname !== "default" &amp;&amp; this.rev) {
         throw new Error("This is the " + this._dbname + ". You cannot change the dbname of an object in this corpus to " + value + ", you must create a clone of the object first.");
       }
       if (!value) {
@@ -1886,7 +1892,7 @@ FieldDBObject.prototype = Object.create(Object.prototype, {
 
   dateModified: {
     get: function() {
-      if (!this._dateModified && this.updated_at) {
+      if (!this._dateModified &amp;&amp; this.updated_at) {
         this.dateModified = this.updated_at;
       }
       return this._dateModified || FieldDBObject.DEFAULT_DATE;
@@ -1939,7 +1945,7 @@ FieldDBObject.prototype = Object.create(Object.prototype, {
         delete this._comments;
         return;
       } else {
-        if (typeof this.INTERNAL_MODELS["comments"] === "function" && Object.prototype.toString.call(value) === "[object Array]") {
+        if (typeof this.INTERNAL_MODELS["comments"] === "function" &amp;&amp; Object.prototype.toString.call(value) === "[object Array]") {
           value = new this.INTERNAL_MODELS["comments"](value);
         }
       }
@@ -1949,7 +1955,7 @@ FieldDBObject.prototype = Object.create(Object.prototype, {
 
   isEmpty: {
     value: function(aproperty) {
-      var empty = !this[aproperty] || this[aproperty] === FieldDBObject.DEFAULT_COLLECTION || this[aproperty] === FieldDBObject.DEFAULT_ARRAY || this[aproperty] === FieldDBObject.DEFAULT_OBJECT || this[aproperty] === FieldDBObject.DEFAULT_STRING || this[aproperty] === FieldDBObject.DEFAULT_DATE || (this[aproperty].length !== undefined && this[aproperty].length === 0) || this[aproperty] === {};
+      var empty = !this[aproperty] || this[aproperty] === FieldDBObject.DEFAULT_COLLECTION || this[aproperty] === FieldDBObject.DEFAULT_ARRAY || this[aproperty] === FieldDBObject.DEFAULT_OBJECT || this[aproperty] === FieldDBObject.DEFAULT_STRING || this[aproperty] === FieldDBObject.DEFAULT_DATE || (this[aproperty].length !== undefined &amp;&amp; this[aproperty].length === 0) || this[aproperty] === {};
       /* TODO also return empty if it matches a default of any version of the model? */
       return empty;
     }
@@ -1987,13 +1993,13 @@ FieldDBObject.prototype = Object.create(Object.prototype, {
         attributesToIgnore = attributesToIgnore.concat(FieldDBObject.internalAttributesToNotJSONify);
         this.debug("Ignoring for json ", attributesToIgnore);
         for (aproperty in this) {
-          if (this.hasOwnProperty(aproperty) && typeof this[aproperty] !== "function" && !FieldDBObject.ignore(aproperty, attributesToIgnore)) {
+          if (this.hasOwnProperty(aproperty) &amp;&amp; typeof this[aproperty] !== "function" &amp;&amp; !FieldDBObject.ignore(aproperty, attributesToIgnore)) {
             underscorelessProperty = aproperty.replace(/^_/, "");
             if (underscorelessProperty === "id" || underscorelessProperty === "rev") {
               underscorelessProperty = "_" + underscorelessProperty;
             }
-            if (!removeEmptyAttributes || (removeEmptyAttributes && !this.isEmpty(aproperty))) {
-              if (this[aproperty] && typeof this[aproperty].toJSON === "function") {
+            if (!removeEmptyAttributes || (removeEmptyAttributes &amp;&amp; !this.isEmpty(aproperty))) {
+              if (this[aproperty] &amp;&amp; typeof this[aproperty].toJSON === "function") {
                 json[underscorelessProperty] = this[aproperty].toJSON(includeEvenEmptyAttributes, removeEmptyAttributes);
               } else {
                 json[underscorelessProperty] = this[aproperty];
@@ -2005,8 +2011,8 @@ FieldDBObject.prototype = Object.create(Object.prototype, {
         /* if the caller requests a complete object include the default for all defauls by calling get on them */
         if (includeEvenEmptyAttributes) {
           for (aproperty in this.INTERNAL_MODELS) {
-            if (!json[aproperty] && this.INTERNAL_MODELS) {
-              if (this.INTERNAL_MODELS[aproperty] && typeof this.INTERNAL_MODELS[aproperty] === "function" && typeof new this.INTERNAL_MODELS[aproperty]().toJSON === "function") {
+            if (!json[aproperty] &amp;&amp; this.INTERNAL_MODELS) {
+              if (this.INTERNAL_MODELS[aproperty] &amp;&amp; typeof this.INTERNAL_MODELS[aproperty] === "function" &amp;&amp; typeof new this.INTERNAL_MODELS[aproperty]().toJSON === "function") {
                 json[aproperty] = new this.INTERNAL_MODELS[aproperty]().toJSON(includeEvenEmptyAttributes, removeEmptyAttributes, attributesToIgnore);
               } else {
                 json[aproperty] = this.INTERNAL_MODELS[aproperty];
@@ -2048,7 +2054,7 @@ FieldDBObject.prototype = Object.create(Object.prototype, {
         }
 
         json.fieldDBtype = this.fieldDBtype;
-        if (json.previousFieldDBtype && json.fieldDBtype && json.previousFieldDBtype === json.fieldDBtype) {
+        if (json.previousFieldDBtype &amp;&amp; json.fieldDBtype &amp;&amp; json.previousFieldDBtype === json.fieldDBtype) {
           delete json.previousFieldDBtype;
         }
         if (attributesToIgnore.indexOf("fieldDBtype") > -1) {
@@ -2065,11 +2071,10 @@ FieldDBObject.prototype = Object.create(Object.prototype, {
     }
   },
 
-
   addRelatedData: {
     value: function(json) {
       var relatedData;
-      if (this.fields && this.fields.relatedData) {
+      if (this.fields &amp;&amp; this.fields.relatedData) {
         relatedData = this.fields.relatedData.json.relatedData || [];
       } else if (this.relatedData) {
         relatedData = this.relatedData;
@@ -2105,15 +2110,15 @@ FieldDBObject.prototype = Object.create(Object.prototype, {
       // Use clone on internal properties which have a clone function
       for (aproperty in json) {
         underscorelessProperty = aproperty.replace(/^_/, "");
-        if (this[aproperty] && typeof this[aproperty].clone === "function") {
+        if (this[aproperty] &amp;&amp; typeof this[aproperty].clone === "function") {
           json[underscorelessProperty] = JSON.parse(JSON.stringify(this[aproperty].clone(includeEvenEmptyAttributes)));
         }
       }
 
       var source = this.id;
-      if (this.id && this.rev) {
+      if (this.id &amp;&amp; this.rev) {
         var relatedData;
-        if (json.fields && json.fields.relatedData) {
+        if (json.fields &amp;&amp; json.fields.relatedData) {
           relatedData = json.fields.relatedData.json.relatedData || [];
         } else if (json.relatedData) {
           relatedData = json.relatedData;
@@ -2123,7 +2128,7 @@ FieldDBObject.prototype = Object.create(Object.prototype, {
         if (this.rev) {
           source = source + "?rev=" + this.rev;
         } else {
-          if (this.parent && this.parent._rev) {
+          if (this.parent &amp;&amp; this.parent._rev) {
             source = "parent" + this.parent._id + "?rev=" + this.parent._rev;
           }
         }
@@ -2140,13 +2145,13 @@ FieldDBObject.prototype = Object.create(Object.prototype, {
       delete json.dbname;
       delete json.pouchname;
 
-      return json;
+      return new this.constructor(json);
     }
   },
 
   contextualizer: {
     get: function() {
-      if (this.application && this.application.contextualizer) {
+      if (this.application &amp;&amp; this.application.contextualizer) {
         return this.application.contextualizer;
       }
     },
@@ -2155,7 +2160,7 @@ FieldDBObject.prototype = Object.create(Object.prototype, {
 
   /**
    *  Cleans a value to become a primary key on an object (replaces punctuation and symbols with underscore)
-   *  formerly: item.replace(/[-\""+=?.*&^%,\/\[\]{}() ]/g, "")
+   *  formerly: item.replace(/[-\""+=?.*&amp;^%,\/\[\]{}() ]/g, "")
    *
    * @param  String value the potential primary key to be cleaned
    * @return String       the value cleaned and safe as a primary key
@@ -2170,7 +2175,7 @@ FieldDBObject.prototype = Object.create(Object.prototype, {
         optionalReplacementCharacter = "_";
       }
       if (value.trim) {
-        value = Diacritics.clean(value);
+        value = Diacritics.remove(value);
         this.debug("sanitizeStringForPrimaryKey " + value);
 
         value = value.trim().replace(/[^-a-zA-Z0-9]+/g, optionalReplacementCharacter).replace(/^_/, "").replace(/_$/, "");
@@ -2194,7 +2199,7 @@ FieldDBObject.prototype = Object.create(Object.prototype, {
         value = value.replace(/-/g, "_");
       }
       value = this.sanitizeStringForFileSystem(value, optionalReplacementCharacter);
-      if (value && typeof value !== "number") {
+      if (value &amp;&amp; typeof value !== "number") {
         return this.camelCased(value);
       }
     }
@@ -2228,17 +2233,13 @@ exports.Document = FieldDBObject;
 
 </div>
 
-<nav>
-    <h2><a href="index.html">Index</a></h2><h3>Modules</h3><ul><li><a href="module-FieldDB.html">FieldDB</a></li></ul><h3>Classes</h3><ul><li><a href="Activities.html">Activities</a></li><li><a href="Activity.html">Activity</a></li><li><a href="App.html">App</a></li><li><a href="AppRouter.html">AppRouter</a></li><li><a href="AudioPlayer.html">AudioPlayer</a></li><li><a href="AudioVideo.html">AudioVideo</a></li><li><a href="AudioVideoRecorder.html">AudioVideoRecorder</a></li><li><a href="AudioVideos.html">AudioVideos</a></li><li><a href="Authentication.html">Authentication</a></li><li><a href="Collection.html">Collection</a></li><li><a href="Comment.html">Comment</a></li><li><a href="Comments.html">Comments</a></li><li><a href="Confidential.html">Confidential</a></li><li><a href="Connection.html">Connection</a></li><li><a href="Consultant.html">Consultant</a></li><li><a href="Consultants.html">Consultants</a></li><li><a href="Contexts.html">Contexts</a></li><li><a href="ContextualizableObject.html">ContextualizableObject</a></li><li><a href="Contextualizer.html">Contextualizer</a></li><li><a href="Conversation.html">Conversation</a></li><li><a href="Conversations.html">Conversations</a></li><li><a href="Corpus.html">Corpus</a></li><li><a href="CorpusMask.html">CorpusMask</a></li><li><a href="DataList.html">DataList</a></li><li><a href="DataLists.html">DataLists</a></li><li><a href="dataURItoBlob.html">dataURItoBlob</a></li><li><a href="Datum.html">Datum</a></li><li><a href="DatumField.html">DatumField</a></li><li><a href="DatumFields.html">DatumFields</a></li><li><a href="Datums.html">Datums</a></li><li><a href="DatumState.html">DatumState</a></li><li><a href="DatumStates.html">DatumStates</a></li><li><a href="DatumTag.html">DatumTag</a></li><li><a href="DatumTags.html">DatumTags</a></li><li><a href="DocumentCollection.html">DocumentCollection</a></li><li><a href="ELanguages.html">ELanguages</a></li><li><a href="ExperimentDataList.html">ExperimentDataList</a></li><li><a href="Export.html">Export</a></li><li><a href="FieldDBObject.html">FieldDBObject</a></li><li><a href="Glosser.html">Glosser</a></li><li><a href="HotKey.html">HotKey</a></li><li><a href="HotKeys.html">HotKeys</a></li><li><a href="HTML5Audio.html">HTML5Audio</a></li><li><a href="Image.html">Image</a></li><li><a href="Images.html">Images</a></li><li><a href="LanguageDatum.html">LanguageDatum</a></li><li><a href="Lexicon.html">Lexicon</a></li><li><a href="LexiconNode.html">LexiconNode</a></li><li><a href="Participant.html">Participant</a></li><li><a href="Permission.html">Permission</a></li><li><a href="Permissions.html">Permissions</a></li><li><a href="PsycholinguisticsApp.html">PsycholinguisticsApp</a></li><li><a href="ReportBot.html">ReportBot</a></li><li><a href="Response.html">Response</a></li><li><a href="Search.html">Search</a></li><li><a href="Session.html">Session</a></li><li><a href="Sessions.html">Sessions</a></li><li><a href="Speaker.html">Speaker</a></li><li><a href="Stimulus.html">Stimulus</a></li><li><a href="SubExperimentDataList.html">SubExperimentDataList</a></li><li><a href="Team.html">Team</a></li><li><a href="UnicodeSymbol.html">UnicodeSymbol</a></li><li><a href="UnicodeSymbols.html">UnicodeSymbols</a></li><li><a href="User.html">User</a></li><li><a href="UserApp.html">UserApp</a></li><li><a href="UserMask.html">UserMask</a></li><li><a href="UserPreference.html">UserPreference</a></li><li><a href="UserRouter.html">UserRouter</a></li><li><a href="Users.html">Users</a></li><li>{String: Exercise}</li></ul><h3>Global</h3><ul><li><a href="global.html#add">add</a></li><li><a href="global.html#clone">clone</a></li><li><a href="global.html#debugMode">debugMode</a></li><li><a href="global.html#find">find</a></li><li><a href="global.html#getMD5ForFile">getMD5ForFile</a></li><li><a href="global.html#getSanitizedDotNotationKey">getSanitizedDotNotationKey</a></li><li><a href="global.html#LexiconFactory">LexiconFactory</a></li><li><a href="global.html#sanitizeStringForFileSystem">sanitizeStringForFileSystem</a></li><li><a href="global.html#sanitizeStringForPrimaryKey">sanitizeStringForPrimaryKey</a></li><li><a href="global.html#showDiffs">showDiffs</a></li></ul>
-</nav>
-
-<br clear="both">
+<br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.2</a> on Thu Aug 13 2015 08:22:52 GMT-0400 (EDT)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Sat Mar 18 2017 20:02:56 GMT-0400 (EDT) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
 </footer>
 
-<script> prettyPrint(); </script>
-<script src="scripts/linenumber.js"> </script>
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
 </body>
 </html>

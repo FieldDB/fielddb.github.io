@@ -2,61 +2,367 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Class: Permissions</title>
-    
-    <script src="scripts/prettify/prettify.js"> </script><script>
-   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-   m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-   })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    <title>Permissions - Documentation</title>
 
-   ga('create','UA-35422317-1','auto');
-   ga('set', 'page', 'docs-javascript' + window.location.href.replace(window.location.protocol, "").replace(/^\//,""));
-   ga('send', 'pageview');
-</script>
-    <script src="scripts/prettify/lang-css.js"> </script>
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
     <!--[if lt IE 9]>
       <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
-    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
-    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
 </head>
-
 <body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Activities.html">Activities</a></li><li><a href="Activity.html">Activity</a></li><li><a href="App.html">App</a></li><li><a href="AppRouter.html">AppRouter</a><ul class='methods'><li data-type='method'><a href="AppRouter.html#renderDashboardOrNot">renderDashboardOrNot</a></li><li data-type='method'><a href="AppRouter.html#showAllData">showAllData</a></li><li data-type='method'><a href="AppRouter.html#showAllDataInSession">showAllDataInSession</a></li><li data-type='method'><a href="AppRouter.html#showDashboard">showDashboard</a></li><li data-type='method'><a href="AppRouter.html#showEmbeddedCorpus">showEmbeddedCorpus</a></li><li data-type='method'><a href="AppRouter.html#showEmbeddedSearch">showEmbeddedSearch</a></li><li data-type='method'><a href="AppRouter.html#showEmbeddedSession">showEmbeddedSession</a></li><li data-type='method'><a href="AppRouter.html#showFullscreenCorpus">showFullscreenCorpus</a></li><li data-type='method'><a href="AppRouter.html#showFullscreenDataList">showFullscreenDataList</a></li><li data-type='method'><a href="AppRouter.html#showFullscreenSearch">showFullscreenSearch</a></li><li data-type='method'><a href="AppRouter.html#showFullscreenSession">showFullscreenSession</a></li><li data-type='method'><a href="AppRouter.html#showFullscreenUser">showFullscreenUser</a></li></ul></li><li><a href="AudioPlayer.html">AudioPlayer</a></li><li><a href="AudioVideo.html">AudioVideo</a></li><li><a href="AudioVideoRecorder.html">AudioVideoRecorder</a></li><li><a href="AudioVideos.html">AudioVideos</a></li><li><a href="Authentication.html">Authentication</a></li><li><a href="Collection.html">Collection</a></li><li><a href="Comment.html">Comment</a></li><li><a href="Comments.html">Comments</a></li><li><a href="ComputationalLinguisticsDatum.html">ComputationalLinguisticsDatum</a></li><li><a href="Confidential.html">Confidential</a></li><li><a href="Connection.html">Connection</a><ul class='methods'><li data-type='method'><a href="Connection.html#.validateIdentifier">validateIdentifier</a></li></ul></li><li><a href="Consultant.html">Consultant</a></li><li><a href="Consultants.html">Consultants</a></li><li><a href="Contexts.html">Contexts</a></li><li><a href="ContextualizableObject.html">ContextualizableObject</a></li><li><a href="Contextualizer.html">Contextualizer</a></li><li><a href="Conversation.html">Conversation</a><ul class='methods'><li data-type='method'><a href="Conversation.html#saveAndInterConnectInApp">saveAndInterConnectInApp</a></li><li data-type='method'><a href="Conversation.html#setAsCurrentConversation">setAsCurrentConversation</a></li></ul></li><li><a href="Conversations.html">Conversations</a></li><li><a href="Corpus.html">Corpus</a></li><li><a href="CorpusMask.html">CorpusMask</a></li><li><a href="DataList.html">DataList</a></li><li><a href="DataLists.html">DataLists</a></li><li><a href="Datum.html">Datum</a></li><li><a href="DatumField.html">DatumField</a></li><li><a href="DatumFields.html">DatumFields</a></li><li><a href="Datums.html">Datums</a></li><li><a href="DatumState.html">DatumState</a></li><li><a href="DatumStates.html">DatumStates</a></li><li><a href="DatumTag.html">DatumTag</a></li><li><a href="DatumTags.html">DatumTags</a></li><li><a href="DocumentCollection.html">DocumentCollection</a></li><li><a href="ELanguages.html">ELanguages</a></li><li><a href="ExperimentDataList.html">ExperimentDataList</a></li><li><a href="Export.html">Export</a></li><li><a href="FieldDBObject.html">FieldDBObject</a><ul class='methods'><li data-type='method'><a href="FieldDBObject.html#.uuidGenerator">uuidGenerator</a></li></ul></li><li><a href="GitImport.html">GitImport</a></li><li><a href="Glosser.html">Glosser</a><ul class='methods'><li data-type='method'><a href="Glosser.html#.calculateAllAlternativeCombinations">calculateAllAlternativeCombinations</a></li><li data-type='method'><a href="Glosser.html#.removeRedundantCopies">removeRedundantCopies</a></li><li data-type='method'><a href="Glosser.html#.sortAlternatesByLessSegmentation">sortAlternatesByLessSegmentation</a></li><li data-type='method'><a href="Glosser.html#.sortAlternatesByMoreSegmentation">sortAlternatesByMoreSegmentation</a></li></ul></li><li><a href="HotKey.html">HotKey</a></li><li><a href="HotKeys.html">HotKeys</a></li><li><a href="HTML5Audio.html">HTML5Audio</a></li><li><a href="Image.html">Image</a></li><li><a href="Images.html">Images</a></li><li><a href="Import.html">Import</a></li><li><a href="LanguageDatum.html">LanguageDatum</a></li><li><a href="Lexicon.html">Lexicon</a></li><li><a href="LexiconNode.html">LexiconNode</a></li><li><a href="Participant.html">Participant</a></li><li><a href="Permission.html">Permission</a></li><li><a href="Permissions.html">Permissions</a></li><li><a href="PsycholinguisticsApp.html">PsycholinguisticsApp</a></li><li><a href="ReportBot.html">ReportBot</a><ul class='methods'><li data-type='method'><a href="ReportBot.html#schedule">schedule</a></li></ul></li><li><a href="Response.html">Response</a></li><li><a href="Search.html">Search</a></li><li><a href="Session.html">Session</a></li><li><a href="Sessions.html">Sessions</a></li><li><a href="Speaker.html">Speaker</a></li><li><a href="Stimulus.html">Stimulus</a></li><li><a href="SubExperimentDataList.html">SubExperimentDataList</a></li><li><a href="Team.html">Team</a></li><li><a href="UnicodeSymbol.html">UnicodeSymbol</a></li><li><a href="UnicodeSymbols.html">UnicodeSymbols</a></li><li><a href="User.html">User</a></li><li><a href="UserApp.html">UserApp</a></li><li><a href="UserMask.html">UserMask</a></li><li><a href="UserPreference.html">UserPreference</a></li><li><a href="UserRouter.html">UserRouter</a><ul class='methods'><li data-type='method'><a href="UserRouter.html#showCorpusDashboard">showCorpusDashboard</a></li><li data-type='method'><a href="UserRouter.html#showDashboard">showDashboard</a></li><li data-type='method'><a href="UserRouter.html#showFullscreenUser">showFullscreenUser</a></li></ul></li><li><a href="Users.html">Users</a></li><li>{String: Exercise}</li></ul><h3>Modules</h3><ul><li><a href="module-FieldDB.html">FieldDB</a></li></ul><h3>Global</h3><ul><li><a href="global.html#add">add</a></li><li><a href="global.html#clone">clone</a></li><li><a href="global.html#debugMode">debugMode</a></li><li><a href="global.html#find">find</a></li><li><a href="global.html#getMD5ForFile">getMD5ForFile</a></li><li><a href="global.html#getSanitizedDotNotationKey">getSanitizedDotNotationKey</a></li><li><a href="global.html#LexiconFactory">LexiconFactory</a></li><li><a href="global.html#sanitizeStringForFileSystem">sanitizeStringForFileSystem</a></li><li><a href="global.html#sanitizeStringForPrimaryKey">sanitizeStringForPrimaryKey</a></li><li><a href="global.html#showDiffs">showDiffs</a></li></ul>
+</nav>
 
 <div id="main">
     
-    <h1 class="page-title">Class: Permissions</h1>
+    <h1 class="page-title">Permissions</h1>
     
+
     
+
 
 
 
 <section>
-    
+
 <header>
-    <h2>
-    Permissions
-    </h2>
     
-</header>  
+        <h2>
+        Permissions
+        </h2>
+        
+    
+</header>
 
 <article>
     <div class="container-overview">
     
-    
-    
         
-<dt>
+
+    
+
     <h4 class="name" id="Permissions"><span class="type-signature"></span>new Permissions<span class="signature">()</span><span class="type-signature"></span></h4>
+
     
+
+
+
+
+<dl class="details">
+
     
-</dt>
-<dd>
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="permission_Permissions.js.html">permission/Permissions.js</a>, <a href="permission_Permissions.js.html#line7">line 7</a>
+    </li></ul></dd>
     
+
     
-    <div class="description">
-        A collection of open ended permissions which can be applied to any object
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-tutorial">Tutorials:</dt>
+    <dd class="tag-tutorial">
+        <ul>
+            <li><em class="disabled">Tutorial: tests/permission/PermissionTest.js</em></li>
+        </ul>
+    </dd>
+    
+
+    
+
+    
+</dl>
+
+
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    
+
+<table class="props">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>admins</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="Permission.html">Permission</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Users who can perform admin operations on the corpus/datalist/datum/datumField.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>exporters</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="Permission.html">Permission</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Users who can export the items in a corpus/datalist/datum/datumField.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>writers</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="Permission.html">Permission</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Users who can modify the items in a corpus/datalist/datum/datumField.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>commenters</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="Permission.html">Permission</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Users who can comment on the items in a corpus/datalist/datum/datumField.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>readers</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="Permission.html">Permission</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Users who can read the items in a corpus/datalist/datum/datumField.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>viewAsBasePermissionSystem</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">This is just syntactic sugar which points to the actual
+   permission system. The actual permission system should be used by apps who want provide a power user or
+   fine grained and open ended control over the permissions, or whose users want to understand
+   the fine graned control at a lower level.
+   - Kind of like Unix permissions.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>viewAsDataBasePermissionSystem</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">This is syntactic sugar which makes
+   the permission system look like there is an implicative relationship betwween roles.
+   - Kind of like PhP/MySQL systems.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>viewAsGroupedPermissionSystem</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">This is syntactic sugar which shows users in
+   only one category (readOnly, writeOnly, read/write, admins) it also makes
+   the permission system look like there is an implicative relationship betwween roles, but with some hint that
+   there are some rare roles (such as write only) for crowdsourcing/non-standard data entry contexts.
+   - Kind of like PhP/MySQL systems.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>viewAsEmailingTeamPermissionSystem</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">This might be the way that
+   some computational linguistics teams will understand the permission system best,
+   but the words `collaborator` and `contributor` are so similar that thus far no one
+   has used these terms (that we know of).
+   - Kind of like GitHub.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<div class="description">
+    A collection of open ended permissions which can be applied to any object
 (usually a corpus, but could be a datalist, or datum, or datumField). A permission
 can be thought of roughly as a phrase:
 <pre>
@@ -66,352 +372,113 @@ has permission ["admin","write","read","comment","export","import",etc]
 to "corpus"/"datalist"/"datum"/"datumField"
 
 <pre>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
     </div>
+
+    
+        <h3 class="subsection-title">Extends</h3>
+
+        
+
+
+    <ul>
+        <li><a href="Collection.html">Collection</a></li>
+    </ul>
+
+
     
 
     
+
     
+
+     
+
     
+
     
-    
-    
-    
+        <h3 class="subsection-title">Members</h3>
+
+        
+            
+<h4 class="name" id="adminOnlys"><span class="type-signature"></span>adminOnlys<span class="type-signature"> :<a href="Permission.html">Permission</a></span></h4>
+
+
+
+
+
 <dl class="details">
-    
-        
-        <h5 class="subsection-title">Properties:</h5>
-        
-        <dl>
 
-<table class="props">
-    <thead>
-	<tr>
-		
-		<th>Name</th>
-		
-		
-		<th>Type</th>
-		
-		
-		
-		
-		
-		<th class="last">Description</th>
-	</tr>
-	</thead>
-	
-	<tbody>
-	
-	
-        <tr>
-            
-                <td class="name"><code>admins</code></td>
-            
-            
-            <td class="type">
-            
-                
-<span class="param-type"><a href="Permission.html">Permission</a></span>
-
-
-            
-            </td>
-            
-            
-            
-            
-            
-            <td class="description last">Users who can perform admin operations on the corpus/datalist/datum/datumField.</td>
-        </tr>
-	
-	
-	
-        <tr>
-            
-                <td class="name"><code>exporters</code></td>
-            
-            
-            <td class="type">
-            
-                
-<span class="param-type"><a href="Permission.html">Permission</a></span>
-
-
-            
-            </td>
-            
-            
-            
-            
-            
-            <td class="description last">Users who can export the items in a corpus/datalist/datum/datumField.</td>
-        </tr>
-	
-	
-	
-        <tr>
-            
-                <td class="name"><code>writers</code></td>
-            
-            
-            <td class="type">
-            
-                
-<span class="param-type"><a href="Permission.html">Permission</a></span>
-
-
-            
-            </td>
-            
-            
-            
-            
-            
-            <td class="description last">Users who can modify the items in a corpus/datalist/datum/datumField.</td>
-        </tr>
-	
-	
-	
-        <tr>
-            
-                <td class="name"><code>commenters</code></td>
-            
-            
-            <td class="type">
-            
-                
-<span class="param-type"><a href="Permission.html">Permission</a></span>
-
-
-            
-            </td>
-            
-            
-            
-            
-            
-            <td class="description last">Users who can comment on the items in a corpus/datalist/datum/datumField.</td>
-        </tr>
-	
-	
-	
-        <tr>
-            
-                <td class="name"><code>readers</code></td>
-            
-            
-            <td class="type">
-            
-                
-<span class="param-type"><a href="Permission.html">Permission</a></span>
-
-
-            
-            </td>
-            
-            
-            
-            
-            
-            <td class="description last">Users who can read the items in a corpus/datalist/datum/datumField.</td>
-        </tr>
-	
-	
-	
-        <tr>
-            
-                <td class="name"><code>viewAsBasePermissionSystem</code></td>
-            
-            
-            <td class="type">
-            
-                
-<span class="param-type">Object</span>
-
-
-            
-            </td>
-            
-            
-            
-            
-            
-            <td class="description last">This is just syntactic sugar which points to the actual
-   permission system. The actual permission system should be used by apps who want provide a power user or
-   fine grained and open ended control over the permissions, or whose users want to understand
-   the fine graned control at a lower level.
-   - Kind of like Unix permissions.</td>
-        </tr>
-	
-	
-	
-        <tr>
-            
-                <td class="name"><code>viewAsDataBasePermissionSystem</code></td>
-            
-            
-            <td class="type">
-            
-                
-<span class="param-type">Object</span>
-
-
-            
-            </td>
-            
-            
-            
-            
-            
-            <td class="description last">This is syntactic sugar which makes
-   the permission system look like there is an implicative relationship betwween roles.
-   - Kind of like PhP/MySQL systems.</td>
-        </tr>
-	
-	
-	
-        <tr>
-            
-                <td class="name"><code>viewAsGroupedPermissionSystem</code></td>
-            
-            
-            <td class="type">
-            
-                
-<span class="param-type">Object</span>
-
-
-            
-            </td>
-            
-            
-            
-            
-            
-            <td class="description last">This is syntactic sugar which shows users in
-   only one category (readOnly, writeOnly, read/write, admins) it also makes
-   the permission system look like there is an implicative relationship betwween roles, but with some hint that
-   there are some rare roles (such as write only) for crowdsourcing/non-standard data entry contexts.
-   - Kind of like PhP/MySQL systems.</td>
-        </tr>
-	
-	
-	
-        <tr>
-            
-                <td class="name"><code>viewAsEmailingTeamPermissionSystem</code></td>
-            
-            
-            <td class="type">
-            
-                
-<span class="param-type">Object</span>
-
-
-            
-            </td>
-            
-            
-            
-            
-            
-            <td class="description last">This might be the way that
-   some computational linguistics teams will understand the permission system best,
-   but the words `collaborator` and `contributor` are so similar that thus far no one
-   has used these terms (that we know of).
-   - Kind of like GitHub.</td>
-        </tr>
-	
-	
-	</tbody>
-</table></dl>
-        
-    
-        
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Permissions.js.html">permission/Permissions.js</a>, <a href="Permissions.js.html#line7">line 7</a>
+        <a href="permission_Permissions.js.html">permission/Permissions.js</a>, <a href="permission_Permissions.js.html#line262">line 262</a>
     </li></ul></dd>
     
+
     
+
     
-    <dt class="tag-tutorial">Tutorials:</dt>
-    <dd class="tag-tutorial">
-        <ul>
-            <li><em class="disabled">Tutorial: tests/permission/PermissionTest.js</em></li>
-        </ul>
-    </dd>
+
     
+
     
+
     
+
     
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
     
 </dl>
 
-    
-    
 
-    
 
-    
-    
-    
-    
-    
-    
-    
-</dd>
 
-    
-    </div>
-    
-    
-        <h3 class="subsection-title">Extends</h3>
-        
-        <ul>
-            <li><a href="Collection.html">Collection</a></li>
-        </ul>
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-        <h3 class="subsection-title">Members</h3>
-        
-        <dl>
-            
-<dt>
-    <h4 class="name" id="adminOnlys"><span class="type-signature"></span>adminOnlys<span class="type-signature"> :<a href="Permission.html">Permission</a></span></h4>
-    
-    
-</dt>
-<dd>
-    
-    <div class="description">
-        Syntactic sugar for apps who want to show users in one category, not in each low level permissions.
+
+<div class="description">
+    Syntactic sugar for apps who want to show users in one category, not in each low level permissions.
 
 This permission is side effect of when a user has only admin permission.
 In this case the user can only access to only admin functionalities such
@@ -419,70 +486,79 @@ as adding new users to the database. This role is used by project managers or IT
 who dont know anything about the data itself, and are only setting up the corpus for
 the team to use if the PI or corpus owner doesnt know how to do the permissions.
 set-up themselves.
-    </div>
-    
-    
-    
-        <h5>Type:</h5>
-        <ul>
-            <li>
-                
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
 <span class="param-type"><a href="Permission.html">Permission</a></span>
 
 
-            </li>
-        </ul>
-    
+        </li>
+    </ul>
 
-    
-<dl class="details">
-    
-        
-    
-    
-    
 
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Permissions.js.html">permission/Permissions.js</a>, <a href="Permissions.js.html#line265">line 265</a>
-    </li></ul></dd>
-    
-    
-    
-    
-    
-    
-    
-</dl>
 
-    
-    
-</dd>
+
+
 
         
             
-<dt>
-    <h4 class="name" id="collaborators"><span class="type-signature"></span>collaborators<span class="type-signature"> :<a href="Permission.html">Permission</a></span></h4>
+<h4 class="name" id="collaborators"><span class="type-signature"></span>collaborators<span class="type-signature"> :<a href="Permission.html">Permission</a></span></h4>
+
+
+
+
+
+<dl class="details">
+
     
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="permission_Permissions.js.html">permission/Permissions.js</a>, <a href="permission_Permissions.js.html#line120">line 120</a>
+    </li></ul></dd>
     
-</dt>
-<dd>
+
     
-    <div class="description">
-        Syntactic sugar for users who have reader+commenter permissions.
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    Syntactic sugar for users who have reader+commenter permissions.
 
 This is a common permission used by research teams where an external reviewer,
 or a second language consultant can review and coment on the data,
@@ -494,139 +570,157 @@ version which they modified for the team to accept),
 
 Dropbox analog: This is for uswers who would be given a URL to a folder in Dropbox
 (but cannot download the files and modify them with the others)
-    </div>
-    
-    
-    
-        <h5>Type:</h5>
-        <ul>
-            <li>
-                
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
 <span class="param-type"><a href="Permission.html">Permission</a></span>
 
 
-            </li>
-        </ul>
-    
+        </li>
+    </ul>
 
-    
-<dl class="details">
-    
-        
-    
-    
-    
 
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Permissions.js.html">permission/Permissions.js</a>, <a href="Permissions.js.html#line121">line 121</a>
-    </li></ul></dd>
-    
-    
-    
-    
-    
-    
-    
-</dl>
 
-    
-    
-</dd>
+
+
 
         
             
-<dt>
-    <h4 class="name" id="commentOnlys"><span class="type-signature"></span>commentOnlys<span class="type-signature"> :<a href="Permission.html">Permission</a></span></h4>
+<h4 class="name" id="commentOnlys"><span class="type-signature"></span>commentOnlys<span class="type-signature"> :<a href="Permission.html">Permission</a></span></h4>
+
+
+
+
+
+<dl class="details">
+
     
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="permission_Permissions.js.html">permission/Permissions.js</a>, <a href="permission_Permissions.js.html#line348">line 348</a>
+    </li></ul></dd>
     
-</dt>
-<dd>
+
     
-    <div class="description">
-        Syntactic sugar for apps who want to show users in one category, not grouped by low level permissions.
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    Syntactic sugar for apps who want to show users in one category, not grouped by low level permissions.
 
 This permission is side effect of when a user has only comment permission.
 This is a rare case which might be used in a web widget external to the data entry apps
 where users or anonymous visitors can leave a comment on data if it is presented to them,
 but cannot browse the database.
-    </div>
-    
-    
-    
-        <h5>Type:</h5>
-        <ul>
-            <li>
-                
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
 <span class="param-type"><a href="Permission.html">Permission</a></span>
 
 
-            </li>
-        </ul>
-    
+        </li>
+    </ul>
 
-    
-<dl class="details">
-    
-        
-    
-    
-    
 
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Permissions.js.html">permission/Permissions.js</a>, <a href="Permissions.js.html#line351">line 351</a>
-    </li></ul></dd>
-    
-    
-    
-    
-    
-    
-    
-</dl>
 
-    
-    
-</dd>
+
+
 
         
             
-<dt>
-    <h4 class="name" id="contributors"><span class="type-signature"></span>contributors<span class="type-signature"> :<a href="Permission.html">Permission</a></span></h4>
+<h4 class="name" id="contributors"><span class="type-signature"></span>contributors<span class="type-signature"> :<a href="Permission.html">Permission</a></span></h4>
+
+
+
+
+
+<dl class="details">
+
     
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="permission_Permissions.js.html">permission/Permissions.js</a>, <a href="permission_Permissions.js.html#line95">line 95</a>
+    </li></ul></dd>
     
-</dt>
-<dd>
+
     
-    <div class="description">
-        Syntactic sugar for users who have reader+commenter+writer permissions.
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    Syntactic sugar for users who have reader+commenter+writer permissions.
 
 This is a common permission in version control systems
 where the user can do everything, including categorize data, assign data cleaning
@@ -642,249 +736,285 @@ To or CC category for emails,
 
 Dropbox analog: This is for users who would be invited to join a shared
 folder on Dropbox.
-    </div>
-    
-    
-    
-        <h5>Type:</h5>
-        <ul>
-            <li>
-                
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
 <span class="param-type"><a href="Permission.html">Permission</a></span>
 
 
-            </li>
-        </ul>
-    
+        </li>
+    </ul>
 
-    
-<dl class="details">
-    
-        
-    
-    
-    
 
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Permissions.js.html">permission/Permissions.js</a>, <a href="Permissions.js.html#line96">line 96</a>
-    </li></ul></dd>
-    
-    
-    
-    
-    
-    
-    
-</dl>
 
-    
-    
-</dd>
+
+
 
         
             
-<dt>
-    <h4 class="name" id="currentPermissions"><span class="type-signature"></span>currentPermissions<span class="type-signature"></span></h4>
-    
-    
-</dt>
-<dd>
-    
-    <div class="description">
-        A list of "hats" which team members can wear in this team.
-    </div>
-    
-    
-    
+<h4 class="name" id="currentPermissions"><span class="type-signature"></span>currentPermissions<span class="type-signature"></span></h4>
 
-    
+
+
+
+
 <dl class="details">
-    
-        
-    
-    
-    
 
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Permissions.js.html">permission/Permissions.js</a>, <a href="Permissions.js.html#line681">line 681</a>
+        <a href="permission_Permissions.js.html">permission/Permissions.js</a>, <a href="permission_Permissions.js.html#line678">line 678</a>
     </li></ul></dd>
     
+
     
+
     
+
     
+
     
+
     
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
     
 </dl>
 
-    
-    
-</dd>
+
+
+
+
+<div class="description">
+    A list of "hats" which team members can wear in this team.
+</div>
+
+
+
+
+
+
+
 
         
             
-<dt>
-    <h4 class="name" id="owners"><span class="type-signature"></span>owners<span class="type-signature"> :<a href="Permission.html">Permission</a></span></h4>
+<h4 class="name" id="owners"><span class="type-signature"></span>owners<span class="type-signature"> :<a href="Permission.html">Permission</a></span></h4>
+
+
+
+
+
+<dl class="details">
+
     
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="permission_Permissions.js.html">permission/Permissions.js</a>, <a href="permission_Permissions.js.html#line140">line 140</a>
+    </li></ul></dd>
     
-</dt>
-<dd>
+
     
-    <div class="description">
-        Syntactic sugar for users who have reader+writer+admin permissions.
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    Syntactic sugar for users who have reader+writer+admin permissions.
 
 This is a common permission used by most data base management systems meaning the user can do anything.
 
 Email collaboration analog: The person who initiates the email thread
 
 Dropbox analog: The person who creates the folder in dropbox and adds others to it.
-    </div>
-    
-    
-    
-        <h5>Type:</h5>
-        <ul>
-            <li>
-                
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
 <span class="param-type"><a href="Permission.html">Permission</a></span>
 
 
-            </li>
-        </ul>
-    
+        </li>
+    </ul>
 
-    
-<dl class="details">
-    
-        
-    
-    
-    
 
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Permissions.js.html">permission/Permissions.js</a>, <a href="Permissions.js.html#line141">line 141</a>
-    </li></ul></dd>
-    
-    
-    
-    
-    
-    
-    
-</dl>
 
-    
-    
-</dd>
+
+
 
         
             
-<dt>
-    <h4 class="name" id="populate"><span class="type-signature"></span>populate<span class="type-signature"></span></h4>
+<h4 class="name" id="populate"><span class="type-signature"></span>populate<span class="type-signature"></span></h4>
+
+
+
+
+
+<dl class="details">
+
     
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="permission_Permissions.js.html">permission/Permissions.js</a>, <a href="permission_Permissions.js.html#line784">line 784</a>
+    </li></ul></dd>
     
-</dt>
-<dd>
+
     
-    <div class="description">
-        Accepts an object containing permission groups which are an array of
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    Accepts an object containing permission groups which are an array of
 users masks which have this permission. This simple object is used to populate the permissions model.
-    </div>
-    
-    
-    
+</div>
 
-    
-<dl class="details">
-    
-        
-    
-    
-    
 
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Permissions.js.html">permission/Permissions.js</a>, <a href="Permissions.js.html#line787">line 787</a>
-    </li></ul></dd>
-    
-    
-    
-    
-    
-    
-    
-</dl>
 
-    
-    
-</dd>
+
+
+
+
 
         
             
-<dt>
-    <h4 class="name" id="readAllWriteOwnDataOnlys"><span class="type-signature"></span>readAllWriteOwnDataOnlys<span class="type-signature"></span></h4>
+<h4 class="name" id="readAllWriteOwnDataOnlys"><span class="type-signature"></span>readAllWriteOwnDataOnlys<span class="type-signature"></span></h4>
+
+
+
+
+
+<dl class="details">
+
     
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="permission_Permissions.js.html">permission/Permissions.js</a>, <a href="permission_Permissions.js.html#line521">line 521</a>
+    </li></ul></dd>
     
-</dt>
-<dd>
+
     
-    <div class="description">
-        Syntactic sugar for apps who want to show users in one category, not grouped by low level permissions.
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    Syntactic sugar for apps who want to show users in one category, not grouped by low level permissions.
 
 This is a rare permission provided for team members who have been editing other people's
 data either to update it to their own dialect (when it was supposed to be the dialect
@@ -897,60 +1027,69 @@ This permission should not be a default permission among research teams, instead
 permission should be used to reduce territoriality in the data and makes it harder for the database to be kept clean
 because users cannot update/comment on data when they notice a problem. All data is versioned so any
 mistakes can be undone.
-    </div>
-    
-    
-    
+</div>
 
-    
-<dl class="details">
-    
-        
-    
-    
-    
 
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Permissions.js.html">permission/Permissions.js</a>, <a href="Permissions.js.html#line524">line 524</a>
-    </li></ul></dd>
-    
-    
-    
-    
-    
-    
-    
-</dl>
 
-    
-    
-</dd>
+
+
+
+
 
         
             
-<dt>
-    <h4 class="name" id="readCommentAllWriteOwnDataOnlys"><span class="type-signature"></span>readCommentAllWriteOwnDataOnlys<span class="type-signature"></span></h4>
+<h4 class="name" id="readCommentAllWriteOwnDataOnlys"><span class="type-signature"></span>readCommentAllWriteOwnDataOnlys<span class="type-signature"></span></h4>
+
+
+
+
+
+<dl class="details">
+
     
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="permission_Permissions.js.html">permission/Permissions.js</a>, <a href="permission_Permissions.js.html#line495">line 495</a>
+    </li></ul></dd>
     
-</dt>
-<dd>
+
     
-    <div class="description">
-        Syntactic sugar for apps who want to show users in one category, not grouped by low level permissions.
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    Syntactic sugar for apps who want to show users in one category, not grouped by low level permissions.
 
 This is a rare permission provided for team members who have been editing other people's
 data either to update it to their own dialect (when it was supposed to be the dialect
@@ -962,314 +1101,359 @@ This permission should not be a default permission among research teams, instead
 permission should be used to reduce territoriality in the data and makes it harder for the database to be kept clean
 because users cannot update/comment on data when they notice a problem. All data is versioned so any
 mistakes can be undone.
-    </div>
-    
-    
-    
+</div>
 
-    
-<dl class="details">
-    
-        
-    
-    
-    
 
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Permissions.js.html">permission/Permissions.js</a>, <a href="Permissions.js.html#line498">line 498</a>
-    </li></ul></dd>
-    
-    
-    
-    
-    
-    
-    
-</dl>
 
-    
-    
-</dd>
+
+
+
+
 
         
             
-<dt>
-    <h4 class="name" id="readerCommenterOnlys"><span class="type-signature"></span>readerCommenterOnlys<span class="type-signature"> :<a href="Permission.html">Permission</a></span></h4>
+<h4 class="name" id="readerCommenterOnlys"><span class="type-signature"></span>readerCommenterOnlys<span class="type-signature"> :<a href="Permission.html">Permission</a></span></h4>
+
+
+
+
+
+<dl class="details">
+
     
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="permission_Permissions.js.html">permission/Permissions.js</a>, <a href="permission_Permissions.js.html#line373">line 373</a>
+    </li></ul></dd>
     
-</dt>
-<dd>
+
     
-    <div class="description">
-        Syntactic sugar for apps who want to show users in one category, not grouped by low level permissions.
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    Syntactic sugar for apps who want to show users in one category, not grouped by low level permissions.
 
 This permission is side effect of when a user has only read and comment permission.
 This is a common permission used by research teams where an external reviewer,
 or a second language consultant can review and coment on the data,
 but cannot modify the data itself.
-    </div>
-    
-    
-    
-        <h5>Type:</h5>
-        <ul>
-            <li>
-                
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
 <span class="param-type"><a href="Permission.html">Permission</a></span>
 
 
-            </li>
-        </ul>
-    
+        </li>
+    </ul>
 
-    
-<dl class="details">
-    
-        
-    
-    
-    
 
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Permissions.js.html">permission/Permissions.js</a>, <a href="Permissions.js.html#line376">line 376</a>
-    </li></ul></dd>
-    
-    
-    
-    
-    
-    
-    
-</dl>
 
-    
-    
-</dd>
+
+
 
         
             
-<dt>
-    <h4 class="name" id="readerCommenterWriterAdmins"><span class="type-signature"></span>readerCommenterWriterAdmins<span class="type-signature"></span></h4>
+<h4 class="name" id="readerCommenterWriterAdmins"><span class="type-signature"></span>readerCommenterWriterAdmins<span class="type-signature"></span></h4>
+
+
+
+
+
+<dl class="details">
+
     
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="permission_Permissions.js.html">permission/Permissions.js</a>, <a href="permission_Permissions.js.html#line443">line 443</a>
+    </li></ul></dd>
     
-</dt>
-<dd>
+
     
-    <div class="description">
-        Syntactic sugar for apps who want to show users in one category, not grouped by low level permissions.
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    Syntactic sugar for apps who want to show users in one category, not grouped by low level permissions.
 
 Often refered to as "admins" in traditional databases permissio ns
 It means the user can write data, read data and comment on data, and perform any operation on the data.
-    </div>
-    
-    
-    
+</div>
 
-    
-<dl class="details">
-    
-        
-    
-    
-    
 
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Permissions.js.html">permission/Permissions.js</a>, <a href="Permissions.js.html#line446">line 446</a>
-    </li></ul></dd>
-    
-    
-    
-    
-    
-    
-    
-</dl>
 
-    
-    
-</dd>
+
+
+
+
 
         
             
-<dt>
-    <h4 class="name" id="readerCommenterWriters"><span class="type-signature"></span>readerCommenterWriters<span class="type-signature"></span></h4>
+<h4 class="name" id="readerCommenterWriters"><span class="type-signature"></span>readerCommenterWriters<span class="type-signature"></span></h4>
+
+
+
+
+
+<dl class="details">
+
     
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="permission_Permissions.js.html">permission/Permissions.js</a>, <a href="permission_Permissions.js.html#line417">line 417</a>
+    </li></ul></dd>
     
-</dt>
-<dd>
+
     
-    <div class="description">
-        Syntactic sugar for apps who want to show users in one category, not grouped by low level permissions.
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    Syntactic sugar for apps who want to show users in one category, not grouped by low level permissions.
 
 This permission is side effect of when a user has only read comment and write permission.
 This is syntactic sugar which is often refered to as "writers" in traditional databases permissions.
 It means the user can write data, read data and comment on data
-    </div>
-    
-    
-    
+</div>
 
-    
-<dl class="details">
-    
-        
-    
-    
-    
 
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Permissions.js.html">permission/Permissions.js</a>, <a href="Permissions.js.html#line420">line 420</a>
-    </li></ul></dd>
-    
-    
-    
-    
-    
-    
-    
-</dl>
 
-    
-    
-</dd>
+
+
+
+
 
         
             
-<dt>
-    <h4 class="name" id="readerWriters"><span class="type-signature"></span>readerWriters<span class="type-signature"> :<a href="Permission.html">Permission</a></span></h4>
+<h4 class="name" id="readerWriters"><span class="type-signature"></span>readerWriters<span class="type-signature"> :<a href="Permission.html">Permission</a></span></h4>
+
+
+
+
+
+<dl class="details">
+
     
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="permission_Permissions.js.html">permission/Permissions.js</a>, <a href="permission_Permissions.js.html#line399">line 399</a>
+    </li></ul></dd>
     
-</dt>
-<dd>
+
     
-    <div class="description">
-        Syntactic sugar for apps who want to show users in one category, not grouped by low level permissions.
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    Syntactic sugar for apps who want to show users in one category, not grouped by low level permissions.
 
 This permission is side effect of when a user has only read and write permission.
 This is a rare permission where the user has been leaving abusive comments,
 and are thus only permitted to browse and edit the data itself, not add or edit comments.
 
 If you want to give someone access as a reader+writer, use readerWritersComenters.
-    </div>
-    
-    
-    
-        <h5>Type:</h5>
-        <ul>
-            <li>
-                
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
 <span class="param-type"><a href="Permission.html">Permission</a></span>
 
 
-            </li>
-        </ul>
-    
+        </li>
+    </ul>
 
-    
-<dl class="details">
-    
-        
-    
-    
-    
 
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Permissions.js.html">permission/Permissions.js</a>, <a href="Permissions.js.html#line402">line 402</a>
-    </li></ul></dd>
-    
-    
-    
-    
-    
-    
-    
-</dl>
 
-    
-    
-</dd>
+
+
 
         
             
-<dt>
-    <h4 class="name" id="readOnlys"><span class="type-signature"></span>readOnlys<span class="type-signature"> :<a href="Permission.html">Permission</a></span></h4>
+<h4 class="name" id="readOnlys"><span class="type-signature"></span>readOnlys<span class="type-signature"> :<a href="Permission.html">Permission</a></span></h4>
+
+
+
+
+
+<dl class="details">
+
     
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="permission_Permissions.js.html">permission/Permissions.js</a>, <a href="permission_Permissions.js.html#line323">line 323</a>
+    </li></ul></dd>
     
-</dt>
-<dd>
+
     
-    <div class="description">
-        Syntactic sugar for apps who want to show users in one category, not grouped by low level permissions.
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    Syntactic sugar for apps who want to show users in one category, not grouped by low level permissions.
 
 This permission is side effect of when a user has only read permission.
 In this case the user might be part of a grant commitees or the general public (for
@@ -1277,406 +1461,469 @@ the aspects of the corpus which have been made @publicic),
 language consultants who might leave mean comments on other consultant's data,
 or other sorts of external viewers of the data who the team doesnt want to leave
 comments.
-    </div>
-    
-    
-    
-        <h5>Type:</h5>
-        <ul>
-            <li>
-                
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
 <span class="param-type"><a href="Permission.html">Permission</a></span>
 
 
-            </li>
-        </ul>
-    
+        </li>
+    </ul>
 
-    
-<dl class="details">
-    
-        
-    
-    
-    
 
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Permissions.js.html">permission/Permissions.js</a>, <a href="Permissions.js.html#line326">line 326</a>
-    </li></ul></dd>
-    
-    
-    
-    
-    
-    
-    
-</dl>
 
-    
-    
-</dd>
+
+
 
         
             
-<dt>
-    <h4 class="name" id="readOwnDataWriteOwnDataOnlys"><span class="type-signature"></span>readOwnDataWriteOwnDataOnlys<span class="type-signature"></span></h4>
+<h4 class="name" id="readOwnDataWriteOwnDataOnlys"><span class="type-signature"></span>readOwnDataWriteOwnDataOnlys<span class="type-signature"></span></h4>
+
+
+
+
+
+<dl class="details">
+
     
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="permission_Permissions.js.html">permission/Permissions.js</a>, <a href="permission_Permissions.js.html#line470">line 470</a>
+    </li></ul></dd>
     
-</dt>
-<dd>
+
     
-    <div class="description">
-        Syntactic sugar for apps who want to show users in one category, not grouped by low level permissions.
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    Syntactic sugar for apps who want to show users in one category, not grouped by low level permissions.
 
 This is a permission provided for teams who want many language consultants to contribute to one
 database without seeing the data other consultants have added. We expect this may be a common
 permission especially for teams where there is no `standard` dialect and speakers of other dialects
 are very prescriptive and think others are making `errors` which need to be corrected, this permission prevents them from `correcting` others data.
-    </div>
-    
-    
-    
+</div>
 
-    
-<dl class="details">
-    
-        
-    
-    
-    
 
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Permissions.js.html">permission/Permissions.js</a>, <a href="Permissions.js.html#line473">line 473</a>
-    </li></ul></dd>
-    
-    
-    
-    
-    
-    
-    
-</dl>
 
-    
-    
-</dd>
+
+
+
+
 
         
             
-<dt>
-    <h4 class="name" id="removeUser"><span class="type-signature"></span>removeUser<span class="type-signature"></span></h4>
-    
-    
-</dt>
-<dd>
-    
-    <div class="description">
-        Removes user from roles on this permissions team, or removes user entirely if only a username is supplied.
-    </div>
-    
-    
-    
+<h4 class="name" id="removeUser"><span class="type-signature"></span>removeUser<span class="type-signature"></span></h4>
 
-    
+
+
+
+
 <dl class="details">
-    
-        
-    
-    
-    
 
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Permissions.js.html">permission/Permissions.js</a>, <a href="Permissions.js.html#line641">line 641</a>
+        <a href="permission_Permissions.js.html">permission/Permissions.js</a>, <a href="permission_Permissions.js.html#line638">line 638</a>
     </li></ul></dd>
     
+
     
+
     
+
     
+
     
+
     
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
     
 </dl>
 
-    
-    
-</dd>
+
+
+
+
+<div class="description">
+    Removes user from roles on this permissions team, or removes user entirely if only a username is supplied.
+</div>
+
+
+
+
+
+
+
 
         
             
-<dt>
-    <h4 class="name" id="viewAsBasePermissionSystem"><span class="type-signature"></span>viewAsBasePermissionSystem<span class="type-signature"></span></h4>
+<h4 class="name" id="viewAsBasePermissionSystem"><span class="type-signature"></span>viewAsBasePermissionSystem<span class="type-signature"></span></h4>
+
+
+
+
+
+<dl class="details">
+
     
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="permission_Permissions.js.html">permission/Permissions.js</a>, <a href="permission_Permissions.js.html#line537">line 537</a>
+    </li></ul></dd>
     
-</dt>
-<dd>
+
     
-    <div class="description">
-        This might be used by teams who want to have fine grained control over the
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    This might be used by teams who want to have fine grained control over the
 permissions, or who want to understand the fine grained control at a lower level.
-    </div>
-    
-    
-    
+</div>
 
-    
-<dl class="details">
-    
-        
-    
-    
-    
 
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Permissions.js.html">permission/Permissions.js</a>, <a href="Permissions.js.html#line540">line 540</a>
-    </li></ul></dd>
-    
-    
-    
-    
-    
-    
-    
-</dl>
 
-    
-    
-</dd>
+
+
+
+
 
         
             
-<dt>
-    <h4 class="name" id="viewAsDataBasePermissionSystem"><span class="type-signature"></span>viewAsDataBasePermissionSystem<span class="type-signature"></span></h4>
-    
-    
-</dt>
-<dd>
-    
-    <div class="description">
-        This is the way most field linguistics apps present the permissions system.
-    </div>
-    
-    
-    
+<h4 class="name" id="viewAsDataBasePermissionSystem"><span class="type-signature"></span>viewAsDataBasePermissionSystem<span class="type-signature"></span></h4>
 
-    
+
+
+
+
 <dl class="details">
-    
-        
-    
-    
-    
 
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Permissions.js.html">permission/Permissions.js</a>, <a href="Permissions.js.html#line579">line 579</a>
+        <a href="permission_Permissions.js.html">permission/Permissions.js</a>, <a href="permission_Permissions.js.html#line576">line 576</a>
     </li></ul></dd>
     
+
     
+
     
+
     
+
     
+
     
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
     
 </dl>
 
-    
-    
-</dd>
+
+
+
+
+<div class="description">
+    This is the way most field linguistics apps present the permissions system.
+</div>
+
+
+
+
+
+
+
 
         
             
-<dt>
-    <h4 class="name" id="viewAsEmailingTeamPermissionSystem"><span class="type-signature"></span>viewAsEmailingTeamPermissionSystem<span class="type-signature"></span></h4>
+<h4 class="name" id="viewAsEmailingTeamPermissionSystem"><span class="type-signature"></span>viewAsEmailingTeamPermissionSystem<span class="type-signature"></span></h4>
+
+
+
+
+
+<dl class="details">
+
     
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="permission_Permissions.js.html">permission/Permissions.js</a>, <a href="permission_Permissions.js.html#line596">line 596</a>
+    </li></ul></dd>
     
-</dt>
-<dd>
+
     
-    <div class="description">
-        This might be the way that some computational linguistics teams will
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    This might be the way that some computational linguistics teams will
 understand the permission system best, but the words
 `collaborator` and `contributor` are so similar that thus far no one
 has used these terms.
-    </div>
-    
-    
-    
+</div>
 
-    
-<dl class="details">
-    
-        
-    
-    
-    
 
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Permissions.js.html">permission/Permissions.js</a>, <a href="Permissions.js.html#line599">line 599</a>
-    </li></ul></dd>
-    
-    
-    
-    
-    
-    
-    
-</dl>
 
-    
-    
-</dd>
+
+
+
+
 
         
             
-<dt>
-    <h4 class="name" id="viewAsGroupedPermissionSystem"><span class="type-signature"></span>viewAsGroupedPermissionSystem<span class="type-signature"></span></h4>
+<h4 class="name" id="viewAsGroupedPermissionSystem"><span class="type-signature"></span>viewAsGroupedPermissionSystem<span class="type-signature"></span></h4>
+
+
+
+
+
+<dl class="details">
+
     
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="permission_Permissions.js.html">permission/Permissions.js</a>, <a href="permission_Permissions.js.html#line552">line 552</a>
+    </li></ul></dd>
     
-</dt>
-<dd>
+
     
-    <div class="description">
-        This view will be missing some members of the corpora since not all combinations of
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    This view will be missing some members of the corpora since not all combinations of
 permission have syntactic sugar methods in this library. This shoudlnt be used
 unless the app dev is sure that the users wont be using corpora for psycholinguistics or
 crowdsourcing or computational linguistics.
-    </div>
-    
-    
-    
+</div>
 
-    
-<dl class="details">
-    
-        
-    
-    
-    
 
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Permissions.js.html">permission/Permissions.js</a>, <a href="Permissions.js.html#line555">line 555</a>
-    </li></ul></dd>
-    
-    
-    
-    
-    
-    
-    
-</dl>
 
-    
-    
-</dd>
+
+
+
+
 
         
             
-<dt>
-    <h4 class="name" id="writeOnlys"><span class="type-signature"></span>writeOnlys<span class="type-signature"> :<a href="Permission.html">Permission</a></span></h4>
+<h4 class="name" id="writeOnlys"><span class="type-signature"></span>writeOnlys<span class="type-signature"> :<a href="Permission.html">Permission</a></span></h4>
+
+
+
+
+
+<dl class="details">
+
     
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="permission_Permissions.js.html">permission/Permissions.js</a>, <a href="permission_Permissions.js.html#line296">line 296</a>
+    </li></ul></dd>
     
-</dt>
-<dd>
+
     
-    <div class="description">
-        Syntactic sugar for apps who want to show users in one category, not grouped by low level permissions.
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    Syntactic sugar for apps who want to show users in one category, not grouped by low level permissions.
 
 This permission is side effect of when a user has only write permission.
 In this case the user can add new data to the database, but cannot
@@ -1691,87 +1938,49 @@ where users are anonymous (identified anoymously by session or by device)
 and visit a given website or Android app and can respond to stimuli and their responses
 become new data points in the system. These users cannot access fieldlinguistics apps
 which permit browsing of the data, but is a rare permission used by web widgets or other smaller apps which write to a corpus.
-    </div>
-    
-    
-    
-        <h5>Type:</h5>
-        <ul>
-            <li>
-                
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
 <span class="param-type"><a href="Permission.html">Permission</a></span>
 
 
-            </li>
-        </ul>
-    
+        </li>
+    </ul>
 
-    
-<dl class="details">
-    
+
+
+
+
+
         
     
-    
+
     
 
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Permissions.js.html">permission/Permissions.js</a>, <a href="Permissions.js.html#line299">line 299</a>
-    </li></ul></dd>
-    
-    
-    
-    
-    
-    
-    
-</dl>
 
-    
-    
-</dd>
-
-        </dl>
-    
-    
-    
-    
-    
-    
     
 </article>
 
-</section>  
+</section>
 
 
 
 
 </div>
 
-<nav>
-    <h2><a href="index.html">Index</a></h2><h3>Modules</h3><ul><li><a href="module-FieldDB.html">FieldDB</a></li></ul><h3>Classes</h3><ul><li><a href="Activities.html">Activities</a></li><li><a href="Activity.html">Activity</a></li><li><a href="App.html">App</a></li><li><a href="AppRouter.html">AppRouter</a></li><li><a href="AudioPlayer.html">AudioPlayer</a></li><li><a href="AudioVideo.html">AudioVideo</a></li><li><a href="AudioVideoRecorder.html">AudioVideoRecorder</a></li><li><a href="AudioVideos.html">AudioVideos</a></li><li><a href="Authentication.html">Authentication</a></li><li><a href="Collection.html">Collection</a></li><li><a href="Comment.html">Comment</a></li><li><a href="Comments.html">Comments</a></li><li><a href="Confidential.html">Confidential</a></li><li><a href="Connection.html">Connection</a></li><li><a href="Consultant.html">Consultant</a></li><li><a href="Consultants.html">Consultants</a></li><li><a href="Contexts.html">Contexts</a></li><li><a href="ContextualizableObject.html">ContextualizableObject</a></li><li><a href="Contextualizer.html">Contextualizer</a></li><li><a href="Conversation.html">Conversation</a></li><li><a href="Conversations.html">Conversations</a></li><li><a href="Corpus.html">Corpus</a></li><li><a href="CorpusMask.html">CorpusMask</a></li><li><a href="DataList.html">DataList</a></li><li><a href="DataLists.html">DataLists</a></li><li><a href="dataURItoBlob.html">dataURItoBlob</a></li><li><a href="Datum.html">Datum</a></li><li><a href="DatumField.html">DatumField</a></li><li><a href="DatumFields.html">DatumFields</a></li><li><a href="Datums.html">Datums</a></li><li><a href="DatumState.html">DatumState</a></li><li><a href="DatumStates.html">DatumStates</a></li><li><a href="DatumTag.html">DatumTag</a></li><li><a href="DatumTags.html">DatumTags</a></li><li><a href="DocumentCollection.html">DocumentCollection</a></li><li><a href="ELanguages.html">ELanguages</a></li><li><a href="ExperimentDataList.html">ExperimentDataList</a></li><li><a href="Export.html">Export</a></li><li><a href="FieldDBObject.html">FieldDBObject</a></li><li><a href="Glosser.html">Glosser</a></li><li><a href="HotKey.html">HotKey</a></li><li><a href="HotKeys.html">HotKeys</a></li><li><a href="HTML5Audio.html">HTML5Audio</a></li><li><a href="Image.html">Image</a></li><li><a href="Images.html">Images</a></li><li><a href="LanguageDatum.html">LanguageDatum</a></li><li><a href="Lexicon.html">Lexicon</a></li><li><a href="LexiconNode.html">LexiconNode</a></li><li><a href="Participant.html">Participant</a></li><li><a href="Permission.html">Permission</a></li><li><a href="Permissions.html">Permissions</a></li><li><a href="PsycholinguisticsApp.html">PsycholinguisticsApp</a></li><li><a href="ReportBot.html">ReportBot</a></li><li><a href="Response.html">Response</a></li><li><a href="Search.html">Search</a></li><li><a href="Session.html">Session</a></li><li><a href="Sessions.html">Sessions</a></li><li><a href="Speaker.html">Speaker</a></li><li><a href="Stimulus.html">Stimulus</a></li><li><a href="SubExperimentDataList.html">SubExperimentDataList</a></li><li><a href="Team.html">Team</a></li><li><a href="UnicodeSymbol.html">UnicodeSymbol</a></li><li><a href="UnicodeSymbols.html">UnicodeSymbols</a></li><li><a href="User.html">User</a></li><li><a href="UserApp.html">UserApp</a></li><li><a href="UserMask.html">UserMask</a></li><li><a href="UserPreference.html">UserPreference</a></li><li><a href="UserRouter.html">UserRouter</a></li><li><a href="Users.html">Users</a></li><li>{String: Exercise}</li></ul><h3>Global</h3><ul><li><a href="global.html#add">add</a></li><li><a href="global.html#clone">clone</a></li><li><a href="global.html#debugMode">debugMode</a></li><li><a href="global.html#find">find</a></li><li><a href="global.html#getMD5ForFile">getMD5ForFile</a></li><li><a href="global.html#getSanitizedDotNotationKey">getSanitizedDotNotationKey</a></li><li><a href="global.html#LexiconFactory">LexiconFactory</a></li><li><a href="global.html#sanitizeStringForFileSystem">sanitizeStringForFileSystem</a></li><li><a href="global.html#sanitizeStringForPrimaryKey">sanitizeStringForPrimaryKey</a></li><li><a href="global.html#showDiffs">showDiffs</a></li></ul>
-</nav>
-
-<br clear="both">
+<br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.2</a> on Thu Aug 13 2015 08:22:53 GMT-0400 (EDT)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Sat Mar 18 2017 20:02:57 GMT-0400 (EDT) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
 </footer>
 
-<script> prettyPrint(); </script>
-<script src="scripts/linenumber.js"> </script>
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
 </body>
 </html>
